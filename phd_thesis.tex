@@ -1,0 +1,21 @@
+\documentclass[a4paper,11pt,twoside]{book}
+\input{./tex/preamble.tex}
+
+%%% begin the document
+\begin{document}
+\frontmatter
+\input{./content/title_page.tex}
+%--- toc
+\microtypesetup{protrusion=false} % disables protrusion locally in the toc
+\tableofcontents % prints Table of Contents
+\microtypesetup{protrusion=true} % enables protrusion
+
+\mainmatter{}
+\input{./content/chapter_1_introduction.tex}
+
+
+\backmatter{}
+%--- bibliography
+\printbibliography{}
+
+\end{document}
