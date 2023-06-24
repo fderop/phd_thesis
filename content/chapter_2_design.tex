@@ -1,2 +1,21 @@
 \chapter{Design and Development of HyDrop-ATAC and HyDrop-RNA}
-\lipsum[1-3]
+In this chapter, we will walk through the design and development of HyDrop, our cost-efficient and transparent single-cell ATAC (and single-cell RNA) sequencing platform. We published this work in eLife in 2022\sjcitep[.]{deropHydropEnablesDropletbased2022}
+
+\section{Motivation and necessity}
+When this research began in 2018, single-cell sequencing methods had already broken through as established research tools, but were still expensive and complicated enough to prohibit them from being considered routine experiments. At the time, non-commercial single-cell RNA sequencing methods were either low in throughput\sjcitep[,]{islamCharacterizationSinglecellTranscriptional2011, ramskoldFulllengthMRNASeqSinglecell2012, hashimshonyCELSeqSinglecellRNASeq2012, sasagawaQuartzSeqHighlyReproducible2013} or low in sensitivity\sjcitep[,]{macoskoHighlyParallelGenomewide2015, gierahnSeqWellPortableLowcost2017, caoComprehensiveSinglecellTranscriptional2017,kleinDropletBarcodingSinglecell2015} and often expensive in labour. However, a commercial solution offered by 10x Genomics offered high sensitvity single-cell transcriptomics generated with droplet microfluidics on a user-friendly controller device. A single 8 sample 10x Genomics Chromium reagent package cost in the order of \euro{\num{10000}}, limiting exploratory use, but the existence of this technology proved that the sensitivity of open-source droplet microfluidic methods could be improved upon several fold. Moreover, a droplet-based single-cell ATAC sequencing method was not yet available to the public, again limiting researchers to low-sensitivity\supershortnotecite{cusanovichMultiplexSinglecellProfiling2015} or low-throughput\supershortnotecite{buenrostroSinglecellChromatinAccessibility2015,chenRapidRobustMethod2018} methods. We wanted to tackle both problems by developing an open-source platform for droplet-based single-cell sequencing, and showcase this method by producing a high-quality scRNA-seq assay, and the first droplet-based scATAC-seq. We hoped that our method would not only reduce the costs of single-cell sequencing, but also provide a platform for novel technique development. Our initial approach was simple, but naive: we would take the detailed inDrop protocols that had been recently published\sjcitep[,]{zilionisSinglecellBarcodingSequencing2017} implement several differences that we thought would improve performance, and use the same concepts to build a single-cell version of ATAC-seq. Both of these goals proved far more complicated than we expected.
+
+\section{Initial design choices}
+The first design choice we faced was the method of cell separation. The throughput of pure microwell-based methods was too low (hundreds of cells per day), and virtual separation using combinatorial indexing strategies (up to tens of thousands of cells per day) generally had low sensitivity, and would require custom barcoded Tn5 when performing scATAC-seq. Droplet microfluidics, which can encapsulate thousands of cells into individual compartments in minutes, appeared to be an attractive middle ground solution. Besides high throughput, droplet encapsulation provides another key advantage: when the cells are physically isolated from one another by droplets, they can undergo chemical reactions completely separately. We can thus fully lyse each cell akin to what happens in a pure microwell-based experiment. We reasoned that an environment in which barcoded primers and cell contents are mixed would provide better sensitivity than techniques where diffusion of either the barcoded primer (sciRNA) or the cell's nucleic acids (Drop-seq, Seq-Well) limit the barcoding reaction rate. inDrop aimed to bypass this requirement by delivering barcoded primers from the bead into the droplet using a photocleavable linker. However, our earliest inDrop experiments proved that release of the primer was very inefficient.
+
+We reasoned that for delivery of the primer into the droplet to occur efficiently, the entire bead must first dissolve, a concept which had already been applied by 10x Genomics in their Chromium solution. Indeed, 10x Chromium also produced data that was at least ten-fold more sensitive than inDrop. One of the first changes we therefore implemented was thus
+
+\lipsum[1]
+
+\section{Optimization process}
+\lipsum[1]
+
+\section{A working prototype}
+\lipsum[1]
+
+\section{Additional use cases}
+\lipsum[1]

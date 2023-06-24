@@ -2,8 +2,8 @@
 
 %%% preamble
 \input{./tex/preamble.tex}
-
 \begin{document}
+
 
 %%% frontmatter
 \frontmatter
@@ -28,6 +28,11 @@
 \backmatter{}
 
 %--- bibliography
+% below commands don't seem to work
+\renewcommand{\mkbibnamefirst}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnameprefix}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnameaffix}[1]{\textsc{#1}} % prints author names as small caps
 \printbibliography{}
 
 \end{document}

@@ -1,16 +1,135 @@
-\chapter{Single-Cell Sequencing Technologies}
+\chapter{The accessible genome at Single-Cell Resolution}
+The work performed in this thesis aims to advance a technical aspect (single-cell sequencing) of an important part (chromatin accessibility) of the gene regulatory puzzle. This introductory chapter will attempt to build the foundation for the explorations that follow by providing a historical overview of chromatin accessibility and frame it within the ongoing research on decoding gene regulation. Then, we frame the state of the art of single-cell chromatin sequencing technologies when I began this work, and delve into the capabilities and limitations of several breakthrough techniques. This context serves to highlight the importance of the subject matter, and to motivate our subsequent discussions and findings.
 
-In this introductory chapter, we provide the foundation for the explorations that follow. We begin by examining how the application of next-generation sequencing (in the 2000s?) \todo{check this} has led to a rapid expansion in our knowledge of biology. Then, we frame the state of the art of single-cell sequencing technologies when I began this work, and delve into the capabilities and limitations of several breakthrough techniques. This context serves to highlight the importance of the subject matter, and to motivate our subsequent discussions and findings.
+\section{A brief historical overview of cellular genetics}
+\begin{wrapfigure}[9]{R}{0.15\textwidth} %this figure will be at the right
+    \centering
+	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{\includegraphics[width=0.15\textwidth]{theodor_schwann.jpg}}%
+	\caption*{T. Schwann}
+\end{wrapfigure}
+The word "cell" was first used by Robert Hooke to describe the hexagonal cell walls in a thin slice of cork in the 1600s\sjcitep[,]{hookeMicrographia1665} but it took several more centuries of research until the concept of cells as the foundational building block of life began to take shape. Only in the mid 1800s, Theodor Schwann showed that animals, just like plants, were composed of cells\sjcitep[,]{schwannMikroskopischeUntersuchungenUber1839} and Rudolf Virchow and Robert Remak later added that cells were the product of division of pre-existing cells\sjcitep[.]{rudolfCellularpathologieIhrerBegrundung1858} While studying this process of division in 1879, Walther Flemming first used the term "chromatin" to describe the filament-like threads between two dividing cells in 1879\sjcitep[.]{flemmingBeitrageZurKenntniss1879} Flemming's observations did not differ much from his colleague's Wilhelm Waldeyer's description of "chromosomes"\sjcitep[.]{deichmannChromatinItsHistory2015} At the time, the physical transfer of genetic information was not yet widely accepted, and the exact function of these chromosomes, and how genetic information was stored, was still unknown. Two breakthrough discoveries were made in the lab of Thomas Hunt Morgan, who in 1908 began studying inheritance by irradiating \textit{Drosophila melanogaster} (fruit fly) and cross-breeding the resulting mutants.
 
-\section{Core questions in molecular biology}
+\begin{wrapfigure}[9]{L}{0.15\textwidth} %this figure will be at the right
+    \centering
+	\includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}
+	\caption*{T. Morgan}
+\end{wrapfigure}
 
-\begin{itemize}
-	\item Same genome - different cells
-	\item how does gene regulation work
-	\item And then I can come back to these in the next chapters
-\end{itemize}
+After several years without results, Morgan observed that some traits, such as the flies' eye colours, could be predictably inherited\sjcitep[.]{morganRandomSegregationCoupling1911} More than half a century earlier, Moravian friar Gregor Mendel had demonstrated the exact same principles using \textit{Pisum sativum} (the common sweet pea), but his work was lost and disputed upon rediscovery. Using his new findings, Morgan verified Mendel's work and formally defined the theory of Mendelian inheritance in 1915\sjcitep[.]{morganMechanismMendelianHeredity1915} A second breakthrough came when Morgan demonstrated that the chromosomes first observed by Flemming and Waldeyer were in fact the physical bodies responsible for the transfer of phenotypic traits, confirming earlier ideas that chromosomes carried genes which contained the genetic information that encoded heritable traits. Together, Morgan's findings inaugurated the 20\textsuperscript{th} century's era of modern molecular genetics and set the stage for many of the major discoveries that ensued. However, until this point, a handful of fundamental questions about the nature of cells and life in general had kept the minds of biologists occupied, but remained completely unanswered:
+\par
+\begin{enumerate}[noitemsep]
+	\item How can a single fertilized egg cell self-organise into an organized array of thousands of different cell types?
+	\item Where is the information that steers this process coded, and how is it interpreted?
+	\item How can this process go wrong, leading to disease?
+\end{enumerate}
+
+At the time, the link between embryonic development and the new insights in genetics was not yet understood, sometimes even dismissed.
+it was not until
+Conrad Waddington visited Thomas Hunt Morgan's lab in 1935.
+
+concept of gene. Another milestone finding was the discovery of the \textit{lac} operon\sjcitep[.]{jacobGeneticRegulatoryMechanisms1961} Jacques Monod had observed that bacteria grown in a medium containing two different sugars would first feed on one sugar, and only  begin feeding on the other once the first had run out. the first well-characterised model of gene regulation.
+
+
+
+We now understand that the exact same concept underlies the key to answering our three fundamental questions. can all be reduced to the concept and foundational nature of \textit{gene regulation}, the process that governs which genes are expressed at a specific time in a specific cell. -> now complex
+
+
+
+We now understand that fine-tuned gene regulation explains how one cell can give rise to many, that this program is embedded in our genomes through a "regulatory code", and that aberrant gene regulation can explain many of our age's most important diseases. Much progress has been made in unraveling the mechanics of gene regulation. We have models of gene transcription and translation, cell signaling, the roles of several classes of proteins, and so on. However, full and deterministic models which can exhaustively answer our core questions remain elusive, almost unimaginable.
+
+As explained in the preamble to this introduction, gene regulation is a central biological concept that underlies []. 
+
+One of the central, physical entities that underlie gene regulation is chromatin and all its properties. The term "chromatin" was first used by German cytologist Walther Flemming in 1879, who simply wanted to describe the filament-like threads which he had stained using aniline dyes while observing cell division. At the time, the existence of a physical substance which transferred genetic information was not yet generally accepted, and Flemming's observations did not differ much from his german colleague Wilhelm Waldeyer's description of "chromosomes" in 1889\sjcitep[.]{deichmannChromatinItsHistory2015} Today, however, the word has a more specific definition: chromatin is a specific state of 
+
+Chromatin is a complex of DNA and proteins found within the nuclei of eukaryotic cells. Its primary function is to package the long DNA molecules into a more compact, denser shape. This is critical as it allows the DNA to fit into the nucleus and be efficiently organized and regulated.
+
+Chromatin is composed of repeating units called nucleosomes. Each nucleosome consists of a segment of DNA wound around eight histone proteins (a core of two copies each of histone proteins H2A, H2B, H3, and H4). The DNA segment connected to this core is referred to as "linker DNA". Another histone protein, H1, binds to the linker DNA, assisting in the compacting of the chromatin structure.
+
+Chromatin can exist in two forms: euchromatin and heterochromatin. Euchromatin is less compact and is associated with regions of the genome that are actively transcribed into RNA. On the other hand, heterochromatin is more densely packed and is typically associated with regions of the genome that are not being transcribed.
+
+The structure of chromatin is dynamic and can change. This flexibility plays a crucial role in gene expression because it can regulate the access of the transcription machinery to the DNA. When the chromatin is open and the DNA is accessible (a state often associated with euchromatin), transcription can take place. When the chromatin is condensed and the DNA is less accessible (a state often associated with heterochromatin), transcription is less likely to occur.
+
+Thus, the study of chromatin and its structure is fundamental to understanding how genes are regulated within cells.
+
+Again a technical innovation, the electron microscope, laid down
+the fundament for the discovery that chromatin is organized by single-repeating
+units, termed the nucleosome [61]. Thus by spreading out nuclear material,the Olins couple and C. Woodcock uncovered that histones did not cover the
+DNA uniformly, but instead formed the nucleosomes, which were organized
+as beads on a string with globular structures separated by what appeared to be
+as spacer regions [61]. Following a race, biochemists, such as Roger Conrberg
+and Jean O. Thomas, in the early 1970s managed to purify mononucleosomes
+and determine that these consist of DNA sequences wrapped around a core octamer
+consisting of two copies of the four major histones, H2A, H2B, H3, and
+H4 [61]. Further chromatin compaction was then found to be regulated by the
+binding of the linker histone H1 to linker regions between nucleosomes [62].
+
+It is now well established, that the localization of nucleosomes along the length of the DNA can be influenced by a combination of factors, such as sequence features, that repel or attract nucleosomes, transcription factors, the RNA pol II machinery, and chromatin-remodeling enzymes that can evict, slide, or remodel nucleosomes (Chapter 4) (reviewed in [63]). While certain regions tend
+to display precise and reproducible nucleosome positioning in a cell population,
+others have varying levels of nucleosome positioning up to no positioning
+at all [63]. Nucleosome positioning in turn dictates which portion of the
+genome is generally more available for transcription factors, which often occupy
+binding sites localized within the linker regions [63]. Certain transcription factors,
+called pioneer transcription factors, can bind DNA even when it is tightly
+wrapped around the nucleosome [63]. Such factors are thus able to remodel,
+even compact, repressed chromatin states in collaboration with chromatinremodeling
+enzymes, and play important roles during lineage commitment,
+differentiation, and epigenetic reprogramming. A term related to, but distinct
+from nucleosome positioning is nucleosome occupancy [63]. While most of the
+genome is occupied by nucleosomes, certain active regulatory regions, such as
+enhancers, promoters, and terminators, show low-nucleosome occupancy or are
+nucleosome-free to enable the efficient binding of the transcription machinery
+[63]. Nucleosome positioning, spacing, and occupancy thus emerge as important
+regulators of cell type–specific gene expression patterns, which can undergo
+dynamic changes during differentiation [64]. Taken together, the discovery of the
+nucleosome has revolutionized chromatin research by opening up fundamentally
+novel questions, such as how nucleosome positioning (Chapter 4), DNA and
+histone modifications (Chapters 2–3, 5–6), and the 3D folding of the primary
+chromatin fiber (Chapters 7–14, 17) collaborate to affect genomic functions.
+
+Given that the structure of chromosomes undergoes cell cycle–specific morphological
+changes, Edmund B. Wilson predicted that the packaging of the genome
+in chromatin might be dynamically regulated [59].
+
+Moreover, in 1964 Vincent Allfrey and Alfred E. Mirsky documented
+that histones can be acetylated and methylated after the completion of translation,
+and proposed that these PTMs could switch on or off different genes in cell
+type–specific manners [66] (Fig. 1.1).
+However, the efforts to realize this important idea into hard
+evidence took another few decades, when two different groups could conclusively
+determine that histone modifications provided information that could
+determine transcriptional activation and repression. Thus, using an affinity
+column Stuart Schreiber’s lab purified a transcriptional repressor, Rpd3, that
+displayed histone deacetylase (HDAC) activity [67]. Conversely, work from
+David Allis’ lab, uncovered that a positive regulator of transcription, Gcn5p,
+had histone acetyl transferase activity [68] (Fig. 1.1).
+
+clarkStructureChromatin1971
+
+A major hurdle was crossed due to advance of Next Generation Sequencing. \todo{NGS revolution (human genome progress, etc.)}
+
+However, each discovery expands our knowledge, putting into perspective how little we know. How is it possible that the vast majority of cells in a given organism share the same genome, but can differ strongly in phenotype and function?
+
+The invention of a set of relatively recent techniques uncovered numerous
+PTMs present on histones and other cellular proteins, as well as their genomic
+distributions (Chapter 2). Milestones include the invention of the chromatin
+immunoprecipitation (ChIP) method to capture DNA sequences occupied by
+a protein of interest by John T. Lis and David Gilmour in 1984 [69],
+
+The advent
+of high-throughput sequencing techniques and their adaptation to chromatin
+research, such as the invention of ChIP sequencing first described by the Pugh
+group [75], provided genome-wide views on how different chromatin proteins
+and histone PTMs regulate the expressivity of the genome. An important observation
+of these experiments was that the effect of chromatin marks is contextspecific
+and depends on the genomic location, the density of the mark, and
+the surrounding chromatin marks, leading to the modification of the initial
+“histone code” hypothesis that assigned different chromatin modifications a
+universal meaning [76].
+
+% section end: describe how chromatin accessibility is an integral part, but it is also only part of the puzzle and must be contextualized
 
 \section{Next generation sequencing techniques}
+A second wave of relief: NGS
 \begin{itemize}
 	\item microarrays
 	\item bulk RNA-seq
@@ -19,7 +138,8 @@ In this introductory chapter, we provide the foundation for the explorations tha
 \end{itemize}
 
 \section{The central dogma of single-cell sequencing}
-Cell type diversity underlies
+Cell type diversity underlies \\
+Single-cell sequencing was \supershortnotecite{noauthorslistedMethodYear20132014}
 
 \begin{itemize}
 	\item NGS sequencing by itself provided a lot of relief, but not quite
@@ -34,6 +154,8 @@ The idea of extracting material from single cells is not new.
 	\item Eberwine
 \end{itemize}
 
+By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
+
 \lipsum[1]
 
 \section{Generation 1 - Small steps}
@@ -41,7 +163,6 @@ The idea of extracting material from single cells is not new.
 	\item Method of the year 2013
 	\item First generation technologies such as CEL-seq, SMART-seq, inDrop, Drop-seq
 \end{itemize}
-Method of the year 2013
 
 \lipsum[1]
 

@@ -11,6 +11,9 @@
 \fi
 \makeatother
 
+% this line removes penalty for large white spaces at the bottom of pages.
+\raggedbottom 
+
 %--- header
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}} % To clear page numbers from footer, and header line at the start of every chapter
@@ -20,6 +23,7 @@
 \fancyhead[R]{\thepage}
 
 \renewcommand{\headruleskip}{1pt}
+
 %--- fonts
 \usepackage[T1]{fontenc}
 \usepackage{charter} % for text
@@ -42,7 +46,6 @@
 {\cftsecfont}
 \renewcommand{\cftsubsecpagefont} % subsection page numbers
 {\cftsubsecfont}
-
 
 %--- typesetting
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
@@ -72,6 +75,11 @@
 
 \SetTracking{encoding={*}, shape=sc}{40}
 
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=0pt}
+
+\usepackage[round-mode=places,round-precision=2,group-separator={\ },output-decimal-marker={.},round-pad=false]{siunitx} 
+
 %--- headers
 \usepackage{titlesec} % www.ctan.org/tex-archive/macros/latex/contrib/titlesec/titlesec.pdf
 
@@ -91,6 +99,9 @@
 %--- graphics and images
 \usepackage{graphicx}
 \graphicspath{ {./im/} }
+\usepackage{caption}
+\usepackage{wrapfig} % for wrapping figures inside text
+\setlength{\abovecaptionskip}{7pt} % skip height after caption
 
 % dummy image
 \newcommand{\dummyfig}[1]{
@@ -110,12 +121,13 @@
 	url=false,
 	isbn=false,
 	backref=true,
-	style=tex/custom-numeric-comp, % changed from khirevich's custom-numer-comp
+	style=./tex/custom-numeric-comp, % changed from khirevich's custom-numer-comp
 	citereset=chapter,
 	maxcitenames=3,
 	maxbibnames=100,
 	block=none,
-	backend=bibtex]{biblatex}
+	backend=bibtex,
+	giveninits=true]{biblatex}
 
 \bibliography{tex/references}
 % \addbibresource{references.bib}
@@ -123,6 +135,23 @@
 	backrefpage  = {see p.}, % for single page number
 	backrefpages = {see pp.} % for multiple page numbers
 }
+%--- some necessary modifications to the citation format
+\renewcommand{\finentrypunct}{} % removes period at the very end of bibliographic record
+\renewcommand{\newunitpunct}{\addspace\midsentence} % remove doi code period
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1},} % italic journal title with comma
+\DeclareFieldFormat[inbook,thesis]{title}{\mkbibemph{#1}\addperiod} % italic title with period
+\DeclareFieldFormat[article]{title}{#1} % title of journal article is printed as normal text
+\DeclareFieldFormat[article]{volume}{\textbf{#1}\addcolon\space} % makes volume of journal bold and adds colon
+\DeclareFieldFormat{pages}{#1} % removes pagination (p./pp.) before page numbers
+
+% the footmisc package with para parameter will add footnotes continuously as opposed to in a list format
+% \usepackage[para]{footmisc}
+\usepackage[flushmargin]{footmisc}
+
+% The following line indents the second line of a footnote in case it wraps multiple lines
+\makeatletter
+\renewcommand\@makefntext[1]{\leftskip=2em\hskip-2em\@makefnmark#1}
+\makeatother
 
 % new command \sjcitep prints footnote citation above punctuation
 \newlength{\spc} % declare a variable to save spacing value
