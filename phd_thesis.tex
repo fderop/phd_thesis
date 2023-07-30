@@ -1,9 +1,10 @@
-\documentclass[a4paper,11pt,twoside]{book}
+\documentclass[a4paper,11pt,twoside,openright]{book}
 
 %%% preamble
 \input{./tex/preamble.tex}
 
 \begin{document}
+
 
 %%% frontmatter
 \frontmatter
@@ -22,11 +23,17 @@
 \input{./content/chapter_2_design.tex}
 \input{./content/chapter_3_benchmark.tex}
 \input{./content/chapter_4_application.tex}
+\input{./content/chapter_5_conclusion_future.tex}
 
 %%% backmatter
 \backmatter{}
 
 %--- bibliography
+% below commands don't seem to work
+\renewcommand{\mkbibnamefirst}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnameprefix}[1]{\textsc{#1}} % prints author names as small caps
+\renewcommand{\mkbibnameaffix}[1]{\textsc{#1}} % prints author names as small caps
 \printbibliography{}
 
 \end{document}
