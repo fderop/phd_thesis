@@ -27,6 +27,7 @@
 
 %--- fonts
 \usepackage[T1]{fontenc}
+\usepackage{textgreek}
 \usepackage{charter} % for text
 \usepackage[charter]{mathdesign} % for mathematics
 \usepackage{sectsty} % use a different font for headings
@@ -49,13 +50,14 @@
 {\cftsubsecfont}
 
 %--- typesetting
-\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10, verbose=silent]{microtype}
 % activate={true,nocompatibility} - activate protrusion and expansion
 % final - enable microtype; use "draft" to disable
 % tracking=true, kerning=true, spacing=true - activate these techniques
 % factor=1100 - add 10% to the protrusion amount (default is 1000)
 % stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
 \microtypecontext{spacing=nonfrench}
+
 
 \SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
 {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
@@ -103,7 +105,7 @@
 \usepackage{caption}
 \usepackage{wrapfig} % for wrapping figures inside text
 \setlength{\abovecaptionskip}{7pt} % skip height after caption
-\renewcommand{\figurename}{Figure.}
+\renewcommand{\figurename}{Figure}
 
 % dummy image
 \newcommand{\dummyfig}[1]{
@@ -127,7 +129,7 @@
 	maxcitenames=3,
 	maxbibnames=100,
 	block=none,
-	% backend=bibtex,
+	backend=bibtex,
 	giveninits=true]{biblatex}
 
 \bibliography{tex/references}
@@ -150,6 +152,9 @@
 % \usepackage[para]{footmisc}
 \usepackage[flushmargin]{footmisc}
 
+
+
+
 % The following line indents the second line of a footnote in case it wraps multiple lines
 \makeatletter
 \renewcommand\@makefntext[1]{\leftskip=2em\hskip-2em\@makefnmark#1}
@@ -170,6 +175,10 @@
 	#1% print the optional argument
 	\hspace*{\spc}% print an additional negative spacing stored in \spc after #1
 	\supershortnoteciteregular{#2}}% print (cite) the mandatory argument
+
+% Double columns for footnotes
+% \usepackage{dblfnote}
+% \DFNalwaysdouble % This command forces two columns
 
 %--- functionalities
 \usepackage{lipsum}
