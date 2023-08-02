@@ -103,10 +103,10 @@
 %--- graphics and images
 \usepackage{graphicx}
 \graphicspath{ {./im/} }
-\usepackage{caption}
+\usepackage[font=small]{caption}
+\captionsetup[figure]{name={fig.},labelsep=period}
 \usepackage{wrapfig} % for wrapping figures inside text
 \setlength{\abovecaptionskip}{7pt} % skip height after caption
-\renewcommand{\figurename}{Figure}
 
 % dummy image
 \newcommand{\dummyfig}[1]{
