@@ -1,0 +1,88 @@
+%% Creator: Inkscape 1.0.1 (3bc2e813f5, 2020-09-07), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'indrop_splitpoolv2.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{727.53117118bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.28128679)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{indrop_splitpoolv2.pdf}}%
+    \put(0.32954748,0.17313217){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Pool\end{tabular}}}}%
+    \put(0.69820553,0.17259426){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Pool\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{indrop_splitpoolv2.pdf}}%
+    \put(0.76637991,0.00000001){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}AAAAA\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{indrop_splitpoolv2.pdf}}%
+    \put(0.23274238,0.04784754){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Isotherm. Amp.\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{indrop_splitpoolv2.pdf}}%
+    \put(0.76190811,0.26985162){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}384 x 384 unique\\barcode combinations\end{tabular}}}}%
+    \put(0.41597565,0.26985162){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}384 unique \\barcodes\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{indrop_splitpoolv2.pdf}}%
+    \put(0.04982754,0.00450737){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}PCR\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{indrop_splitpoolv2.pdf}}%
+    \put(0.43966473,0.00490707){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}BC1\end{tabular}}}}%
+    \put(0.39630941,0.00490707){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}PCR\end{tabular}}}}%
+    \put(0.47996138,0.00471694){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Ad\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{indrop_splitpoolv2.pdf}}%
+    \put(0.97598239,0.06405969){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Poly-T\end{tabular}}}}%
+    \put(0.80996922,0.06432428){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}BC1\end{tabular}}}}%
+    \put(0.88056699,0.06432428){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}BC2\end{tabular}}}}%
+    \put(0.84906575,0.06405969){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Ad\end{tabular}}}}%
+    \put(0.77166928,0.06432428){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}PCR\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{indrop_splitpoolv2.pdf}}%
+    \put(0.91561014,0.08195233){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}NNN\end{tabular}}}}%
+    \put(0.7308662,0.00000001){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}NNN\end{tabular}}}}%
+    \put(0.92139328,0.0645227){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}UMI\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{indrop_splitpoolv2.pdf}}%
+    \put(0.60198821,0.04784754){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Isotherm. Amp.\end{tabular}}}}%
+    \put(0.14095892,0.18253899){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Split\\x 384\end{tabular}}}}%
+    \put(0.53770437,0.18253899){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Split\\x 384\end{tabular}}}}%
+    \put(0.00515441,0.26985162){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Unbarcoded\\beads\end{tabular}}}}%
+  \end{picture}%
+\endgroup%
