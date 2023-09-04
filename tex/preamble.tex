@@ -43,6 +43,17 @@
 \newcommand\thefontsize{The current font size is: \f@size pt}
 \makeatother
 
+
+% calculate difference between xheight and ascenderheight
+% \usepackage{calc}
+% \newlength{\xheight}
+% \newlength{\ascenderheight}
+% \newlength{\xascenderdiff}
+
+% \settoheight{\xheight}{x} % Measure the height of 'x'
+% \settoheight{\ascenderheight}{b} % Measure the height of 'b'
+% \setlength{\xascenderdiff}{\ascenderheight - \xheight} % Calculate the difference
+
 \usepackage{tocloft} % we use tocloft to change the font in the toc
 \renewcommand{\cfttoctitlefont} % ToC title
 {\usefont{T1}{qhv}{b}{n}\selectfont\huge}
@@ -58,6 +69,8 @@
 {\cftsecfont}
 \renewcommand{\cftsubsecpagefont} % subsection page numbers
 {\cftsubsecfont}
+
+\usepackage{hyphenat} % to disable hyphenation in titles
 
 %--- typesetting
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10, verbose=silent]{microtype}
@@ -107,6 +120,11 @@
 \titleformat{\chapter}[display]
 {\usefont{T1}{qhv}{b}{n}\huge\bfseries}{Chapter \thechapter}
 {1em}{\huge}[\vskip8pt{\titlerule[1.5pt]}]
+
+% \titleformat{\chapter}[block]
+% {\usefont{T1}{qhv}{b}{n}\huge\bfseries}{Chapter \thechapter.}{1em}{\huge}
+% [\vskip8pt{\titlerule[1.5pt]}]
+% \titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
 %--- graphics and images
 \usepackage{graphicx}
@@ -200,3 +218,11 @@
 %--- functionalities
 \usepackage{lipsum}
 \usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pdfpages}
+
+% insert a blank page
+\newcommand{\blankpage}{
+    \null
+    \thispagestyle{empty}
+    \newpage
+}

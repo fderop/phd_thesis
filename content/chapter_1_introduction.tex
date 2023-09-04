@@ -1,10 +1,10 @@
-\chapter{The Accessible Genome at Single-Cell Resolution}
+\chapter{\nohyphens{The Accessible Genome at Single-Cell Resolution}}
 This introductory chapter will attempt to build the foundation for the explorations that follow by providing a historical overview of chromatin accessibility based on historical accounts\sjcitep[,]{slackConradHalWaddington2002, olinsChromatinHistoryOur2003, cobbWhoDiscoveredMessenger2015, deichmannChromatinItsHistory2015, deichmannEpigeneticsOriginsEvolution2016, lis50YearHistory2019, roeder50YearsEukaryotic2019} and frame it within the ongoing research on decoding gene regulation. Then, we frame the state of the art of single-cell chromatin sequencing technologies when I began this work, and delve into the capabilities and limitations of several breakthrough techniques. This context serves to highlight the importance of the subject matter, and to motivate our subsequent discussions and findings.
 
 \section{Old masters}
 % \begin{wrapfigure}[9]{R}{0.15\textwidth}
 % 	\centering
-% 	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{\includegraphics[width=0.15\textwidth]{karlernstvonbaer.png}}%
+% 	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{\includegraphics[width=0.15\textwidth]{karlernstvonbaer.png}}%
 % 	\caption*{K. Baer}
 % \end{wrapfigure}
 
@@ -18,17 +18,17 @@ The word "cell" was first used in 1665 by Robert Hooke to describe the hexagonal
 
 \begin{wrapfigure}[9]{r}{0.25\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.25\textwidth]{spemannmangold.png}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.25\textwidth]{spemannmangold.png}}
 	% \includegraphics[width=0.20\textwidth]{watsoncrickfranklin.png}
 	\caption[Spemann-Mangold organizer transplant]{Spemann-Mangold organizer transplantation. Reprod. from \notefullcite{tagarelliHansSpemannOne2004}}
 	\label{fig:spemannmangold}
 \end{wrapfigure}
 
-By the early 20th century, several groups were systematically studying these concepts. In 1924, Hans Spemann, together with his student Hilde Mangold, discovered that transplantation of the dorsal lip from one \textit{Triturus} (newt) embryo to the ventral side of another embryo would induce the formation of a ventrally conjoined twin (\autoref{fig:spemannmangold})\sjcitep[.]{spemannUberInduktionEmbryonenanlagen1924} Importantly, the pair showed that the conjoined secondary embryo primarily consisted of tissue from the \textit{host}, indicating that this transplanted tissue (later named the "organizer field") merely instructed its surroundings to change developmental fate. Multiple labs raced to purify and characterise the compound responsible for these processes in an "organizer gold rush"\sjcitep[,]{slackConradHalWaddington2002} but without success. We now know that the compounds responsible for this process are small, secreted molecules termed "growth factors", and are capable of steering a cell's fate when present even at only nanogram quantities - far below the detection limit of that era's technologies.
+By the early 20th century, several groups were systematically studying these concepts. In 1924, Hans Spemann, together with his student Hilde Mangold, discovered that transplantation of the dorsal lip from one \textit{Triturus} (newt) embryo to the ventral side of another embryo would induce the formation of a ventrally conjoined twin (\autoref{fig:spemannmangold})\sjcitep[.]{spemannUberInduktionEmbryonenanlagen1924} Importantly, the pair showed that the conjoined secondary embryo primarily consisted of tissue from the \textit{host}, indicating that this transplanted tissue, later named the "organizer field", merely instructed its surroundings to change developmental fate. Multiple labs raced to purify and characterise the compound responsible for these processes in an "organizer gold rush"\sjcitep[,]{slackConradHalWaddington2002} but without success. We now know that the compounds responsible for this process are small, secreted molecules termed "growth factors", and are capable of steering a cell's fate when present even at only nanogram quantities - far below the detection limit of that era's technologies.
 
 \begin{wrapfigure}[9]{L}{0.15\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}}
 	% \includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}
 	\caption*{T. Morgan}
 \end{wrapfigure}
@@ -37,7 +37,7 @@ Around that time, the concept of physical store and transfer of genetic informat
 
 \begin{wrapfigure}[8]{r}{0.15\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{conrad_waddington.png}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{conrad_waddington.png}}
 	\caption*{C. Waddington}
 \end{wrapfigure}
 
@@ -53,14 +53,14 @@ Together, Morgan's findings inaugurated the 20\textsuperscript{th} century's era
 
 \begin{wrapfigure}[11]{r}{0.20\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.20\textwidth]{watsoncrickfranklin.png}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.20\textwidth]{watsoncrickfranklin.png}}
 	% \includegraphics[width=0.20\textwidth]{watsoncrickfranklin.png}
 	\caption[DNA X-ray crystallography]{DNA X-ray crystallography. Reprod. from \notefullcite{watsonMolecularStructureNucleic1953}.}
 	\label{fig:watsoncrickfranklin}
 \end{wrapfigure}
 
 It must be noted that the "genes" Morgan and Waddington addressed were vaguely-defined, almost virtual units of heredity, as their exact physical composition was unknown throughout their early research.\footnotetextwithoutmarker{\superfullcite{watsonMolecularStructureNucleic1953}J. D. Watson and F. H. C. Crick. Nature, \textbf{171}: 737 – 738, 1953}\hspace{-1pt} % this stupid line is here because this reference is first cited in the X ray crystallography wrapfigure environment. As a result, it gets a citation number that predates the second Watson & Crick 1953 paper by a few citations. This is a problem that I think cannot be avoided. What is more worrying is that as this reference is first cited in the wrapfigure environment, and not on the page environment, it does not show up in the footnotes of this page, but goes missing completely. The best solution I could come up with was to reconstruct the reference in the footnotes manually.
-In fact, the storage of genetic information was attributed to proteins at the time, as they made up a large portion of the chromosomal dry mass and were deemed far more complex than nucleic acids. The nucleic acids (DNA) found in chromosomes were thought to be only of structural importance akin to the highly repetitive polymers found in cell walls and plant fibers. This notion was overturned in 1944, when Avery, MacLeod and McCarty demonstrated that it was DNA, and not proteins, purified from a non-virulent, rough (R) strain of bacteria that could "transform" a virulent, smooth (S) strain to the R strain\sjcitep[.]{griffithSignificancePneumococcalTypes1928,averyStudiesChemicalNature1944}
+In fact, the storage of genetic information was attributed to proteins at the time, as they made up a large portion of the chromosomal dry mass and were deemed far more complex than nucleic acids. The nucleic acids found in chromosomes were thought to be only of structural importance akin to the highly repetitive polymers found in cell walls and plant fibers. This notion was overturned in 1944, when Avery, MacLeod and McCarty demonstrated that it was DNA, and not proteins, purified from a non-virulent, rough (R) strain of bacteria that could "transform" a virulent, smooth (S) strain to the R strain\sjcitep[.]{griffithSignificancePneumococcalTypes1928,averyStudiesChemicalNature1944}
 
 The Avery-MacLeod-McCarty experiment formally cemented DNA as the genetic storage of information, but another decade would pass before the exact molecular mechanism through which DNA could contain information was discovered. This breakthrough came when Watson, Crick and Franklin resolved the double-helix structure of DNA using X-ray crystallography (\autoref{fig:watsoncrickfranklin})\sjcitep[,]{watsonMolecularStructureNucleic1953} and for the first time suggested that \textit{"the precise sequence of the bases is the code which carries the genetical information"}\sjcitep[.]{,watsonGeneticalImplicationsStructure1953} It had thus become clear that life stores information in the nucleotide sequence of DNA, and the scientific community began to prepare experiments that would leverage this concept.
 
@@ -79,7 +79,7 @@ Earlier that month, Jacob, together with Sidney Brenner, had proposed the existe
 
 \begin{wrapfigure}[9]{r}{0.15\textwidth}
 	\centering
-	% \raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{walterfiers.png}}
+	% \raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{walterfiers.png}}
 	\includegraphics[width=0.15\textwidth]{walterfiers.png}
 	\caption*{W. Fiers}
 \end{wrapfigure}
@@ -88,7 +88,7 @@ A "backward" experiment in which the sequence of a given DNA or RNA molecule cou
 
 \begin{wrapfigure}[10]{r}{0.20\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.20\textwidth]{sangersequencing.png}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.20\textwidth]{sangersequencing.png}}
 	% \includegraphics[width=0.20\textwidth]{sangersequencing.png}
 	\caption[Sanger sequencing]{Sanger sequencing. Reprod. from \notefullcite{sangerDNASequencingChainterminating1977}.}
 	\label{fig:sangersequencing}
@@ -115,15 +115,14 @@ In hindsight, several pieces of the gene regulatory puzzle had now been discover
 	\item The resulting proteins are capable of influencing transcription and thus the behaviour of the cell.
 \end{enumerate}
 
-However, mechanistic and molecular insights in \textit{how} genes might be regulated was still sparse.
 
 \begin{wrapfigure}[9]{R}{0.15\textwidth}
 	\centering
-	\raisebox{0pt}[\dimexpr\height-1\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{robert_roeder.jpg}}
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{robert_roeder.jpg}}
 	\caption*{R. Roeder}
 \end{wrapfigure}
 
-Several breakthroughs regarding this rather visionary idea came from the lab of Robert Roeder. Roeder, who as a student had purified the polymerase enzymes that catalyze the transcription of messenger RNA from DNA in 1969\sjcitep[,]{roederMultipleFormsDNAdependent1969} showed that purified RNA polymerases could only initiate the transcription of DNA templates in the presence of uncharacterised cellular protein extracts. This finding confirmed earlier ideas that additional, then-unknown factors were necessary to initiate the transcription reaction\sjcitep[.]{ngTranscriptionClonedXenopus1979} Several such initiation factors were purified and characterised within the next year\sjcitep[,]{matsuiMultipleFactorsAre1980} and it soon transpired that a large number of different factors are necessary for transcription to occur.
+However, mechanistic and molecular insights in \textit{how} genes might be regulated was still sparse. Several breakthroughs regarding this rather visionary idea came from the lab of Robert Roeder. Roeder, who as a student had purified the polymerase enzymes that catalyze the transcription of messenger RNA from DNA in 1969\sjcitep[,]{roederMultipleFormsDNAdependent1969} showed that purified RNA polymerases could only initiate the transcription of DNA templates in the presence of uncharacterised cellular protein extracts. This finding confirmed earlier ideas that additional, then-unknown factors were necessary to initiate the transcription reaction\sjcitep[.]{ngTranscriptionClonedXenopus1979} Several such initiation factors were purified and characterised within the next year\sjcitep[,]{matsuiMultipleFactorsAre1980} and it soon transpired that a large number of different factors are necessary for transcription to occur.
 Parallel research in Roeder's lab led to the discovery of a protein which induced expression of the 5S ribosomal RNA gene in \textit{Xenopus} (clawed frog) egg cells. This factor, later named Transcription Factor III (TFIIIa), was the first protein shown to initiate transcription of a \textit{specific} gene in eukaryotes, and not just initiate transcription in general. Roeder and his student Takashi Matsui suggested that TFIIIa might \textit{"recognize a unique region of DNA"}, a hypothesis which was explored and demonstrated soon after\sjcitep[.]{engelkeSpecificInteractionPurified1980} However, as part of the ribosomal body, 5S rRNA plays a role in cellular protein synthesis, and is ubiquitously present in all cells across all known organisms. Transcription factors involved in more specialised processes were identified and characterised relatively quickly: examples include the glucocorticoid receptor \textit{Gr}\sjcitep[,]{payvarPurifiedGlucocorticoidReceptors1981} \textit{Sp1}\sjcitep[,]{dynanIsolationTranscriptionFactors1983} and \textit{Gal4}\sjcitep[,]{bramSpecificProteinBinding1985} important transcription factors which are still under scrutiny to this day. In fact, it became clear that some of these factors were extremely powerful: their ectopic expression could convert one cell type to another\sjcitep[,]{davisExpressionSingleTransfected1987} and later specific combinations were found to even revert fully differentiated skin cells back to stem cells\sjcitep[.]{takahashiInductionPluripotentStem2006} By this time, the scientific realised that the factors responsible for the organizing potential of the Spemann-Mangold organizer were transcription factors, and several of these factors were identified shortly after\sjcitep[.]{choMolecularNatureSpemann1991, lambNeuralInductionSecreted1993}
 
 We now understand that fine-tuned gene regulation explains how one cell can give rise to many, that this program is embedded in our genomes through a "regulatory code", and that aberrant gene regulation can explain many of our age's most important diseases. Much progress has been made in unraveling the mechanics of gene regulation. We have models of gene transcription and translation, cell signaling, the roles of several classes of proteins, and so on. Now, the objective has shifted from elucidating the fundamental processes that govern gene regulation to reconstructing the specific gene regulatory networks that underly life. Full and deterministic models which can exhaustively answer our core questions remain elusive, almost unimaginable.
@@ -140,77 +139,70 @@ A second wave of relief: NGS
 	\item bulk ATAC-seq
 \end{itemize}
 
-% !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
+% % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
 
-further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
-toadd: salmen et al, spindrop --> pico injection
-\section{Single-cell sequencing technologies}\label{sect:single_cell_sequencing_tech}
-Cell type diversity underlies \\
-Single-cell sequencing was \supershortnotecite{noauthorslistedMethodYear20132014}
+% further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
+% toadd: salmen et al, spindrop --> pico injection
+% \section{Single-cell sequencing technologies}\label{sect:single_cell_sequencing_tech}
+% Cell type diversity underlies \\
+% Single-cell sequencing was \supershortnotecite{noauthorslistedMethodYear20132014}
 
-\begin{itemize}
-	\item NGS sequencing by itself provided a lot of relief, but not quite
-\end{itemize}
+% \begin{itemize}
+% 	\item NGS sequencing by itself provided a lot of relief, but not quite
+% \end{itemize}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Generation 0 - The early years}
-The idea of extracting material from single cells is not new.
-\begin{itemize}
-	\item Not a new idea
-	\item Eberwine
-\end{itemize}
+% \section{Generation 0 - The early years}
+% The idea of extracting material from single cells is not new.
+% \begin{itemize}
+% 	\item Not a new idea
+% 	\item Eberwine
+% \end{itemize}
 
-By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
+% By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Generation 1 - Small steps}
-\begin{itemize}
-	\item Method of the year 2013
-	\item First generation technologies such as CEL-seq, SMART-seq, inDrop, Drop-seq
-\end{itemize}
+% \section{Generation 1 - Small steps}
+% \begin{itemize}
+% 	\item Method of the year 2013
+% 	\item First generation technologies such as CEL-seq, SMART-seq, inDrop, Drop-seq
+% \end{itemize}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Generation 2 - Learning how to run}
-\begin{itemize}
-	\item Wide spread of 10x
-	\item Addition of ATAC-seq and possibly others
-\end{itemize}
+% \section{Generation 2 - Learning how to run}
+% \begin{itemize}
+% 	\item Wide spread of 10x
+% 	\item Addition of ATAC-seq and possibly others
+% \end{itemize}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Generation 3 - Large leaps}
-\begin{itemize}
-	\item Super large scale sequencing projects
-	\item Multiomics techniques
-	\item Method of the year 2019
-\end{itemize}
+% \section{Generation 3 - Large leaps}
+% \begin{itemize}
+% 	\item Super large scale sequencing projects
+% 	\item Multiomics techniques
+% 	\item Method of the year 2019
+% \end{itemize}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Off into space}
-\begin{itemize}
-	\item Similar evolutions as SC techs themselves
-	\item Method of the year
-\end{itemize}
+% \section{Off into space}
+% \begin{itemize}
+% 	\item Similar evolutions as SC techs themselves
+% 	\item Method of the year
+% \end{itemize}
 
-\lipsum[1]
+% \lipsum[1]
 
-\section{Computational models}
-\begin{itemize}
-	\item how the sequencing works
-	\item count matrices in both rna and ATAC
-	\item multiome added value examples
-	\item using genomic information to assign samples
-	\item atac: extra challenge
-	\item AI models
-\end{itemize}
-
-%% This part makes a figure
-\begin{figure*}[h]
-	\dummyfig{Dummy Figure Label}
-	\caption{Dummy figure caption}
-	\label{fig:dummy}
-\end{figure*}
+% \section{Computational models}
+% \begin{itemize}
+% 	\item how the sequencing works
+% 	\item count matrices in both rna and ATAC
+% 	\item multiome added value examples
+% 	\item using genomic information to assign samples
+% 	\item atac: extra challenge
+% 	\item AI models
+% \end{itemize}

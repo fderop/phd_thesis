@@ -1,11 +1,37 @@
+\pagebreak
+\checkoddpage
+\ifodd\thepage
+    \null
+    \newpage
+\fi
+
+\setcounter{chapter}{2} % Manually set the chapter counter to 1
+\setcounter{figure}{0}  % Reset the figure counter to 0
+\thispagestyle{empty}
+
+\begin{minipage}{\textwidth}
+    \vspace{2.25cm}
+    {%
+    \centering
+    \includegraphics[width=\textwidth]{im/2021_elife_fixed.pdf}
+    \captionsetup{width=0.80\linewidth}
+    \vspace{0.5cm}
+    \captionof{figure}[Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads"]{Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads" \notefullcite{deropHydropEnablesDropletbased2022}.}
+    % \label{fig:sequencing_diagram_for_second_bead_design}
+    }%
+\end{minipage}
+
+\setcounter{chapter}{1} % Manually set the chapter counter to 1
+
 \chapter{Design and Development of HyDrop-ATAC and HyDrop-RNA}
+\setcounter{figure}{1}  % Reset the figure counter to 0
 In this chapter, we will walk through the design and development of HyDrop, our cost-efficient and transparent single-cell ATAC (and single-cell RNA) sequencing platform. We published this work in eLife in 2022\sjcitep[.]{deropHydropEnablesDropletbased2022}
 
 \section{Motivation}
 When I began this research as a master student in 2018, single-cell sequencing methods had already broken through as established research tools, but were still expensive and complicated enough to prohibit them being considered routine experiments. At the time, non-commercial single-cell RNA sequencing methods were either low in throughput\sjcitep[,]{islamCharacterizationSinglecellTranscriptional2011, ramskoldFulllengthMRNASeqSinglecell2012, hashimshonyCELSeqSinglecellRNASeq2012, sasagawaQuartzSeqHighlyReproducible2013} or low in sensitivity\sjcitep[,]{macoskoHighlyParallelGenomewide2015, gierahnSeqWellPortableLowcost2017, caoComprehensiveSinglecellTranscriptional2017,kleinDropletBarcodingSinglecell2015} (see also \autoref{sect:single_cell_sequencing_tech}) and reserved for use by specialised labs. The majority of single-cell experiments were performed using a commercial solution offered by 10x Genomics, which packaged the working principles of inDrop's droplet microfluidic scRNA-seq protocol\supershortnotecite{kleinDropletBarcodingSinglecell2015} into a user-friendly kit \& benchtop device combination. The 10x kit provided a reliable way to generate high-quality single-cell RNA-seq libraries\sjcitep[]{mereuBenchmarkingSinglecellRNAsequencing2020} but costed in the order of \euro{\num{10000}} per 8 samples, limiting exploratory use. However, its sensitivity - which was around 10 times higher than inDrop and Drop-seq - demonstrated that the sensitivity ceiling of droplet microfluidics had not been reached by open-source methods. Moreover, a droplet-based single-cell ATAC sequencing method was not yet available to the public, again limiting researchers to either low-sensitivity\supershortnotecite{cusanovichMultiplexSinglecellProfiling2015} or low-throughput\supershortnotecite{buenrostroSinglecellChromatinAccessibility2015,chenRapidRobustMethod2018} methods. We wanted to tackle both challenges by developing an open-source platform for droplet-based single-cell sequencing, aiming to not only reduce the costs of single-cell sequencing, but also provide a platform for further technological development. Our initial approach was simple, but naive: we began by taking the detailed inDrop protocols that had been recently published\sjcitep[,]{zilionisSinglecellBarcodingSequencing2017} and implementing several differences that we thought would improve performance, and use the same concepts to build a single-cell version of ATAC-seq. Both of these goals proved more complicated than we expected.
 
 \section{Initial design choices}
-Besides speed, throughput and reduction in reagent cost, droplet microfluidics provide another key advantage: when cells are physically isolated from one another in droplets, they can undergo chemical reactions completely separately. We can thus fully lyse each cell akin to what happens in a pure microwell-based experiment (a drawback is that cells cannot be easily washed or accessed anymore after they are encapsulated, precluding more complex protocols). The next step in the single-cell indexing process is the introduction of the cell barcode oligonucleotide. inDrop and Drop-seq addressed this problem in two different ways: Drop-seq co-encapsulated the cell together with a hard, resin bead of which the surface carried the barcode oligonucleotides. inDrop opted for a polyacrylamide hydrogel which carried and released the barcoded primer using a UV-photocleavable linker.
+Besides speed, throughput and reduction in reagent cost, droplet microfluidics provide another key advantage: when cells are physically isolated from one another in droplets, we can fully lyse each cell akin to what happens in a microwell-based experiment. A drawback is that cells cannot be easily washed or accessed anymore after once encapsulated, precluding more complex protocols. The next step in the single-cell indexing process is the introduction of the cell barcode oligonucleotide. inDrop and Drop-seq addressed this problem in two different ways: Drop-seq co-encapsulated the cell together with a hard, resin bead of which the surface carried the barcode oligonucleotides. inDrop opted for a polyacrylamide hydrogel which carried and released the barcoded primer using a UV-photocleavable linker.
 
 \begin{figure}[h]
     \centering
@@ -267,9 +293,6 @@ then the delley protocol
 % \item january 25 2021: chris shows bap output of hydrop-atac -> quite an enrichment
 
 % \item january 26 2021: "both runs finished well today. we tried 6 uM vs 12 uM beads, 55C 15 min with shaking, Phusion/BST3/ETSSB polymerases"
-
-
-
 
 
 Still, there was a high level of background noise barcodes. We began to question whether the barcode sequences on our beads were pure. If a supposedly uniquely barcoded bead contained a distribution of different barcodes, none of our post-hoc cell barcodes represented a cell, but rather a mixture of transcripts/fragments originating from many cells. Importantly, if 20\% of the 
