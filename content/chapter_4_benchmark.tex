@@ -60,11 +60,11 @@ At this point, [x] institutes were on board with our benchmark ([list]), and gen
     \includegraphics[width=0.85\textwidth,height=5cm]{example-image-a}
     \captionsetup{width=0.80\linewidth}
     \captionof{figure}[scATAC-seq benchmark study final datasets]{scATAC-seq benchmark study final datasets}
-    \label{fig:scatac_seq_benchmark_study_design}
+    \label{fig:scatac_seq_benchmark_study_final_datasets}
     }%
 
 \section{Analysis}
-Due to the large scale and collaborative nature of the project, sequencing data trickled in on an unpredictable basis. We quickly realised that data stemming from the 8 different techniques strongly differed in format. The 10x Genomics format was the most straightforward to work with: two paired-end genomic reads, a sample index read, and a 16 bp barcode read with a whitelist containing ~2.7M entries. HyDrop followed a similar scheme, with index and barcode read switched in position, and a barcode length of 50 bp. Bio-Rad and s3-ATAC used a very different logic: [] (\autoref{fig:library_types_and_sequencing_schematics}).
+We quickly realised that data stemming from the 8 different techniques strongly differed in format. The 10x Genomics format was the most straightforward to work with: two paired-end genomic reads, a sample index read, and a 16 bp barcode read with a whitelist containing ~2.7M entries. HyDrop followed a similar scheme, with index and barcode read switched in position, and a barcode length of 50 bp. Bio-Rad and s3-ATAC used a very different logic: [] (\autoref{fig:library_types_and_sequencing_schematics}).
 
     {%
     \centering
@@ -74,7 +74,35 @@ Due to the large scale and collaborative nature of the project, sequencing data 
     \label{fig:library_types_and_sequencing_schematics}
     }%
 
-Moreover, there was no consensus to how this data should be pre-processed, and how the aligned single-cell chromatin accessibility profiles should be further analysed. [short description of the different pipelines used, maybe keep low-level here and expand on cistopic/snapatac/archr,... later and show that cistopic consistently performs well]. We faced a similar problem when developing HyDrop: despite the similarities between 10x Genomics' scATAC-seq and HyDrop, we could not easily use 10x's proprietary software (CellRanger) to align our sequencing data to a reference genome since several internal parameters (such as read lengths and barcode whitelist) were hard-coded to suit 10x data. To solve this problem, Gert Hulselmans and Christopher Flerin developed a NextFlow [di tomasso et al] pre-processing pipeline capable of aligning HyDrop data.
+Moreover, there was no consensus to how this data should be pre-processed, and how the aligned single-cell chromatin accessibility profiles should be further analysed. [short description of the different pipelines used, maybe keep low-level here and expand on cistopic/snapatac/archr,... later and show that cistopic consistently performs well]. We faced a similar problem when developing HyDrop: despite the similarities between 10x Genomics' scATAC-seq and HyDrop, we could not easily use 10x's proprietary software (CellRanger) to align our sequencing data to a reference genome since several internal parameters (such as read lengths and barcode whitelist) were hard-coded to suit 10x data. To solve this problem, Gert Hulselmans, Christopher Flerin and I developed a NextFlow [di tomasso et al] pre-processing pipeline capable of aligning sequencing data agnostic of sequencing format (\autoref{fig:pumatac_workflow}).
+
+    {%
+    \centering
+    \includegraphics[width=5cm,height=5cm]{example-image-a}
+    \captionsetup{width=0.80\linewidth}
+    \captionof{figure}[PUMATAC steps]{PUMATAC steps}
+    \label{fig:pumatac_steps}
+    }%
+
+[explanation of how PUMATAC works]
+
+The use of NextFlow provides several advantages over a simple chain of `bash` commands:
+
+\begin{enumerate}[noitemsep]
+    \item Intelligent interruption procedures: per step in the pipeline, an [md5] hash of the sample names, input files, output files and parameters is computed. If the workflow is interrupted and re-started, these hashes are re-computed. If no change in the hash is detected, no conditions have changed, and the pipeline can resume where it left off. If a parameter is changed, the hash of relevant steps will change, and the pipeline will resume there.
+    \item Management of parallel processing: samples and steps that are not dependent on each other can be scheduled independently from each other's completion status, facilitating co-processing of small and large datasets. Each step in the pipeline has definitions for maximum CPU and memory usage, and available resources are utilised maximally.
+    \item Built-in support for software containers (docker, singularity), improving environment-independent compatibility.
+\end{enumerate}
+
+Due to the large scale and collaborative nature of the project, sequencing data trickled in on an unpredictable basis.
+
+    {%
+    \centering
+    \includegraphics[width=5cm,height=5cm]{example-image-a}
+    \captionsetup{width=0.80\linewidth}
+    \captionof{figure}[Data analysis workflow]{Data analysis workflow}
+    \label{fig:data_analysis_workflow}
+    }%
 
 \section{Conclusions}
 \lipsum[1]
