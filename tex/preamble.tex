@@ -103,7 +103,14 @@
 \usepackage{enumitem}
 \setlist[enumerate]{itemsep=0pt}
 
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}{\end{enumerate}}
+
 \usepackage[round-mode=places,round-precision=2,group-separator={\ },output-decimal-marker={.},round-pad=false]{siunitx}
+\usepackage[super]{nth}
 
 %--- headers
 \usepackage{titlesec} % www.ctan.org/tex-archive/macros/latex/contrib/titlesec/titlesec.pdf
