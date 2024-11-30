@@ -57,52 +57,33 @@ From the onset of the project, we wanted to replace inDrop's photocleavable olig
 \begin{enumerate}
 	\item We designed and manufactured a microfluidic chip for the generation of the stable acrylamide monomer emulsions needed to produce polyacrylamide hydrogel beads. We characterised the relationship between oil and water flow rates on this chip design, and predicted flow rates that would generate \SI{50}{\micro\metre} diameter droplets with minimal size variance using iterative linear model optimisation (\autoref{fig:bead_diameter_optimisation}).
 
-		{%
-			\centering
-			\fontsize{8pt}{11pt}\selectfont
-			\def\svgwidth{0.85\textwidth}
-			\input{im/indrop_model.pdf_tex}
-			\captionsetup{width=0.80\linewidth}
-			\captionof{figure}[Bead diameter optimisation]{Bead diameter optimisation strategy. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
-			\label{fig:bead_diameter_optimisation}
-		}%
+		\svgfigure{im/indrop_model.pdf_tex}
+				{Bead diameter optimisation}
+				{Bead diameter optimisation strategy. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
+				{fig:bead_diameter_optimisation}
 
 	The resulting beads were indeed of a stable \SI{53}{\micro\metre} diameter with a standard deviation of \SI{5}{\micro\metre}.
 
 	\item We barcoded the resulting \SI{53}{\micro\metre} polyacrylamide hydrogel beads using inDrop's split-pool protocol, producing 384 \texttimes 384 possible cell barcodes across all beads (\autoref{fig:preliminary_barcoding_split_pool_design}). Importantly, the photocleavable linker was replaced by a disulfide bond as mentioned previously.
 
-		      {%
-			      \centering
-			      \fontsize{8pt}{11pt}\selectfont
-			      \def\svgwidth{0.85\textwidth} % use textwidth here, we are in an enum environment -- otherwise fig would be too small.
-			      \input{im/indrop_splitpoolv2.pdf_tex}
-			      \captionsetup{width=0.80\linewidth}
-			      \captionof{figure}[Preliminary barcoding split-pool design]{Preliminary barcoding split-pool design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
-			      \label{fig:preliminary_barcoding_split_pool_design}
-		      }%
+		\svgfigure{im/indrop_splitpoolv2.pdf_tex}
+				{Preliminary barcoding split-pool design}
+				{Preliminary barcoding split-pool design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
+				{fig:preliminary_barcoding_split_pool_design}
 
-	      The structure of the resulting barcode sequence was validated using Sanger sequencing and fluorescent probe assays. By design, the cell barcode should be sequenced like using a custom sequencing primer, as detailed in figure \autoref{fig:preliminary_design_sequencing}.
+		The structure of the resulting barcode sequence was validated using Sanger sequencing and fluorescent probe assays. By design, the cell barcode should be sequenced like using a custom sequencing primer, as detailed in figure \autoref{fig:preliminary_design_sequencing}.
 
-	      {%
-	      \centering
-	      \fontsize{10.95pt}{11pt}\selectfont
-	      \includegraphics[width=0.85\textwidth,height=1cm]{example-image-a}
-	      \captionsetup{width=0.80\linewidth}
-	      \captionof{figure}[Sequencing diagram for preliminary scRNA-seq design]{Sequencing diagram for preliminary scRNA-seq design.}
-	      \label{fig:preliminary_design_sequencing}
-	      }%
+		\svgfigure{example-image-a}
+				{Sequencing diagram for preliminary scRNA-seq design}
+				{Sequencing diagram for preliminary scRNA-seq design.}
+				{fig:preliminary_design_sequencing}
 
 	\item We designed a new cell encapsulation microfluidic chip which included several layers of passive filters due to prior experiences with flow-obstrucing dusta particles. Using this updated design, we were able to reliably encapsulate single cells with reagent mixes across several experiments.
 
-		      {%
-			      \centering
-			      \fontsize{8pt}{11pt}\selectfont
-			      \def\svgwidth{0.85\textwidth} % use textwidth here, we are in an enum environment -- otherwise fig would be too small.
-			      \input{im/indrop_chip_zoom.pdf_tex}
-			      \captionsetup{width=0.80\linewidth}
-			      \captionof{figure}[Droplet encapsulation chip design]{Droplet encapsulation chip design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
-			      \label{fig:indrop_chip_zoom}
-		      }%
+		      \svgfigure{im/indrop_chip_zoom.pdf_tex}
+		              {Droplet encapsulation chip design}
+		              {Droplet encapsulation chip design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
+		              {fig:indrop_chip_zoom}
 
 	\item To implement scRNA-seq on our now functional droplet platform, we tested several different cDNA generation and subsequent sequencing library preparation strategies. We ultimately settled on a protocol that incorporated Maxima H Minus reverse transcriptase, KAPA DNA polymerase for amplification of the cDNA, and NEB Next Ultra II FS DNA sequencing library preparation. Sequencing libraries produced using this method returned favourable fragment length distributions measured by Agilent BioAnalyzer.
 \end{enumerate}
@@ -113,20 +94,18 @@ In parallel to our scRNA-seq troubles, our initial scATAC-seq development effort
 
 Out of these two major problems, the barcode sequencing problem was deemed most pressing, as both scRNA-seq and scATAC-seq would depend on ability to assign reads to cells. Realising that the two-read barcode sequencing in tandem with the custom sequencing primer overcomplicated the barcode read sequencing, we decided to redesign the barcode structure (\autoref{fig:sequencing_diagram_for_second_bead_design}).
 
-	{%
-		\centering
-		\fontsize{10.95pt}{11pt}\selectfont
-		\includegraphics[width=0.85\textwidth,height=1cm]{example-image-a}
-		\captionsetup{width=0.80\linewidth}
-		\captionof{figure}[Sequencing diagram for second bead design.]{Sequencing diagram for second bead design.}
-		\label{fig:sequencing_diagram_for_second_bead_design}
-	}%
+	\svgfigure{example-image-a}
+		{Sequencing diagram for second bead design.}
+		{Sequencing diagram for second bead design.}
+		{fig:sequencing_diagram_for_second_bead_design}
 
 % \item December 2019: I am trying runs with TSA and DMSO (?)
 % \item december 2019: i post results for more indrop tsa and dmso -- is this the first runs with the newest bead barcode design? are these the first true sequecing of barcodes? check this.
 % \item january 24 2020: i post tsa/dmso results starsolo
 
-In the updated design, the cell barcode was now read in one go, and did not require the use of a custom sequencing primer. The first sequencing library generated with these beads generated mixed results: on one hand, more than 90\% of the new barcode reads matched our whitelist, but on the other hand, these reads did not aggregate into pure cells in mixed-species experiments: all "cells" contained a mixture of human and mouse reads.
+In the updated design, the cell barcode was now read in one go, and did not require the use of a custom sequencing primer. The first sequencing library made with these beads yielded positive results: more than 90\% of the new barcode reads matched our whitelist. The remaining 10\% could be attributed to incorporation errors during vendor oligonucleotide synthesis, PCR, and sequencing errors.
+
+On the other hand, these reads did not aggregate into pure cells in mixed-species experiments: all "cells" contained a mixture of human and mouse reads.
 
 Figure
 
@@ -183,14 +162,9 @@ Introduction of the dissolvable bead had an unexpected but welcome side-effect: 
 
 Just like our latest batch of scRNA-seq beads, the first batch of 96x96x96 scATAC-seq beads were strongly fluorescent when probed for the "capture oligo" sequence. We performed a first scATAC-seq run on PBMC, which was shallowly sequenced to test the first library generated with the 96x96x96 ATAC bead design. We then generated an additional scATAC-seq library on Drosophila larval brain to assess how the method would handle small input cells. Both of these libraries were sequenced deeply. The aggregate characteristics of both datasets matched expectations for ATAC-seq (\autoref{fig:pbmc_larval_brain}a), but the distribution of reads across cell barcodes seemed random. This can be observed in the barcode-ranking of the number of transcripts "knee" or "elbow" plots did not exhibit the clean cut-off between true cells and background noise barcodes usually observed in 10x Genomics-generated libraries ((\autoref{fig:pbmc_larval_brain}b)). These background noise barcodes were presumed to originate from ambient RNA present in droplets without a cell. After alignment and (admittedly arbitrary) cell filtering, we were not able to discern any different cell types in either the PBMC or the larval brain cells. Similarly to the TSA/DMSO scRNA-seq experiments I had performed earlier, all cells formed a homogeneous mass after dimensionality reduction.
 
-	{%
-		\centering
-		\fontsize{10.95pt}{11pt}\selectfont
-		\includegraphics[width=0.85\textwidth,height=4cm]{example-image-a}
-		\captionsetup{width=0.80\linewidth}
-		\captionof{figure}[3' enrichment and barcode rank plot for PBMC and larval brain scRNA-seq]{3' enrichment (a) and barcode rank plot (b) for PBMC and larval brain scRNA-seq.}
-		\label{fig:pbmc_larval_brain}
-	}%
+	% \svgfigure{sim/figs/ch2_kneeplot.svg}{Barcode rank simulation}{Barcode rank simulation. test}{fig:simulation}
+
+	\svgfigure{example-image-a}{3' enrichment and barcode rank plot for PBMC and larval brain scRNA-seq}{3' enrichment (a) and barcode rank plot (b) for PBMC and larval brain scRNA-seq}{fig:pbmc_larval_brain}
 
 
 % \item april 3 2020: crap tSNE from snapatac/cistopic in R (?), "so there is evidence that we have a serious barcoding issue, my main suspicion is carryover of gel/barcodes from pcr 1 to pcr 2, this would explain the knee plot and lack of clustering, i don't think it's the barcoded beads, there's no way to verify this without doing a couple of qpcrs on one bead, but the barcoding process should be very robust" --> this is usable in the thesis. suresh suggests "Perhaps a way to check this is by performing bio A after the first linear PCR. If there are significant carryover, we should see a significant spike in the trace corresponding to the barcode length."

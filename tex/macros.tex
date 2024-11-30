@@ -1,0 +1,11 @@
+\newcommand{\svgfigure}[4]{%
+    {%
+        \centering
+        \fontsize{8pt}{11pt}\selectfont
+        \def\svgwidth{0.85\textwidth}
+        \input{#1}
+        \captionsetup{width=0.80\linewidth}
+        \captionof{figure}[#2]{#3}
+        \label{#4}
+    }%
+}

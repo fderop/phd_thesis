@@ -1,6 +1,10 @@
 % linewidth is 15.3784 cm
 % x 0.85 = 13.07164
 % fontsize in maintext is 10.95 pt, can be checked with \thefontsize
+
+%%% custom macros
+\input{tex/macros}
+
 %%% packages %%%
 %--- layout
 \usepackage[DIV=14,BCOR=2mm,headinclude=true,footinclude=false]{typearea}
@@ -151,7 +155,8 @@
 	}
 }
 
-\usepackage{svg}
+\usepackage[clean]{svg}
+% \usepackage{inkscape}
 
 %--- citations
 \usepackage{hyperref}
