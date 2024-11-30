@@ -20,7 +20,7 @@
 		\label{fig:article_title_benchmark}
 	}%
 \end{minipage}
-\setcounter{chapter}{3} % Manually reset the chapter counter to 3
+% \setcounter{chapter}{3} % Manually reset the chapter counter to 3
 
 \chapter{Benchmarking the performance of single-cell chromatin accessibility sequencing methods}
 \setcounter{figure}{1}  % Set the figure counter to 1 already to include the first figure
@@ -29,7 +29,7 @@ The following chapter will describe how we benchmarked several of the most promi
 \section{Motivation and approach}
 Throughout the development of HyDrop-ATAC, we were often confronted with questions surrounding the method's sensitivity (the number of fragments detected per cell) and specificity (the enrichment of these fragments in enhancers and near transcription start sites, collectively forming chromatin accessibility "peaks"). Such questions arose both internally and externally, and echoed previous calls for an in-depth method performance exploration since the release of Bio-Rad\supershortnotecite{lareauDropletbasedCombinatorialIndexing2019} and 10x Genomics'\supershortnotecite{satpathyMassivelyParallelSinglecell2019} scATAC-seq products in 2019. At the time, a number of open-source scATAC-seq protocols had also been published\sjcitep[,]{chenRapidRobustMethod2018,mulqueenHighcontentSinglecellCombinatorial2021} [sci, name each of these techniques individually with ref, also mulqueen was not published yet!], but best-case data exhibited in these articles revealed that they could not compete with 10x in terms of sensitivity. Furthermore, most of these open-source protocols required significant levels of expertise (e.g. low-level automated liquid handling) and/or non-commercially available components (e.g. indexed Tn5). As a result, they remained in use almost exclusively at a handful of labs. Both BioRad and 10x's scATAC-seq solutions were more user-friendly and handled the most technically challenging aspect, microfluidic droplet generation, on benchtop devices (10x's Chromium Controller and Bio-Rad's ddSEQ). However, the Chromium controller was already ubiquitously present in our research due to the success of 10x's scRNA-seq products. As a result, 10x enjoyed a relatively competition-free dominance of the scATAC-seq market, leading to [x] publications compared to ddSEQ's [y], and only approximately [z] publications generated with open-source methods by [date].
 
-We reasoned that an exact quantification of the performance distance between and among commercial and non-commercial protocols could stimulate informed decision making. Two large such studies had already been performed for scRNA-seq methods: one by Ziegenhain and Enard\sjcitep[,]{ziegenhainComparativeAnalysisSingleCell2017} and a larger, more recent study by Mereu and Heyn\sjcitep[.]{mereuBenchmarkingSinglecellRNAsequencing2020} Both of these benchmarks employed the same strategy: a reference sample was compiled centrally and distributed to collaborating labs [doublecheck for Ziegenhain], which were each tasked with generating at least one scRNA-seq dataset on this sample. In the Mereu benchmark, the reference consisted of a carefully ratioed mixture of [x] tissues across [y] species, which complicated genome alignment and further post-processing during the analysis stage. We therefore opted to limit the reference sample to PBMC extracted from one male and one female donor. The use of a liquid tissue also simplified the sample extraction procedure: frozen PBMC only need to be thawed slowly, after which nuclei extraction can occur immediately on the resulting single-cell suspension. In addition, a large reference dataset of single-cell PBMC chromatin accessibility did not yet exist, and could be of considerable value to blood (cancer) and immune research.
+We reasoned that an exact quantification of the performance differences among commercial and non-commercial protocols could stimulate informed decision making. Two such benchmarks had been performed for scRNA-seq methods: one by Ziegenhain and Enard\sjcitep[,]{ziegenhainComparativeAnalysisSingleCell2017} and a larger, more recent study by Mereu and Heyn\sjcitep[.]{mereuBenchmarkingSinglecellRNAsequencing2020} Both of these benchmarks employed the same strategy: a reference sample was distributed to collaborating labs [doublecheck for Ziegenhain], which each generated at least one scRNA-seq dataset. In the Mereu benchmark, the reference consisted of a mixture of [x] tissues across [y] species. This complicated genome alignment and further post-processing, and we therefore opted to limit the reference sample to a mixture of PBMC extracted from one male and one female donor. The use of a liquid tissue also simplified sample handling: PBMC can be distributed frozen, and only need to be thawed slowly before nuclei extraction can occur. In addition, a large reference dataset of single-cell PBMC chromatin accessibility did not yet exist.
 
 We included 7 different techniques in the initial phase of our benchmark. [ref to introduction] includes an overview of these methods from a mechanistic point of view.:
 
@@ -103,5 +103,11 @@ Due to the large scale and collaborative nature of the project, sequencing data 
 		\label{fig:data_analysis_workflow}
 	}%
 
+
+\section{Key results}
+One of the most surprising findings of the benchmark was the comparison between different sources of data "loss" among different methods. While analysing data for unrelated projects, I noticed that in a given dataset, only a very small fraction of all sequenced reads ends up being "useful". For example, if a single-cell library of 10 000 cells is sequenced to 400 million reads total, and the resulting median number of unique fragments per cell in the count matrix is 5 000, then only 50 million reads are really used - a mere 12.5\% of the total. One of the most significant losses occurred during the "cell filtration" step. 
+
+
 \section{Conclusions}
+
 \lipsum[1]
