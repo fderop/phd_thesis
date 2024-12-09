@@ -130,6 +130,41 @@ Many (Sanger twice, Roger Kornberg,) researchers cited here were recipients of t
 
 \section{Next generation sequencing techniques}
 Next Generation Sequencing \sjcitep[.]{metzkerSequencingTechnologiesNext2010}
+
+How does basecalling work?
+
+Each incorporation cycle is imaged, generating imaging data of the oligo lawn. Image processing is used to determine the position of oligo clusters present on the lawn, and these are stored in \verb|.locs| (locations) files. The basecalling algorithm will combine these \verb|.locs| files together with the imaging data to extract fluorescence intensities for all colours used per cluster. Dominant fluorescent signals then determine the base called for each cluster for every cycle.  When no base can be called, \verb|N| is used.
+
+
+When a strand does not incorporate a base during a given cycle, or if it leads ahead by one base, it becomes out of phase with the other strands of that cluster for the rest of the sequencing run. This is called phasing/pre-phasing and is corrected by the basecalling algorithm. Theoretical phasing rates (approximately 0.1\% of strands in a given cluster per cycle) can be used to estimate the contribution of phasing noise and deconvolve true signal from phased noise.
+
+Each basecall is also assigned a "Phred" quality score \verb|Q| based on signal-to-noise ratio, phasing, and separation of dense clusters:
+
+\begin{equation}
+	Q = -10 \cdot \log_{10} (P)
+\end{equation}
+
+A Q score of 30 corresponds to a probability of error of 1 in 1000. 
+
+where \verb|P| is the probability of the basecall being correct.
+
+The result is a binary \verb|.bcl| file, which contains the basecalls for each cluster. The binary \verb|.bcl| file is then converted to the ASCII \verb|.fastq| format using \verb|bcl2fastq|.
+
+\begin{center}
+\begin{lstlisting}
+@NS2000:001:HKYYLDSXX:1:1101:10000:1000 2:N:0:ATCACG
+CGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGGA
++
+HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
+@NS2000:001:HKYYLDSXX:1:1101:10001:1000 2:N:0:ATCACG 
+ACGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGA
++
+HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
+\end{lstlisting}
+\end{center}
+
+Each sequenced strand is represented by four lines in the \verb|.fastq| file. The first line is a header, which stores metadata such as sequencer and cluster coordinates. The second line is the sequence itself, followed by a separator (\verb|+|) on the third line, and the ASCII-encodedquality score on the fourth line.
+
 \begin{itemize}
 	\item microarrays
 	\item bulk RNA-seq
@@ -207,3 +242,56 @@ Cell type diversity underlies \\
 % 	\item atac: extra challenge
 % 	\item AI models
 % \end{itemize}
+
+\section{Analysis of single-cell sequencing data}
+Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the choice will depend on the type of data. For genomic data alignment, \verb|bwa-mem2| is a popular choice due to its speed advantage over \verb|bwa-mem| and \verb|bowtie|. Sequencing transcriptomes poses an additional challenge: gene transcripts are usually spliced after transcription, and thus contain gaps compared to the reference genome. The \verb|STAR| algorithm was specifically designed for dealing with these gaps.
+
+\begin{lstlisting}
+@HD     VN:1.6  SO:coordinate
+@SQ     SN:chr1 LN:248956422
+@SQ     SN:chr2 LN:242193529
+
+read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+\end{lstlisting}
+
+
+A key step in analysis is to convert the aligned data to a count matrix. This conversion in turn unlocks linear algebra for downstream analysis.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline
+ & \textbf{barcode\_1} & \textbf{barcode\_2} & $\cdots$ & \textbf{barcode\_N} \\ \hline
+\textbf{feature\_1} & 3 & 2 & $\cdots$ & 13 \\
+\textbf{feature\_2} & 2 & 3 & $\cdots$ & 1 \\
+\textbf{feature\_3} & 1 & 14 & $\cdots$ & 18 \\
+$\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+\textbf{feature\_M} & 25 & 0 & $\cdots$ & 0 \\ \hline
+\end{tabular}
+\caption{Example feature count matrix across different cells.}
+\label{tab:feature_count_matrix}
+\end{table}
+
+
+Counting requires a genome-feature annotation. scRNA-seq, for example, uses a gene-annotation. For ATAC-seq, several strategies exist.
+
+For single-cell RNA-seq data, a gene count matrix 
+
+The barcode-rank plot (also referred to as "knee or elbow plot") visualises the distribution of reads across all sequenced barcodes in the sequencing dataset. It is obtained by counting the number of reads per barcode, and ranking each barcode in a log-log figure - similarly in concept to a Zipf or Lorenz curve. If the dataset is sequenced to near-saturation, the total number of barcodes will exceed the whitelist, as sequencing/PCR/synthesis errors introduce non-whitelisted species. In the "ideal signal" case, all reads are evenly distributed across a small number of barcodes that matches the number of input cells (e.g. 10 000 in the figure). This means that there are no quality differences between real cells, and there are no barcodes with low read counts. The opposite scenario ("ideal noise") has an even distribution of all reads across \textit{all} barcodes, and we cannot distinguish cells from noise. Real datasets fall between these two extremes. A high quality dataset exhibits a clear cut-off, where the number of reads per barcode sharply drops off in the transition between real cells and background noise. A dataset of lower quality will exhibit a more gradual transition between real cells and background noise. This can be caused by a variety of mechanisms, notably ambient RNA or non-pure cell barcodes on the beads.
+
+	\pdffigure{sim/figs/ch2_kneeplot.pdf}{Barcode rank simulation}{The barcode rank plot. Two idealised cases (pure noise and pure signal) compared to two simulations of realistic scenarios (high and low signal-to-noise ratio datasets).
+
+In this simulation, 10 000 cells are sequenced to a total depth of 200 million reads, and the whitelist is 800 000 barcodes in length. The ceiling for mean number of reads per barcode is thus 200M reads/10k cell = 20k reads/cell (perfect signal), with a floor of 200M reads/800k barcodes = 250 reads/barcode (perfect noise).}{fig:simulation}
+
+
+It must be noted that even in a high quality dataset, "true cell" barcodes contain noise that cannnot be seen on this plot. Thus, even in a dataset with a clear cut-off, it is desirable to have a very low noise ceiling in the noise barcodes, because the "true cells" will also contain noise.
+
+We quickly realised that based on this simple plot, we can quickly estimate the quality of any single-cell dataset:
+
+\begin{itemize}
+	\item The number of cells captured in the dataset is revealed by the barcode rank where true cells are separated from background noise ("knee").
+	\item The approximate number of reads associated with each true cell can be estimated from the y-axis.
+	\item Overall data quality can be estimated by comparing the area under real cells and area under noise, or simply the "sharpness" of the cutoff.
+	\item Total noise can be inferred by looking at the number of reads present after the cutoff.
+\end{itemize}

@@ -162,23 +162,7 @@ Introduction of the dissolvable bead had an unexpected but welcome side-effect: 
 
 Just like our latest batch of scRNA-seq beads, the first batch of 96x96x96 scATAC-seq beads were strongly fluorescent when probed for the "capture oligo" sequence. We performed a first scATAC-seq run on PBMC, which was shallowly sequenced to test the first library generated with the 96x96x96 ATAC bead design. We then generated an additional scATAC-seq library on Drosophila larval brain to assess how the method would handle small input cells. Both of these libraries were sequenced deeply. The aggregate characteristics of both datasets matched expectations for ATAC-seq (\autoref{fig:pbmc_larval_brain}a), but the distribution of reads across cell barcodes seemed random. This can be observed in the barcode-ranking of the number of transcripts "knee" or "elbow" plots did not exhibit the clean cut-off between true cells and background noise barcodes usually observed in 10x Genomics-generated libraries ((\autoref{fig:pbmc_larval_brain}b)). These background noise barcodes were presumed to originate from ambient RNA present in droplets without a cell.
 
-	\pdffigure{sim/figs/ch2_kneeplot.pdf}{Barcode rank simulation}{The barcode rank plot. Two idealised cases (pure noise and pure signal) compared to two simulations of realistic scenarios (high and low signal-to-noise ratio datasets). In this simulation, 10 000 cells are sequenced to 200 million reads, and the whitelist is 800 000 barcodes. The ceiling for mean number of reads per barcode is thus 200M/800k = 20k (perfect signal), with a floor of 250 (perfect noise).}{fig:simulation}
-
-The barcode-rank plot (also referred to as "knee or elbow plot") visualises the distribution of reads across all sequenced barcodes in the sequencing dataset. It is obtained by counting the number of reads per barcode, and ranking each barcode in a log-log figure - similarly in concept to a Zipf or Lorenz curve. If the dataset is sequenced to near-saturation, the total number of barcodes will exceed the whitelist, as sequencing/PCR/synthesis errors introduce non-whitelisted species. In the "ideal signal" case, all reads are evenly distributed across a small number of barcodes that matches the number of input cells (e.g. 10 000 in the figure). This means that there are no quality differences between real cells, and there are no barcodes with low read counts. The opposite scenario ("ideal noise") has an even distribution of all reads across \textit{all} barcodes, and we cannot distinguish cells from noise. Real datasets fall between these two extremes. A high quality dataset exhibits a clear cut-off, where the number of reads per barcode sharply drops off in the transition between real cells and background noise. A dataset of lower quality will exhibit a more gradual transition between real cells and background noise. This can be caused by a variety of mechanisms, notably ambient RNA or non-pure cell barcodes on the beads.
-
-It must be noted that even in a high quality dataset, "true cell" barcodes contain noise that cannnot be seen on this plot. Thus, even in a dataset with a clear cut-off, it is desirable to have a very low noise ceiling in the noise barcodes, because the "true cells" will also contain noise.
-
-We quickly realised that based on this simple plot, we can quickly estimate the quality of any single-cell dataset:
-
-\begin{itemize}
-	\item The number of cells captured in the dataset is revealed by the barcode rank where true cells are separated from background noise ("knee").
-	\item The approximate number of reads associated with each true cell can be estimated from the y-axis.
-	\item Overall data quality can be estimated by comparing the area under real cells and area under noise, or simply the "sharpness" of the cutoff.
-	\item Total noise can be inferred by looking at the number of reads present after the cutoff.
-\end{itemize}
-
 After alignment and (admittedly arbitrary) cell filtering, we were not able to discern any different cell types in either the PBMC or the larval brain cells. Similarly to the TSA/DMSO scRNA-seq experiments I had performed earlier, all cells formed a homogeneous mass after dimensionality reduction.
-
 
 	\svgfigure{example-image-a}{3' enrichment and barcode rank plot for PBMC and larval brain scRNA-seq}{3' enrichment (a) and barcode rank plot (b) for PBMC and larval brain scRNA-seq}{fig:pbmc_larval_brain}
 
