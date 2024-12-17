@@ -175,14 +175,9 @@ Each sequenced strand is represented by four lines in the \verb|.fastq| file. Th
 % % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
 
 % further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
-% toadd: salmen et al, spindrop --> pico injection
-\section{}
-
+% toadd: salmen et al, spindrop --> pico injectil
 \section{Single-cell sequencing technologies}
 \label{sect:single_cell_sequencing_tech}
-Cell type diversity underlies \\
-% Single-cell sequencing was \supershortnotecite{noauthorslistedMethodYear20132014}
-
 % \begin{itemize}
 % 	\item NGS sequencing by itself provided a lot of relief, but not quite
 % \end{itemize}
@@ -199,7 +194,11 @@ Cell type diversity underlies \\
 
 "True" single-cell sequencing was first demonstrated in 2009 by Tang and Surani at the Gurdon Institute\sjcitep[.]{tangMRNASeqWholeTranscriptome2009} By modifying existing mRNA amplification methods (notably increasing reverse transcription and PCR extension time), the group was able to generate sequencing-ready cDNA libraries from individual mouse blastomeres. This sequencing-based approach provided a number of immediate advantages over microarray analysis: comparison of single-blastomere mRNA-seq data with pooled (320 cells) Affymetrix microarray data showed that \SI{94.3}{\percent} of microarray-detected genes had at least 5 transcripts in the mRNA-seq data, but mRNA-seq detected \num{5270} more genes in total. Sensitivity and dynamic range (\SIrange{0.2}{12000}{RPKM}) were decidedly higher for mRNA-seq than for analog microarrays. Since whole transcripts were sequenced, the group also discovered \num{1753} novel splice junctions, and demonstrated for the first time that different isoforms of the same gene can occur in the same single cell. 
 
-Tang et al. used the ABI SOLiD sequencer, which had become commercially available only two years prior. Given that the sample extraction and amplification protocol itself was only slightly different from existing microarray protocols, it can be posed that development of this method was a direct result of sequencing hardware improvements. However, the new sequencing-based approach also came with a new set of challenges. Most importantly, the cost of sequencing was incredibly high - Tang et al. spent around 24 to 85 million reads per \textit{single cell}, equivalent to \USD{10000} to \USD{50000} in SOLiD sequencing costs per cell alone. At the time, one Affymetric microarray sample cost in the order of \USD{800}.Despite longer extension times, the protocol was also unable to capture transcripts longer than \SI{3}{kb}. These factors contributed to mRNA-Seq's status as a niche, developmental technique rather than an immediate research tool.
+Tang et al. used the ABI SOLiD sequencer, which had become commercially available only two years prior. Given that the sample extraction and amplification protocol itself was only slightly different from existing microarray protocols, it can be posed that development of this method was a direct result of sequencing hardware improvements. However, the new sequencing-based approach also came with a new set of challenges. Most importantly, the cost of sequencing was incredibly high - Tang et al. spent around 24 to 85 million reads per \textit{single cell}, equivalent to \USD{10000} to \USD{50000} in SOLiD sequencing costs per cell alone. At the time, one Affymetric microarray sample cost in the order of \USD{800}. Despite longer extension times, the protocol was also unable to capture transcripts longer than \SI{3}{kb}, and was limited to poly(A)\textsuperscript{+} transcripts since it was based on oligo(dT) capture. These factors contributed to mRNA-Seq's status as a developmental/proof-of-concepttechnique rather than an immediate research tool.
+
+In 2012, Ramsköld and Sandberg published SMART-seq (Switching Mechanism At the 5' end of RNA Template)\sjcitep[,]{ramskoldFulllengthMRNASeqSinglecell2012} which improved upon the Tang protocol in several ways: first, the use of template switching reverse transcription introduced a known sequence at the 5' end of the RNA template. This change allowed for uniform PCR amplification of the resulting cDNA, increasing sensitivity and removing 3' bias. Second, fragmentation of these full-length transcripts using Tn5 from Illumina's Nextera library preparation kit (or Covaris shearing) allowed for shotgun sequencing of the entire transcript. Whereas Tang et al. had sequenced just 6 cells, Ramsköld et al. sequenced 42 cells total (several human cancer cell lines, circulating tumor cells, and mouse oocytes). Improved isoform coverage allowed Ramsköld et al. to demonstrate that exon 13 of the NEDD4L gene was differentially expressed between LNCaP and T24 prostate cancer cells.
+
+
 
 By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
 
