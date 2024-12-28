@@ -198,6 +198,8 @@ Tang et al. used the ABI SOLiD sequencer, which had become commercially availabl
 
 In 2012, Ramsköld and Sandberg published SMART-seq (Switching Mechanism At the 5' end of RNA Template)\sjcitep[,]{ramskoldFulllengthMRNASeqSinglecell2012} which improved upon the Tang protocol in several ways: first, the use of template switching reverse transcription introduced a known sequence at the 5' end of the RNA template. This priming site allowed PCR amplification of the resulting cDNA, increasing sensitivity and removing 3' bias. Second, fragmentation of these full-length transcripts using Tn5 from Illumina's Nextera library preparation kit (or Covaris shearing) allowed for shotgun sequencing of the entire transcript. Whereas Tang et al. had sequenced just 6 cells, Ramsköld et al. sequenced 42 cells total (several human cancer cell lines, circulating tumor cells, and mouse oocytes). Improved isoform coverage allowed Ramsköld et al. to demonstrate that exon 13 of the NEDD4L gene was differentially expressed between LNCaP and T24 prostate cancer cells.
 
+Another significant change was that Ramsköld et al. had access to significantly cheaper sequencing technology. By 2012, availability of commercial "bench-top" sequencers had reduced the cost of sequencing from \USD{1000} in 2005\sjcitep[]{shendureAccurateMultiplexPolony2005} to \USD{0.10} per megabase\sjcitep[,]{shendureExpandingScopeDNA2012} which aided in increasing number of cells sequenced.
+
 Only a year later, Sandberg lab published Smart-seq2, an improved protocol with a number of protocol changes that increased sensitivity\sjcitep[.]{picelliSmartseq2SensitiveFull2013} Notably, the addition of a locked nucleic acid (LNA) at the TSO's 3' end and addition of betaine led to 2-4 fold cDNA yield increases. The protocol was simplified and reduced in cost by switching to KAPA HiFi polymerase, which also improved amplification of GC-rich genes. In 2014, yet another major breakthrough was made: Picelli et al. published a method for the production and loading of recombinant Tn5\sjcitep[.]{picelliTn5TransposaseTagmentation2014} Researchers could now bypass Illumina's Nextera Tn5, which to this day is still enormously expensive (\textasciitilde\$\num{3600} per \SI{160}{\micro\liter}). Sandberg and Picelli then put the broader availability of Tn5 to use in a subsequent Nature Methods protocol describing a detailed Smart-seq2 protocol\sjcitep[.]{picelliFulllengthRNAseqSingle2014} As a result of various incremental cost decreases, more cells could be processed: now, a total of 262 cells were profiled across across 4 different cell lines. At this point, the Smart-seq2 protocol was capturing [n] genes per cell.
 
 competing tech: cel-seq
@@ -206,13 +208,9 @@ competing tech: cel-seq
 Fluidigm C1 automation
 While Smart-seq garnered users as a research tool, cell throughput became a concern. Since reagent and labour costs per cell were high [estimate], Smart-seq was deployed on relatively low numbers of cells sequenced deeply. This approach meant that it was not feasible to reliably capture or discover new rare cell types in larger populations, or detect subtle differences between cell subtyptes. Smart-seq was best suited for deeply profiling isolated (e.g. through fluorescence sorting or laser microdissection) cells.
 
-Shifting this strategy towards larger numbers of cells required a different approach.
-
-Guo et al. (2012) demonstrated various biomolecular assays in droplets
+Scaling single-cell sequencing towards larger numbers of cells required a different approach. Researchers at David Weitz' lab had been working on using droplet microfluidics to perform antibody screening and rare template PCR in droplets\sjcitep[,]{guoDropletMicrofluidicsHighthroughput2012} referring to a hypothetical system of droplet "barcoding" with nucleic acids in order to trace droplets along the process. Such a system was realised for single-cell RNA-seq in 2015 by two separate labs at Harvard, both in collaboration with Weitz: Macosko et al. (McCarroll lab) produced Drop-seq\sjcitep[,]{macoskoHighlyParallelGenomewide2015} and Klein et al. (Klein lab) produced inDrop\sjcitep[.]{kleinDropletBarcodingSinglecell2015}
 
 
-
-\sjcitep[.]{macoskoHighlyParallelGenomewide2015}
 
 10x's Chromium drew on some technical concepts - such as emulsion chemistry and microfluidic geometry - borrowed from droplet digital PCR (ddPCR), which had been previously developed by the company's CSO Ben Hindson at Lawrence Livermore\sjcitep[.]{hindsonHighThroughputDropletDigital2011} In fact, 10x's founding team (Hindson, Saxonov and Ness) had previously commercialized ddPCR at QuantaLife. The team left shortly after QuantaLife's acquisition by Bio-Rad to found 10x Genomics, a source of strife and future litigation between the two companies which was settled only in 2021\sjcitep[.]{brittain2021biorad}.
 
@@ -266,8 +264,12 @@ By isolating, sorting and sequencing the genome of 52 cells from a primary breas
 % 	\item AI models
 % \end{itemize}
 
-\section{Analysis of single-cell sequencing data}
-Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the choice will depend on the type of data. For genomic data alignment, \verb|bwa-mem2| is a popular choice due to its speed advantage over \verb|bwa-mem| and \verb|bowtie|. Sequencing transcriptomes poses an additional challenge: gene transcripts are usually spliced after transcription, and thus contain gaps compared to the reference genome. The \verb|STAR| algorithm was specifically designed for dealing with these gaps.
+\section{Basic single-cell sequencing data analysis}
+Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depend on the type of data. For genomic data alignment, \verb|bwa-mem2| is a popular option due to its speed advantage over \verb|bwa-mem| and \verb|bowtie|. Sequencing transcriptomes poses an additional challenge: gene transcripts are usually spliced after transcription, and thus contain gaps compared to the reference genome. The \verb|STAR| algorithm was specifically designed for dealing with these gaps.
+
+Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depends on several factors. Short-read aligners such as \verb|bowtie2| are optimized for reads < \SI{200}{\bp}, while long-read aligners like \verb|minimap2| are better at handling reads > \SI{1000}{\bp}. The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more indels due to incorporation errors, which are explicitly corrected for by \verb|bwa-mem|. \verb|minimap2| is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads. When sequencing transcriptomic data, RNA-seq specific aligners like \verb|STAR| and \verb|HISAT2| are used to handle spliced reads. Like many classes of algorithms, a trade-off between memory and compute can also be made, for example \verb|STAR| requires large amounts of memory due to its use of an uncompressed genome index, but is faster, while \verb|HISAT2| is more memory-efficient, but takes longer.
+
+The diversity in sequencing technologies and alignment algorithms led to the use of several independent alignment formats, each tied to specific sequencing technologies or alignment algorithms. Analyses on different datasets (e.g. variant calling, genotype analysis) required cross parsing or conversion. The introduction of the Sequence Alignment Map (\verb|SAM|) format as part of the 1000 Genomes Project in 2009\sjcitep[,]{liSequenceAlignmentMapFormat2009} provided a unified standard for storing aligned sequencing data which has since become the de facto standard. Each read is stored in a single line containing 11 mandatory fields including: read name, reference name (chromosome or contig), position, mapping quality, the actual sequence, several other alignment quality parameters as well as optional tags.
 
 \begin{lstlisting}
 @HD     VN:1.6  SO:coordinate
@@ -278,8 +280,11 @@ read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGT
 read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
 \end{lstlisting}
 
+An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
 
-A key step in analysis is to convert the aligned data to a count matrix. This conversion in turn unlocks linear algebra for downstream analysis.
+After alignment, the next step is to vectorize the data, which unlocks linear algebra. This approach has been standard practice since the earliest microarray experiments\sjcitep[,]{eisenClusterAnalysisDisplay1998} where gene expression measurements across different conditions in yeast were visualised using simple hierarchical clustering. This work also contained the first combination of a dendrogram and a heatmap in bioinformatics!
+
+After alignment, all single-cell sequencing data is converted into a count matrix for downstream analyses.
 
 \begin{table}[ht]
 \centering
@@ -299,7 +304,7 @@ $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
 
 Counting requires a genome-feature annotation. scRNA-seq, for example, uses a gene-annotation. For ATAC-seq, several strategies exist.
 
-For single-cell RNA-seq data, a gene count matrix 
+For single-cell RNA-seq data, a gene count matrix is generated.
 
 The barcode-rank plot (also referred to as "knee or elbow plot") visualises the distribution of reads across all sequenced barcodes in the sequencing dataset. It is obtained by counting the number of reads per barcode, and ranking each barcode in a log-log figure - similarly in concept to a Zipf or Lorenz curve. If the dataset is sequenced to near-saturation, the total number of barcodes will exceed the whitelist, as sequencing/PCR/synthesis errors introduce non-whitelisted species. In the "ideal signal" case, all reads are evenly distributed across a small number of barcodes that matches the number of input cells (e.g. 10 000 in the figure). This means that there are no quality differences between real cells, and there are no barcodes with low read counts. The opposite scenario ("ideal noise") has an even distribution of all reads across \textit{all} barcodes, and we cannot distinguish cells from noise. Real datasets fall between these two extremes. A high quality dataset exhibits a clear cut-off, where the number of reads per barcode sharply drops off in the transition between real cells and background noise. A dataset of lower quality will exhibit a more gradual transition between real cells and background noise. This can be caused by a variety of mechanisms, notably ambient RNA or non-pure cell barcodes on the beads.
 
@@ -312,7 +317,7 @@ It must be noted that even in a high quality dataset, "true cell" barcodes conta
 
 We quickly realised that based on this simple plot, we can quickly estimate the quality of any single-cell dataset:
 
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item The number of cells captured in the dataset is revealed by the barcode rank where true cells are separated from background noise ("knee").
 	\item The approximate number of reads associated with each true cell can be estimated from the y-axis.
 	\item Overall data quality can be estimated by comparing the area under real cells and area under noise, or simply the "sharpness" of the cutoff.
