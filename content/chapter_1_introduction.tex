@@ -337,7 +337,45 @@ Directly visualising correlations or variance between many RNA-seq or microarray
 
 By 2019, several single-cell sequencing technologies had emerged. Each had their own strengths and weaknesses, sometimes leading to technical artifacts in datasets even when assessing the same biological sample. Even the same technology used on different days could lead to batch effects due to sample degradation or other technical artifacts between experiments. This translates to cells clustering by dataset batch rather than biological state. In order to remedy this, Satija lab released an analysis package called \verb|Seurat|, which aimed to facilitate integration of multiple single-cell datasets across different technologies and conditions\sjcitep[.]{stuartComprehensiveIntegrationSinglecell2019} [Seurat v1 focused on correlating single-cell gene expression with in situ hybridisation (ISH) data] Seurat uses Canonical Correlation Analysis (CCA\sjcitep{hotellingRelationsTwoSets1936}) to calculate linear combinations of genes (canonical correlation vectors, in this case "metagenes") that capture common information between two datasets. Cells are then co-projected in this shared metagene space to create a new "joint embedding" where clustering and differential expression analysis can be performed. The canonical vectors can be used to re-transform differential metagenes back to the original gene set used. Seurat's CCA implementation could also be used for label transfer: if one dataset is labeled or annotated, proximity in the joint embedding space can be used to transfer labels from one dataset to another.
 
-Analysis of scATAC-seq poses yet more challenges: where scRNA-seq is limited to \textasciitilde{}20 000 genes, scATAC-seq can include hundreds of thousands of open chromatin regions, further exacerbating dimensionality and sparsity issues. In addition, the relationship between open chromatin and cell phenotypes is even less clearly defined, potentially less linear than gene expression. Timescales of chromatin dynamics are also generally slower than gene expression, and thus more difficult to capture.
+Analysis of scATAC-seq poses yet more challenges: where scRNA-seq is limited to \textasciitilde{}20 000 genes, scATAC-seq can include hundreds of thousands of open chromatin regions - which can each be sampled a maximum of two times per cell, further exacerbating dimensionality and sparsity issues. In addition, the relationship between open chromatin and cell phenotypes is even less clearly defined, potentially less linear than gene expression. Timescales of chromatin dynamics are also generally slower than gene expression, and thus more difficult to capture. A number of analysis tools have attempted to address these issues, using broadly two attempts:
 
+A scRNA-seq like approach where cells are first clustered, and differential chromatin accessibility is calculated between clusters. Latent semantic indexing (LSI), an algorithm borrowed from text analysis, can be used to perform this dimensionality reduction\sjcitep[.]{cusanovichSingleCellAtlasVivo2018} Briefly, single-cell accessibility is first counted in regions (usually accessibility peaks) or 5 kb genome bins, binarized, and scaled according to inverse document frequency (peaks that are not commonly accessible are weighted higher). Singular value decomposition (SVD), is then used to decompose the resulting weighted cell-accessibility matrix into latent features across cells:
+
+\[
+M = U\Sigma V^T = 
+\underset{(m \times n)}{\begin{bmatrix}
+\cdot & \cdot & \cdot & \cdots & \cdot \\
+\cdot & \cdot & \cdot & \cdots & \cdot \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\cdot & \cdot & \cdot & \cdots & \cdot \\
+\cdot & \cdot & \cdot & \cdots & \cdot
+\end{bmatrix}}
+=
+\underset{(m \times r)}{\begin{bmatrix}
+\cdot & \cdot & \cdots & \cdot \\
+\cdot & \cdot & \cdots & \cdot \\
+\vdots & \vdots & \ddots & \vdots \\
+\cdot & \cdot & \cdots & \cdot \\
+\cdot & \cdot & \cdots & \cdot
+\end{bmatrix}}
+\underset{(r \times r)}{\begin{bmatrix}
+\sigma_1 & 0 & \cdots & 0 \\
+0 & \sigma_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma_r
+\end{bmatrix}}
+\underset{(r \times n)}{\begin{bmatrix}
+\cdot & \cdot & \cdot & \cdots & \cdot \\
+\cdot & \cdot & \cdot & \cdots & \cdot \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\cdot & \cdot & \cdot & \cdots & \cdot
+\end{bmatrix}}
+\]
+
+Here, $m$ is the number of peaks, $n$ is the number of cells, and $r = \min(m,n)$ is the rank of the decomposition. U represents the peak-composition of the latent features, $\Sigma$ is diagonal and represents the explanatory power of each latent feature, and V\textsuperscript{T} represents the contribution of latent feature to each cell. Based on $\Sigma$, we can select the top n most important latent features and visualise cells in this reduced feature space using t-SNE. Differentially accessible regions (DARs) between clusters can then be calculated on the raw binary accessibility matrix using logistic regression, which can model the odds of a binary event like accessibility.
+
+Or, chromVAR, which works in a fundamentally different way\sjcitep[.]{schepchromVAR2017} Instead of using hundreds of thousands of accessible peak regions, chromVAR first groups these peaks into cistromes based on common TF motifs or pre-set functional annotations (such as known enhancer peak sets). This approach tackles sparsity and dimensionality. Accessibility within each cistrome is normalized to z-scores, which are then used for t-SNE and clustering. Instead of known TF motifs, k-mers can also be used to identify novel motifs important in a given biological process..
+
+\sjcitep[,]{bravoGonzalezBlascisTopic2019}
 
 \section{Artificial learning}
