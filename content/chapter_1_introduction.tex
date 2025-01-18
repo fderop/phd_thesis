@@ -128,7 +128,11 @@ Parallel research in Roeder's lab led to the discovery of a protein which induce
 
 Many (Sanger twice, Roger Kornberg,) researchers cited here were recipients of the Nobel prize for their work, illustrating the importance of these subjects.
 
-\section{Next generation sequencing techniques}
+\section{Next generation sequencing}
+[maybe link this part better with the previous section] The completion of the human genome project in 2003 allowed researchers to shift focus from recording the genome sequence to deciphering its code. The new fields of transcriptomics, epigenomics, metagenomics, population genetics, ... now required sequencing not just one genome, but thousands of genomes and other nucleic acid samples across many species, individuals and tissues. This demand could not be met by the Sanger sequencing method, spurring the development of a variety of new sequencing technologies. While initially several participants competed in the , one victor emerged to take a monopoly: Illumina. Illumina had acquired Solexa in 2007. Solexa itself was founded in 1998
+
+Sequencing by Synthesis (SBS) was developed around 1998 by chemist Shankar Balasubramanian and biophysicist David Klenerman, both professors at the university of Cambridge. The technology worked by hybridizing millions of DNA templates to an oligo "lawn" on a flow cell, amplifying each individual molecule to generate a cluster of clones, and sequencing each cluster by sequentially adding fluorescently labeled nucleotides.
+
 Next Generation Sequencing \sjcitep[.]{metzkerSequencingTechnologiesNext2010}
 
 How does basecalling work?
@@ -165,6 +169,29 @@ HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
 
 Each sequenced strand is represented by four lines in the \verb|.fastq| file. The first line is a header, which stores metadata such as sequencer and cluster coordinates. The second line is the sequence itself, followed by a separator (\verb|+|) on the third line, and the ASCII-encodedquality score on the fourth line.
 
+Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depends on several factors. Short-read aligners such as \verb|bowtie2| are optimized for reads < \SI{200}{\bp}, while long-read aligners like \verb|minimap2| are better at handling reads > \SI{1000}{\bp}. The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more indels due to incorporation errors, which are explicitly corrected for by \verb|bwa-mem|. \verb|minimap2| is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads. When sequencing transcriptomic data, RNA-seq specific aligners like \verb|STAR| and \verb|HISAT2| are used to handle spliced reads. Like many classes of algorithms, a trade-off between memory and compute can also be made, for example \verb|STAR| requires large amounts of memory due to its use of an uncompressed genome index, but is faster, while \verb|HISAT2| is more memory-efficient, but takes longer.
+
+The diversity in sequencing technologies and alignment algorithms led to the use of several independent alignment formats, each tied to specific sequencing technologies or alignment algorithms. Analyses on different datasets (e.g. variant calling, genotype analysis) required cross parsing or conversion. The introduction of the Sequence Alignment Map (\verb|SAM|) format as part of the 1000 Genomes Project in 2009\sjcitep[,]{liSequenceAlignmentMapFormat2009} provided a unified standard for storing aligned sequencing data which has since become the de facto standard. Each read is stored in a single line containing 11 mandatory fields including: read name, reference name (chromosome or contig), position, mapping quality, the actual sequence, several other alignment quality parameters as well as optional tags.
+
+\begin{lstlisting}
+@HD     VN:1.6  SO:coordinate
+@SQ     SN:chr1 LN:248956422
+@SQ     SN:chr2 LN:242193529
+
+read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+\end{lstlisting}
+
+An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
+
+[here starts the part about the techs that sequencing tech unlocked]
+
+\section{Sequencing assays}
+The widespread availability of NGS directly led to the development of a new class of quantitative, sequencing-based assays. Prior to the widespread availability of NGS, studying gene expression relied heavily on microarrays\sjcitep[,]{schenaQuantitativeMonitoringGene1995} where RNA samples are hybridized to pre-designed DNA probes on a glass slide and fluorescence intensity is used to measure expression levels. This technique allowed researchers to measure expression levels across a large number of genes (and even samples, using multiple fluorescent probes) in a single experiment.
+
+% RNA-Seq emerged as one of the earliest transformative applications enabled by NGS. Prior to RNA-Seq, gene expression studies relied heavily on microarrays, which measured RNA levels indirectly through hybridization. Microarrays were constrained by their dependence on pre-designed probes, which limited their ability to detect novel transcripts, splice variants, and non-coding RNAs. RNA-Seq replaced these limitations with a direct, unbiased, and quantitative approach to transcriptomics. Researchers could profile entire transcriptomes, detect rare transcripts, and identify alternative splicing events. This shift proved especially impactful in understanding diseases like cancer, where transcriptomic dysregulation plays a key role. RNA-Seq also facilitated comparative transcriptomics across species, developmental stages, and experimental conditions, broadening its utility in evolutionary biology and functional genomics.
+
+
 \begin{itemize}
 	\item microarrays
 	\item bulk RNA-seq
@@ -172,7 +199,41 @@ Each sequenced strand is represented by four lines in the \verb|.fastq| file. Th
 	\item bulk ATAC-seq
 \end{itemize}
 
+both barbara wold and ali mortazavi!
+chip-seq\sjcitep[.]{johnsongenomewidemappingvivo2007}
+Cells are fixed and lysed. The transcription factor of interest, still bound to its DNA, is immunoprecipitated. The DNA is then purified and sequenced.
+
+robust statistical confidence (ROC > 0.96) = more reliable than chip-chip or SAGE, genome-wide (not on arrays) --> identify unknown binding sites and as a result non-canonical binding motifs. high positional resolution (50 bp). correctly predicted that sequencing depth will increase due to costs. correctly predicted combination with rna-seq ("gene expression", rna-seq didn't exist yet). predict use for drug targets by mapping aberrant TF binding sites in disease states
+new notion: strong and weak binding sites for NRSF!
+The observation that some non-canonical sites were functional only when clustered or when associated with specific chromatin features implies that binding specificity can be influenced by chromatin context and local DNA architecture.
+varied and context-specific binding.
+
+They observed that genes with NRSF-binding sites near their promoters displayed significantly lower transcript levels, consistent with NRSF’s role as a transcriptional repressor.
+before this: individiual tfs linked to individual genes or small regions, NOT entire networks of genes being regulated by one tf!
+ChIP-chip required pre-designed arrays and lacked genome-wide coverage.
+ChIP-SAGE offered some breadth but had lower resolution and required more complex workflows.
+
+chip-chip: A precursor to ChIP-Seq, ChIP-chip combines chromatin immunoprecipitation (ChIP) with microarray technology. After immunoprecipitating DNA bound by a TF, the enriched DNA is hybridized to a microarray containing pre-designed oligonucleotides corresponding to genomic regions.
+
+
+they measured genome-wide transcript levels in Jurkat cells using Illumina RefSeq8 Sentrix arrays to assess RNA abundance.
+
+
+leads to \sjcitep[.]{trapnellTranscriptAssemblyQuantification2010}
+Tn5
+
+methylation sequencing\sjcitep[.]{barskiHighresolutionProfilingHistone2007}
+
 % % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
+
+
+This enzyme was first used by Adey & Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing"). Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{shendureMassivelyParallelContiguity2013}
+% people are doing dnase-seq and chip-seq
+% atac-seq is invented by buenrostro
+% backstory of tn5: adey, reznikoff
+% picelli brings cheap tn5
+% plate based scatac
+% 10x scatac-seq
 
 % further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
 % toadd: salmen et al, spindrop --> pico injectil
@@ -265,24 +326,8 @@ By isolating, sorting and sequencing the genome of 52 cells from a primary breas
 % \end{itemize}
 
 \section{Pre-processing single-cell sequencing data}
-[Say something about SCREEN regions and genome blacklist?]
+[Say something about SCREEN regions and genome blacklist? actually this should be done when i'm explaining vectorization/region counting]
 
-Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depend on the type of data. For genomic data alignment, \verb|bwa-mem2| is a popular option due to its speed advantage over \verb|bwa-mem| and \verb|bowtie|. Sequencing transcriptomes poses an additional challenge: gene transcripts are usually spliced after transcription, and thus contain gaps compared to the reference genome. The \verb|STAR| algorithm was specifically designed for dealing with these gaps.
-
-Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depends on several factors. Short-read aligners such as \verb|bowtie2| are optimized for reads < \SI{200}{\bp}, while long-read aligners like \verb|minimap2| are better at handling reads > \SI{1000}{\bp}. The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more indels due to incorporation errors, which are explicitly corrected for by \verb|bwa-mem|. \verb|minimap2| is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads. When sequencing transcriptomic data, RNA-seq specific aligners like \verb|STAR| and \verb|HISAT2| are used to handle spliced reads. Like many classes of algorithms, a trade-off between memory and compute can also be made, for example \verb|STAR| requires large amounts of memory due to its use of an uncompressed genome index, but is faster, while \verb|HISAT2| is more memory-efficient, but takes longer.
-
-The diversity in sequencing technologies and alignment algorithms led to the use of several independent alignment formats, each tied to specific sequencing technologies or alignment algorithms. Analyses on different datasets (e.g. variant calling, genotype analysis) required cross parsing or conversion. The introduction of the Sequence Alignment Map (\verb|SAM|) format as part of the 1000 Genomes Project in 2009\sjcitep[,]{liSequenceAlignmentMapFormat2009} provided a unified standard for storing aligned sequencing data which has since become the de facto standard. Each read is stored in a single line containing 11 mandatory fields including: read name, reference name (chromosome or contig), position, mapping quality, the actual sequence, several other alignment quality parameters as well as optional tags.
-
-\begin{lstlisting}
-@HD     VN:1.6  SO:coordinate
-@SQ     SN:chr1 LN:248956422
-@SQ     SN:chr2 LN:242193529
-
-read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
-read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
-\end{lstlisting}
-
-An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
 
 After alignment, the next step is to vectorize the data, which unlocks linear algebra. This approach has been standard practice since the earliest microarray experiments\sjcitep[,]{eisenClusterAnalysisDisplay1998} where gene expression measurements across different conditions in yeast were visualised using simple hierarchical clustering. This work showed the first combination of a dendrogram and a heatmap in bioinformatics, introducing wholistic analysis of full gene expression data. For example, whereas the functions of novel genes were previously investigated through deep control experiments, they could could now be inferred through co-expression ("guilt by association").
 
@@ -304,7 +349,13 @@ $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
 \end{table}
 
 
-Counting requires a genome-feature annotation. scRNA-seq, for example, uses a gene-annotation. For ATAC-seq, several strategies exist.
+Counting requires a genome annotation. scRNA-seq, for example, uses a gene-annotation. For ATAC-seq, several strategies exist. [screen regions, peak calling on bulk, annotated regions from other sources]
+
+ENCODE SCREEN regions: 926,535 (human) and 339,815 (mouse) candidate cis-regulatory elements (cCREs) identified based on ATAC-seq, DNase hypersensitivity, CHiP-seq, histone modifications (H3K4me3, H3K27ac), and CTCF binding. These regions represent potential enhancers, promoters, and insulators.
+Over 9000 experiments.
+
+
+[rewrite]  These datasets were unified by identifying regions with strong chromatin accessibility and enhancer or promoter marks, followed by clustering and annotation based on biochemical signatures. Some of these regions (100s) were validated using transgenic mouse enhancer–reporter assays, where 44\% of tested cCREs showed tissue-specific activity, and massively parallel reporter assays (MPRAs) and SuRE assays, which confirmed activity in cell lines with success rates ranging from 28\% to 73\%, depending on biochemical signals and cCRE type. ENCODE data demonstrate that noncoding variants associated with diseases often [how often?] map to cCREs, suggesting regulatory disruptions as mechanisms underlying genetic disorders.
 
 For single-cell RNA-seq data, a gene count matrix is generated.
 
@@ -341,7 +392,7 @@ By 2019, several single-cell sequencing technologies had emerged. Each had their
 
 Analysis of scATAC-seq poses yet more challenges: where scRNA-seq is limited to counts in \textasciitilde{}20 000 genes (human, mouse), the accessible genome can span hundreds of thousands of open chromatin regions - which can each be sampled a maximum of two times per cell, further exacerbating dimensionality and sparsity issues. In addition, expression of protein-coding genes can be used as a rough proxy for a measurement of protein activity, which can be linked more directly to cell phenotype. Genomic regions can serve many functions [some examples of genomic classes] dependent on cell state. the relationship between open chromatin and cell phenotypes is even less clearly defined, potentially less linear than gene expression. Timescales of chromatin dynamics are also generally slower than gene expression, and thus more difficult to capture. A number of analysis tools have attempted to address these issues, using broadly two attempts:
 
-A scRNA-seq like approach where cells are first clustered, and differential chromatin accessibility is calculated between clusters. Latent semantic indexing (LSI), an algorithm borrowed from text analysis, can be used to perform this dimensionality reduction\sjcitep[.]{cusanovichSingleCellAtlasVivo2018} Briefly, single-cell accessibility is first counted in annotated regions (usually accessibility peaks) or 5 kb genome bins, binarized, and scaled according to inverse document frequency (peaks that are not commonly accessible are weighted higher). Singular value decomposition (SVD), is then used to decompose the resulting weighted cell-accessibility matrix into latent features across cells:
+A scRNA-seq like approach where cells are first clustered, and differential chromatin accessibility is calculated between clusters. Latent semantic indexing (LSI), an approach borrowed from text analysis, can be used to perform this dimensionality reduction\sjcitep[.]{cusanovichSingleCellAtlasVivo2018} Briefly, single-cell accessibility is first counted in annotated regions (usually accessibility peaks) or 5 kb genome bins, binarized, and scaled according to inverse document frequency (peaks that are not commonly accessible are weighted higher). Singular value decomposition (SVD), is then used to decompose the resulting weighted cell-accessibility matrix into latent features across cells:
 
 \[
 M = U\Sigma V^T = 
@@ -380,7 +431,36 @@ Or, chromVAR, which works in a fundamentally different way\sjcitep[.]{schepchrom
 
 In this work, cisTopic was used instead [instead of what?]\sjcitep[.]{bravoGonzalezBlascisTopic2019} Peaks are first called on the aggregate accessibility data [or screen? actually, it wouldn't hurt to explain MACS somewhere], and a sparse count matrix is generated using these peaks as regions [this sentence can be skipped, we can also use the SCREEN regions]. Like chromVAR, cisTopic uses a probabilistic approach to model chromatin accessibility, but unlike chromVAR, cisTopic uses LDA\sjcitep[]{bleiLatentDirichletAllocation2003}, which 
 
-LDA calculates two distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell). LDA parameters (probabilities) are estimated using a Markov chain monte carlo approach: regions are initially randomly assigned to topics, and distributions are calculated iteratively until convergence of log-likelihood". Each topic-region assignment is then updated in each cell based on two factors: (1) topic's occurrence in the cell and that region's occurrence in each topic across all other cells (collapsed Gibbs sampling). This approach reduces total computational complexity compared to sampling in both region-topic and topic-cell distribution. This approach is more efficient than other Bayesian approaches (e.g. variational inference) due to the extreme sparsity of the data. tSNE or UMAP can then be used to visualise the resulting (normalized) topic-cell distributions.
+LDA calculates two sets of distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell) which should approximate the original data when multiplied.
+
+\[
+\underset{m \times n}{
+\begin{bmatrix}
+x_{11} & x_{12} & \cdots & x_{1n} \\
+x_{21} & x_{22} & \cdots & x_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{m1} & x_{m2} & \cdots & x_{mn}
+\end{bmatrix}}
+\approx
+N \cdot
+\underset{m \times k}{
+\begin{bmatrix}
+p_{r_1t_1} & p_{r_1t_2} & \cdots & p_{r_1t_k} \\
+p_{r_2t_1} & p_{r_2t_2} & \cdots & p_{r_2t_k} \\
+\vdots & \vdots & \ddots & \vdots \\
+p_{r_mt_1} & p_{r_mt_2} & \cdots & p_{r_mt_k}
+\end{bmatrix}_{}}
+\cdot
+\underset{k \times n}{
+\begin{bmatrix}
+p_{t_1c_1} & p_{t_1c_2} & \cdots & p_{t_1c_n} \\
+p_{t_2c_1} & p_{t_2c_2} & \cdots & p_{t_2c_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+p_{t_kc_1} & p_{t_kc_2} & \cdots & p_{t_kc_n}
+\end{bmatrix}}
+\]
+
+LDA parameters (probabilities) are estimated using a Markov chain monte carlo approach: regions are initially randomly assigned to topics, and topic-region assignment is then updated iteratively in each cell based on two factors: (1) the topic's occurrence in the cell and (2) the region's occurrence in each topic across all other cells. Instead of sampling in the entire [], sampling is only performed in [] (collapsed Gibbs sampling), which reduces total computational complexity compared to sampling in both region-topic and topic-cell distribution. This approach is more efficient than other Bayesian approaches (e.g. variational inference) due to the extreme sparsity of the data. tSNE or UMAP can then be used to visualise the resulting (normalized) topic-cell distributions.
 
 Another advantage of LDA over LSI is that LDA's topics are interpretable, whereas LSI's latent features can be abstract\sjcitep[.]{steyversProbabilisticTopicModels2007} This property is exploited in cisTopic, for example by extracting transcription factor binding motifs from the cis-regulatory topics found by LDA. The motif enrichment analysis itself is performed using cisTarget [ref]. Regions and combinations of regions can also be annotated using nearest genes (ChIPseeker)
 
@@ -390,14 +470,11 @@ cisTopic also introduces a region score which rewards regions that are more spec
 \text{Region score} = \beta_{r,t} \left( \log \beta_{r,t} - \frac{1}{T} \sum_{t=1}^{T} \log \beta_{r,t} \right)
 \]
 
-Following Shannon entropy $H(X) = -\sum_{i} p(x_i) \log p(x_i)$, the term \(\beta_{r,t} \log \beta_{r,t}\) can be interpreted as the local information content of the region, and the term \(\frac{\beta_{r,t}}{T} \sum_{t=1}^{T} \log \beta_{r,t}\) is the average log-probability of the region acrosss all topics. The region score is thus a normalized measure of each region's information content and indicates how specific a region is to a given topic. These scores can then be used to identify transcription factor motif enrichment or GeneOntology term representation within each topic's most important regions.
+Consider Shannon entropy $H(X) = -\sum_{i} p(x_i) \log p(x_i)$, then the term \(\beta_{r,t} \log \beta_{r,t}\) can be considered the local information content of the region in topic context, while the term \(\frac{\beta_{r,t}}{T} \sum_{t=1}^{T} \log \beta_{r,t}\) is the average log-probability of the region acrosss all topics [double check this, is beta a probability?]. The region score is thus an average-normalized measure of a given region's information content, indicating how specific it is to each topic. Topics can then be scored for TF motif enrichment by counting TF motif occurrence in the score-ranked regions and calculating the area under this rank curve (AUCell\sjcitep[]{aibarSCENICSingleCell2017,aibarSCENICSingleCell2017}).
 
-When ranking regions by score and calculating the area under the rank curve (AUCell), enriched motifs can be identified.
+cisTopic's LDA approach was benchmarked against other popular tools such as chromVAR, scABC, BROCKMAN, SCRAT, Cicero, and LSI, using both simulated single-cell ATAC-seq datasets and real data from FAC-sorted hematopoietic cells. cisTopic typically yielded higher adjusted Rand index (ARI) scores for cell-type clustering, especially in low-coverage scenarios, confirming that the method can more robustly capture biologically meaningful patterns in sparse single-cell ATAC-seq data.
 
-
-
-
-In the cisTopic paper, the authors benchmarked their approach against other popular tools such as chromVAR, scABC, BROCKMAN, SCRAT, Cicero, and LSI, using both simulated single-cell ATAC-seq datasets and real data from FACS-sorted hematopoietic cells. They showed that cisTopic typically yielded higher adjusted Rand index (ARI) scores for cell-type clustering, especially in low-coverage scenarios, confirming that the method can more robustly capture biologically meaningful patterns in sparse single-cell ATAC-seq data.
+[There was something about how cistopic reduces dimensionality for both cells and regions somewhere, in the part where they compare previous analysis methods. highlight that.]
 
 \section{Artificial learning}
 
@@ -407,3 +484,77 @@ fly brain paper
 mcmc: converges --> now loss functions are converging, we observed an evolution/transition of early machine learning models to machine learning and deep learning [explain the distinction between the two]
 
 enformer/transformer paper?
+
+% [rewrite] In their groundbreaking study, "Cell-type-directed design of synthetic enhancers," Taskiran et al. (2024) leverage deep learning to decode the genetic rules governing transcriptional enhancers—short DNA sequences that regulate gene expression by binding transcription factors. Using convolutional neural networks trained on enhancer activity data, the authors demonstrate how random DNA sequences can be evolved through iterative nucleotide mutations to create synthetic enhancers that are highly specific to particular cell types, such as Kenyon cells and glial cells in Drosophila brains, as well as melanoma cells in humans. This computational approach reveals the fundamental role of activator and repressor motifs, showing that enhancer function depends on the precise arrangement, spacing, and strength of these motifs. The study not only uncovers the principles underlying enhancer function but also introduces the concept of minimal enhancers—compact sequences as short as 50 base pairs capable of retaining full regulatory activity. Furthermore, the authors engineer dual-code enhancers that target multiple cell types, showcasing the flexibility of this design process. Experimental validation through transgenic animal models and reporter assays confirms the activity of these synthetic enhancers, underscoring their potential applications in gene therapy, synthetic biology, and disease modeling. By combining computational modeling with experimental biology, this work provides a transformative framework for understanding and designing gene regulatory elements with unprecedented precision and scalability.
+
+Hubel and Wiesel showed that specific neurons in a cat's visual cortex respond to common spatial patterns (e.g. edges, corners, orientations) in specific locations within the cat's visual field. These patterns can overlap when layers of neurons pass information onwards, forming broader structures which ultimately allow the cat to recognise complex objects. This idea was borrowed by Fukishima and later LeCun to implement convolutional neural networks (CNNs) for handwritten digit recognition. Rasterized (vectorized) images are scanned by a "filter", converting the original data into a new representation. This new representation is then passed on to the next layer, where it is again scanned by a new filter, and so on until the final layer. CNNs are thus well suited for detecting spatial patterns, and integrating these patterns into larger, more global structures. The same logic is applied in [ref], where a CNN is trained to detect local patterns in DNA (cell-type specific peaks). In order to train a CNN on DNA sequences (peaks), DNA sequences were one-hot encoded (each position is encoded by a binary vector of length 4, and the sequence is represented as a matrix of these vectors of size $N \times L \times 4$). where $N$ is the number of sequences, $L$ is the sequence length (500 bp), and the nucleotides are one-hot encoded as binary vectors.
+
+\[
+\mathbf{X} \in \{0, 1\}^{N \times L \times 4}, \text{ e.g. }
+\begin{bmatrix}
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0
+\end{bmatrix}
+,
+\begin{bmatrix}
+0 & 1 & 0 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0
+\end{bmatrix}
+\end{bmatrix}
+\text{ encodes for [ACGTA, CAGTC].}
+\]
+
+The output labels are represented by a given by:
+\[
+\mathbf{Y} \in [0, 1]^{N \times C}
+\]
+where $C$ denotes the number of cell types (e.g., $C = 81$). Each $Y_{ij}$ represents the probability that sequence $i$ is an enhancer for cell type $j$. For example:
+\[
+\begin{bmatrix}
+0.9 & 0.1 & 0.0 & \cdots & 0.2 \\
+0.1 & 0.8 & 0.1 & \cdots & 0.0 \\
+0.0 & 0.1 & 0.9 & \cdots & 0.1
+\end{bmatrix}
+\]
+indicates that sequence 1 is likely an enhancer for cell type 1 (0.9), sequence 2 for cell type 2 (0.8), and sequence 3 for cell type 3 (0.9).
+
+The convolution operation for filter $k$ is:
+\[
+z_{i,k} = f \left( \sum_{j=1}^{h} \sum_{m=1}^{4} X_{i+j-1, m} W_{j, m}^{(k)} + b_k \right)
+\]
+where $f(x) = \max(0, x)$ is the ReLU activation function.
+
+After pooling, the flattened feature map $\mathbf{P}$ is mapped to outputs as:
+\[
+\mathbf{\hat{Y}} = \sigma \left( \mathbf{P} \mathbf{V} + \mathbf{b} \right)
+\]
+where $\sigma$ is the sigmoid function.
+
+The binary cross-entropy loss is computed as:
+\[
+\mathcal{L}_{ij} = - \left[ Y_{ij} \log(\hat{Y}_{ij}) + (1 - Y_{ij}) \log(1 - \hat{Y}_{ij}) \right]
+\]
+with the total loss:
+\[
+\mathcal{L} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{j=1}^{C} \mathcal{L}_{ij}
+\]
+
+
+
+Filters correspond to biologically meaningful motifs, making CNNs interpretable for genomics.
+
+Briefly, an atlas of fly brain scATAC-seq data was pre-processed and annotated. Cell-type labeled peak sets were then
+
+
+CNNs have been successfully used in earlier enhancer prediction models, such as DeepBind and DeepSEA, validating their use in genomics.
+
+
+
+
