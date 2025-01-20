@@ -94,7 +94,7 @@ A "backward" experiment in which the sequence of a given DNA or RNA molecule cou
 	\label{fig:sangersequencing}
 \end{wrapfigure}
 
-Soon after, Fredrick Sanger, who had developed the two-dimensional fractionation used by Fiers\sjcitep[,]{sangerTwodimensionalFractionationProcedure1965} and had been awarded the Nobel prize for the amino-acid sequence of insulin in 1958, succeeded in deterministically sequencing the entire DNA genome of bacteriophage \textphi X174 in 1977\sjcitep[.]{sangerDNASequencingChainterminating1977} Earlier work had shown that dideoxy variants of the four common nucleotides (A, C, G \& T) would inhibit further polymerisation when included into the newly synthesised DNA strand due to the absence of a reactive phosphate. Sanger devised that a polymerisation reaction performed in a mixture of the four common nucleotides combined with a single dideoxy variant will produce a mixture of strands terminated at each position of the dideoxy variant. Sanger further reasoned that performing this reaction for all four dideoxy variants in parallel should yield all the positions of each of the four bases (\autoref{fig:sangersequencing}). Indeed, when applied to fragments of \textphi X174 DNA, the entire phage's genome could be reconstructed. Sanger's method now allowed researchers to sequence DNA at a relatively "rapid" pace and with higher accuracy than previously possible, setting the stage for the coming decade's research.
+Soon after, Fredrick Sanger, who had developed the two-dimensional fractionation used by Fiers\sjcitep[,]{sangerTwodimensionalFractionationProcedure1965} and had been awarded the Nobel prize for the amino-acid sequence of insulin in 1958, succeeded in deterministically sequencing the entire DNA genome of bacteriophage \textphi X174 in 1977\sjcitep[.]{sangerDNASequencingChainterminating1977} Earlier work had shown that dideoxy variants of the four common nucleotides (A, C, G \& T) would inhibit further polymerisation when included into the newly synthesised DNA strand due to the absence of a reactive phosphate. Sanger devised that a polymerisation reaction performed in a mixture of the four common nucleotides combined with a single dideoxy variant will produce a mixture of strands terminated at each position of the dideoxy variant. Sanger further reasoned that performing this reaction for all four dideoxy variants in parallel should yield all the positions of each of the four bases (\autoref{fig:sangersequencing}). Indeed, when applied to fragments of \textphi X174 DNA, the entire phage's genome (5386 basepairs) could be reconstructed. Sanger's method now allowed researchers to sequence DNA at a relatively "rapid" pace and with higher accuracy than previously possible, setting the stage for the coming decade's research. The genomes of bacteriophage \textlambda and Simian Virus 40 soon followed [when? cite?].
 
 While the function of chromatin's DNA component was now clear, its protein component required more scrutiny. The discovery of the molecular structure of chromatin [] Roger Kornberg, who showed that
 \sjcitep[.]{kornbergChromatinStructureOligomers1974, kornbergChromatinStructureRepeating1974a}
@@ -127,6 +127,37 @@ Parallel research in Roeder's lab led to the discovery of a protein which induce
 [not very good text:] We now understand that fine-tuned gene regulation explains how one cell can give rise to many, that this program is embedded in our genomes through a "regulatory code", and that aberrant gene regulation can explain many of our age's most important diseases. Much progress has been made in unraveling the mechanics of gene regulation. We have models of gene transcription and translation, cell signaling, the roles of several classes of proteins, and so on. Now, the objective has shifted from elucidating the fundamental processes that govern gene regulation to reconstructing the specific gene regulatory networks that underly life. Full and deterministic models which can exhaustively answer our core questions remain elusive, almost unimaginable.
 
 Many (Sanger twice, Roger Kornberg,) researchers cited here were recipients of the Nobel prize for their work, illustrating the importance of these subjects.
+
+
+[So now we sort of start to understand genomes, canonical knowledge (it was disputed for a time!), we're sort of starting to understand that transcription factors interact with the genome, but how will we deciper this? we need a human genome! technology is advancing]
+
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\captionsetup{font=blue, labelfont=sc, labelsep=quad}
+\begin{wraptable}{r}{7cm}
+\caption{Timeline of Early Genome Sequencing}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{5cm}}
+\toprule
+\addlinespace[1.5ex] 
+\multicolumn{1}{c!{\tfoo}}{}& \\[-2.3ex]
+1995 & First complete bacterial genome (H. influenzae, 1.83Mb)\\
+1996 & First eukaryotic genome (S. cerevisiae, 12Mb)\\
+1998 & First multicellular organism (C. elegans, 100Mb)\\
+2000 & Largest eukaryotic genome to date (D. melanogaster, 120Mb)\\
+\multicolumn{1}{c!{\bfoo}}{}&
+\end{tabular}
+\end{wraptable}
+
+
+A brief timeline:
+The human genome project started in 1985 as a joint academic effort between the US National Institutes of Health. Surprisingly, the US Department of Energy also played a major role, with Lawrence Livermore, Los Alamos and Lawrence Berkeley labs providing extensive support in computational analysis and data storage. The ties between DNA, cancer, radiation damage and the immune system were also known already. The project was first expected to take 15 years and cost ~\$3 billion dollars. Early efforts focused on a hierarchical approach: the genome was broken into fragments (~200kbp) and cloned into bacterial artificial chromosomes (BACs). These BACs were then linked into large contigs using a variety of techniques (mainly sequence tagging sites PCR and restriction enzyme fingerprinting), which were in turn mapped to entire chromosomes. Individual BAC clones were then further fragmeted into smaller pieces (1000bp) which could be sequenced via the Sanger method. A number of problems made this approach a slow process: repetitive DNA regions and coverage gaps and made the assembly of contigs difficult, and Sanger's dideoxy method was incredibly labour intensive. Luckily, automation soon followed. One company played a particularly important role: ABI, first with the ABI Prism 373 and 377 automated slab gel electrophoresis analyzers, then with the ABI Prism 310 capilarry gel electrophoresis, and finally the ABI 3700 96-plex capillary gel electrophoresis analyzer (1998), which became the workhorse of the human genome project. This machine could sequence \textit{thousands} of base pairs per day (this is particularly funny to write in 2025)!
+
+In 1995, craig venter founded celera. at celera, 300 ABI 3700s were working 24/7 with the explicit intent to sequence the human genome faster than the human genome project. Their trick was to bypass the contig assembly altogether: instead, they used a whole genome shotgun approach, fragmenting the genome directly into fragments that could be run on the ABI 3700. This approach was first considered infeasible to resolve computationally, but development of better computers and algorithms during the 90s, and using the human genomoe projects' intermittently released data allowed Celera to publish a draft in 2001.
+
+in 2000: drosophila, first complex genome done by celera using whole genome shotgun approach. <refer to previous text with drosophila ofc>
+
+
+Validated the viability of whole-genome shotgun sequencing for eukaryotes, which was controversial at the time! The race was on.
+draft of hgp: 90\% complete, some gaps of uncertainty
 
 \section{Next generation sequencing}
 [maybe link this part better with the previous section] The completion of the human genome project in 2003 allowed researchers to shift focus from recording the genome sequence to deciphering its code. The new fields of transcriptomics, epigenomics, metagenomics, population genetics, ... now required sequencing not just one genome, but thousands of genomes and other nucleic acid samples across many species, individuals and tissues. This demand could not be met by the Sanger sequencing method, spurring the development of a variety of new sequencing technologies. While initially several participants competed in the , one victor emerged to take a monopoly: Illumina. Illumina had acquired Solexa in 2007. Solexa itself was founded in 1998
@@ -184,9 +215,10 @@ read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTAC
 
 An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
 
-[here starts the part about the techs that sequencing tech unlocked]
+
 
 \section{Sequencing assays}
+so now we have a human genome... we have cheap sequencing... what can we do beyond cheaply sequencing genomes?
 The widespread availability of NGS directly led to the development of a new class of quantitative, sequencing-based assays. Prior to the widespread availability of NGS, studying gene expression relied heavily on microarrays\sjcitep[,]{schenaQuantitativeMonitoringGene1995} where RNA samples are hybridized to pre-designed DNA probes on a glass slide and fluorescence intensity is used to measure expression levels. This technique allowed researchers to measure expression levels across a large number of genes (and even samples, using multiple fluorescent probes) in a single experiment.
 
 % RNA-Seq emerged as one of the earliest transformative applications enabled by NGS. Prior to RNA-Seq, gene expression studies relied heavily on microarrays, which measured RNA levels indirectly through hybridization. Microarrays were constrained by their dependence on pre-designed probes, which limited their ability to detect novel transcripts, splice variants, and non-coding RNAs. RNA-Seq replaced these limitations with a direct, unbiased, and quantitative approach to transcriptomics. Researchers could profile entire transcriptomes, detect rare transcripts, and identify alternative splicing events. This shift proved especially impactful in understanding diseases like cancer, where transcriptomic dysregulation plays a key role. RNA-Seq also facilitated comparative transcriptomics across species, developmental stages, and experimental conditions, broadening its utility in evolutionary biology and functional genomics.
@@ -208,7 +240,7 @@ new notion: strong and weak binding sites for NRSF!
 The observation that some non-canonical sites were functional only when clustered or when associated with specific chromatin features implies that binding specificity can be influenced by chromatin context and local DNA architecture.
 varied and context-specific binding.
 
-They observed that genes with NRSF-binding sites near their promoters displayed significantly lower transcript levels, consistent with NRSF’s role as a transcriptional repressor.
+They observed that genes with NRSF-binding sites near their promoters displayed significantly lower transcript levels, consistent with NRSF's role as a transcriptional repressor.
 before this: individiual tfs linked to individual genes or small regions, NOT entire networks of genes being regulated by one tf!
 ChIP-chip required pre-designed arrays and lacked genome-wide coverage.
 ChIP-SAGE offered some breadth but had lower resolution and required more complex workflows.
@@ -227,7 +259,19 @@ methylation sequencing\sjcitep[.]{barskiHighresolutionProfilingHistone2007}
 % % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
 
 
-This enzyme was first used by Adey & Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing"). Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{shendureMassivelyParallelContiguity2013}
+This enzyme was first used by Adey & Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing")\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{adeyRapidLowInputLowbias2010,shendureMassivelyParallelContiguity2013} Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. (This is important for single-cell later.)
+
+reznikoff 1998: \sjcitep[]{goryshinTn5VitroTransposition1998} Innovation in Mutant Transposase: The study employs a hyperactive transposase mutant (EK54/MA56/LP372) to achieve efficient in vitro transposition, overcoming the low activity of wild-type Tn5 transposase. why tn5 is more simple than <than what?>: Tn5 relies on only three core components (transposase, OE sequences, and target DNA) and eliminates the need for host proteins or other cis-acting sequences, simplifying transposition studies. Mechanistic Insights: The precise cleavage and transposition process were analyzed in detail, providing insights into the molecular steps of Tn5 transposition. Unlike other transposons, Tn5 transposition requires no host proteins or additional DNA sequences beyond the 19-bp OE. think that their tool can be used for integrating synthetic dna constructs into specific dna sites. The paper shows that Tn5 transposition involves both sequence-specific recognition of the OEs and a random component when selecting target DNA. Dependency on Magnesium: The study confirms that no transposition occurs in the absence of Mg²⁺, highlighting its importance for the catalytic activity of the transposase and possibly for stabilizing the DNA-protein complex - DDE motif, known in RNAseH family of enzymes.
+
+reznikoff 2002: introduction of mosaic end\sjcitep[]{steinigerwhiteEvidenceUnseenTransposase2002} The mosaic end (ME) is a hyperactive recognition sequence that differs from the OE at three positions (4, 17, and 18). ME's hyperactivity results in significantly higher transposition efficiency compared to the OE. The primary defect in OE-mediated transposition lies in its impaired ability to form the paired ends complex (PEC), a crucial intermediate in the transposition process.
+Tnp binds OE and ME monomers similarly, but PEC formation is more efficient with the ME. (paired ends complex). The hyperactivity of the ME is primarily attributed to the base at position 4. Specifically, the C5-methyl group on the thymine base of the non-transferred strand at position 4 is critical for efficient PEC formation.
+Mutations at positions 17 and 18 do not significantly affect PEC formation.
+
+reznikoff 2003: review, Key residues (DDE motif) in Tnp's active site coordinate magnesium ions critical for catalysis.
+
+
+
+already shown as a molecular tool in genetics\sjcitep[]{reznikoffTn5MolecularGenetics2004}
 % people are doing dnase-seq and chip-seq
 % atac-seq is invented by buenrostro
 % backstory of tn5: adey, reznikoff
