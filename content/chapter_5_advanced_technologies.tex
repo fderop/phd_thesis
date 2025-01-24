@@ -14,11 +14,14 @@ what we need for better predictive tools
     \item more more arrayed dat --> well based assays!
 \end{itemize}
 
+Droplet-based assays require large amounts of labour and skill to implement. Automating the flow-focusing-based droplet microfluidics is generally challenging. The 10x Chromium Connect, a modified Hamilton Nimbus liquid handler with an on-deck Chromium, offers fully automated droplet generation and library prep, but does not increase throughput since the system is serial in nature (one concurrent batch of up to 8 samples at a time). Droplet generation itself is also a confounding process that affects the entire sample. If the process fails (by the hand of dust, cell or DNA aggregates, air bubbles, chip imperfections, pump controller or gasket failures, ...), the entire sample can be compromised, or will at least suffer a delay. Manual droplet generation on an Onyx or Chromium followed by partial automation of the library prep only is also not practical for many (96+) samples, due to time spent on ice before/after droplet generation for the first/last samples. Native plate-based methods deal with this problem more elegantly, for example by pre-sorting cells into plates using FACS, freezing the plates, and thawing the plates on demand - a process which can be automated end to end. Moreover, the most recent SMART-seq assays have scaled down reagent cost through the use of acoustic nanoliter dispensing and 1536 well-plate formats, and combinatorial indexing methods have come closer to 10x Chromium in terms of sensitivity. Does this mean that droplet-based assays have no future?
+
+
 sample multiplexing tackled by
 \begin{itemize}
     \item snubar
-    \item multiplexing with antibody oligos (reap-seq, cite-seq/total-seq)
-    \item indexed tn5 multiplexing for atac-seq (multi-seq, cut&tag for atac)
+    \item lipd and antibody oligos
+    \item indexed tn5 multiplexing for atac-seq (cut\&tag for atac)
     \item scifi-seq overloading
     \item genetic demultiplexing
     \item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
@@ -26,18 +29,17 @@ sample multiplexing tackled by
     \item !!!!!!!!!!!!! parse bio and that massive dataset
 \end{itemize}
 
-\begin{itemize}
-    \item Advanced smart-seq
-    \item Advanced droplet tech
-    \item Advanced perturbation studies
-    \item Advanced highly multiplexed sequencing
-    \item Advanced AI
-\end{itemize}
-
-"does this mean droplet-based assays are completely dead?" the most recent smart-seq assays have scaled down reagent cost, and with the use of 1536 wells and automation (classical liquid handling, but also echo), throughput can be scaled considerably. no: look at pip-seq. a development i find very interesting is pip-seq.
+no: look at pip-seq. a development i find very interesting is pip-seq.
 microfluidic device is costly, also - definitely requires a lot of skill to operate, and it's intensive work mentally/requires focus. a major, major problem is multiplexing samples.
 \sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023}
 
+The main strategy to increase sample throughput is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkaComparativeAnalysisAntibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
+
+Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
+
+
+
+Chromium = nimbus
 
 perturbations
 \begin{itemize}
@@ -51,10 +53,11 @@ validation
 \begin{itemize}
     \item mpras
     \item reporter assays
-\item{itemize}
+\end{itemize}
 
 tackling multimodality: not a great strength
 \begin{itemize}
+    \item reap-seq, cite-seq, eccite-seq
     \item 10x multiome
     \item TEA-seq
     \item some plate based bullshit
