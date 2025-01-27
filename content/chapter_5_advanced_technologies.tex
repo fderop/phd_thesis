@@ -1,18 +1,5 @@
 \chapter{The path ahead}
-Highly predictive tools help advance science in a number of ways. First and foremost, good models help save costs by narrowing down the number of hypotheses that need to be tested. Ideas (e.g. enhancer candidates) can be evaluated in-silico, and the most promising ones can be validated. Downstream of that, higher iteration speed and reduced capital cost reduce the barrier to entry, allowing us to pool human resources more efficiently. Finally, since ML models value negative and control data, they stimulate data sharing and transparency, and potentially the repurposing of existing databases.
-
-In this work, we established a droplet microfluidic platform for single-cell RNA- and ATAC sequencing, and laid a benchmarking framework and pipeline for scATAC-seq specifically. We have also shown that data generated through this and adjacent omics techniques can be used to feed machine learning model training campaigns that produce models with predictive value. What can we expect from the future of this field, and where should we try to improve the most?
-
-In the previous decades, researchers have been focused on understanding how natural biological systems self-organize and function. As our knowledge grows, so will our confidence to modulate and impact these systems. There are three main areas I can think of: the first, and the most logical continuations on this work, is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
-
-
-Consolidating this knowledge into deterministic understanding will ultimately lead to advanced cell- and gene therapies. CAR-T, the re-engineering of autologous T cells to target cancer [be more specific], has been a resounding success.
-
-\begin{itemize}
-    \item Cell response to drugs
-    \item Differentiate cells into what we want, transhumanism
-    \item protein binding
-\end{itemize}
+In this work, we have established a droplet microfluidic platform for single-cell RNA- and ATAC sequencing, and laid a benchmarking framework and pipeline for scATAC-seq specifically. We have also shown that data generated through this and adjacent omics techniques can be used to feed model training campaigns. 
 
 \begin{itemize}
     \item better fidelity/less noise
@@ -29,33 +16,37 @@ Consolidating this knowledge into deterministic understanding will ultimately le
     \item Self-Optimizing Experiments: AI-driven platforms could autonomously design and run experiments, iteratively refining hypotheses in real time. closed loop scientist = the end game
 \end{itemize}
 
-
 \section{What is needed?}
+Before single-cell sequencing methods were available, perturbation screens were performed in an arrayed manner, starting with RNAi screens in the early 2000s\sjcitep[,]{berns2004large,boutros2006analysis} and since the application of CRISPR as a molecular tool\sjcitep[]{ran2013genome} have quickly gained more traction\sjcitep[.]{behan2019prioritization,pacini2021integrated} In arrayed screens, each perturbation is handled individuall from beginning to end in microwell plates, a laborious and expensive process. Around 2014, researchers at the Broad institute realised that single-cell sequencing would allow them parallelize perturbation screens by generating pooled lentiviral libraries\sjcitep[.]{dixit2016perturbseq} Their method, Perturb-seq, revolves around a clever lentiviral vector design: each vector is designed to express two transcripts: the sgRNA, driven by U6, and a transcript containing the puro selection cassette, BFP, and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). the known sgRNA-GBC dictionary can then be used to identify the genetic edit present in captured cell \sjcitep[.]{dixit2016perturbseq} Perturb-seq's costs can also be scaled down by multiplexing perturbations or cells: if gene regulatory networks are assumed sparse in number of participants, then the differential expression of a cell responding to multiple perturbations (high MOI), or a droplet containing multiple single-perturbation cells, can be considered a linear combination of the effect of its components. Pooling cells or perturbations in this manner and demultiplexing the individual terms using PCA and LASSO can reduce cost ten-fold and quantify interaction terms between different perturbations\sjcitep[.]{yao2024scalable}
 
-perturbations
+drawback: vector does not contain Cas9, therefore needs to be performed in transgenic Cas9-expressing K562 cell lines
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{perturbation_vectors.png}
+	\captionsetup{width=0.85\linewidth}
+	\caption[Common single-cell perturbation vector designs]{Common single-cell perturbation vector designs. Reproduced from \notefullcite{xie2018frequent}.}
+	\label{fig:perturbation_vectors}
+\end{figure}
+
 \begin{itemize}
-    \item TAP-seq
     \item perturb-seq/perturb-atac, even spatial! perturb-map, perturb-fish
     \item crop-seq
+    \item TAP-seq
     \item MIX-seq
     \item drug or molecule screens
     \item DRUG-seq -> also interplay with automation
 \end{itemize}
 
-tackling multimodality: not a great strength
-\begin{itemize}
-    \item reap-seq, cite-seq, eccite-seq
-    \item 10x multiome
-    \item TEA-seq
-    \item some plate based bullshit
-\end{itemize}
-
+one of the weaknesses of droplet-based methods...
 
 this will require many conditions!
 
 so, we will need to multiplex!
 
 Sample multiplexing for droplet microfluidics has also been achieved through other means. The main strategy is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkaComparativeAnalysisAntibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
+
+layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out
 
 dsciatac!!
 Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
@@ -82,9 +73,17 @@ validation
     \item reporter assays
 \end{itemize}
 
+tackling multimodality: not a great strength
+\begin{itemize}
+    \item reap-seq, cite-seq, eccite-seq
+    \item 10x multiome
+    \item TEA-seq
+    \item some plate based bullshit
+\end{itemize}
+
 
 this will lead to circular automation that self-learns
-
+10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab}
 maybe better ai? better hardware? scaling laws? bitter pill?
 maybe say something about the nvidia collabs?
 
@@ -101,4 +100,12 @@ mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022dec
 - by using combination of bulk ATAC-seq and RNA-seq, in a simple study design (2 cell lines, 3 time points, 3 replicates, treatment vs control)
 - despite measuring similar levels of 3-CeP induced DNA damage in both cancer cell lines, the outcome was different, with one cell line engaging dna repair mechanisms earlier and more efficiently, and surviving the treatment at a higher rate, than the other. IC50 concentrations were also 10-50x higher in one cell line than the other --> viability
 
-10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab}
+
+\sjcitep[.]{janssens2022decoding}
+by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain
+identified key TFs for each cell type using cisTarget (ref)
+[deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!)
+
+mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs
+
+out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.

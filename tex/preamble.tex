@@ -148,8 +148,8 @@
 %--- graphics and images
 \usepackage{graphicx}
 \graphicspath{ {./im/} }
-\usepackage[font=small]{caption}
-\captionsetup[figure]{name={Figure.},labelsep=period}
+\usepackage{caption}
+\captionsetup[figure]{name={Figure.},labelsep=period,font=default}
 \usepackage{wrapfig} % for wrapping figures inside text
 \setlength{\abovecaptionskip}{7pt} % skip height after caption
 
@@ -171,8 +171,9 @@
 \usepackage{wrapfig}
 \usepackage{array, booktabs}
 \usepackage[x11names, table]{xcolor}
-\usepackage{caption}
-\DeclareCaptionFont{blue}{\color{LightSteelBlue3}}
+
+
+% \DeclareCaptionFont{blue}{\color{LightSteelBlue3}}
 
 \newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\tiny\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
 \newcommand{\bfoo}{\raisebox{2.1ex}[0pt]{\makebox[\dimexpr2\tabcolsep]%
