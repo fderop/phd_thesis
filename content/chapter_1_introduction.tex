@@ -251,8 +251,7 @@ chip-chip: A precursor to ChIP-Seq, ChIP-chip combines chromatin immunoprecipita
 they measured genome-wide transcript levels in Jurkat cells using Illumina RefSeq8 Sentrix arrays to assess RNA abundance.
 
 
-leads to \sjcitep[.]{trapnellTranscriptAssemblyQuantification2010}
-Tn5
+The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
 
 methylation sequencing\sjcitep[.]{barskiHighresolutionProfilingHistone2007}
 
@@ -267,9 +266,7 @@ reznikoff 2002: introduction of mosaic end\sjcitep[]{steinigerwhiteEvidenceUnsee
 Tnp binds OE and ME monomers similarly, but PEC formation is more efficient with the ME. (paired ends complex). The hyperactivity of the ME is primarily attributed to the base at position 4. Specifically, the C5-methyl group on the thymine base of the non-transferred strand at position 4 is critical for efficient PEC formation.
 Mutations at positions 17 and 18 do not significantly affect PEC formation.
 
-reznikoff 2003: review, Key residues (DDE motif) in Tnp's active site coordinate magnesium ions critical for catalysis.
-
-
+reznikoff 2003: review, Key residues (DDE motif) in Tnp's active site coordinate magnesium ions critical for catalysis\sjcitep[.]{reznikoffTn5ModelUnderstanding2003}
 
 already shown as a molecular tool in genetics\sjcitep[]{reznikoffTn5MolecularGenetics2004}
 % people are doing dnase-seq and chip-seq
