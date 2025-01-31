@@ -219,9 +219,43 @@ An indexed binary format (\verb|BAM|) can also generated to save storage space a
 
 \section{Sequencing assays}
 so now we have a human genome... we have cheap sequencing... what can we do beyond cheaply sequencing genomes?
-The widespread availability of NGS directly led to the development of a new class of quantitative, sequencing-based assays. Prior to the widespread availability of NGS, studying gene expression relied heavily on microarrays\sjcitep[,]{schenaQuantitativeMonitoringGene1995} where RNA samples are hybridized to pre-designed DNA probes on a glass slide and fluorescence intensity is used to measure expression levels. This technique allowed researchers to measure expression levels across a large number of genes (and even samples, using multiple fluorescent probes) in a single experiment.
+The widespread availability of NGS, and the availability of the human genome project, directly led to the development of a new class of quantitative, sequencing-based assays. Prior to the widespread availability of NGS, studying gene expression relied heavily on microarrays\sjcitep[,]{schenaQuantitativeMonitoringGene1995} where RNA samples are hybridized to pre-designed DNA probes on a glass slide and fluorescence intensity is used to measure expression levels. This technique allowed researchers to measure expression levels across a large number of genes (and even samples, using multiple fluorescent probes) in a single experiment. Microarrays could also be used to identify DNA-protein interactions through chromatin immunoprecipitation on chip, "ChIP-on-Chip".  Here, DNA bound by a protein (transcription factors, histones) are immunoprecipitated, extracted, amplified and hybridized to a microarray containing a library of genomic regions. Both of these microarray-dependent technique suffered heavy biases and low dynamic ranges. In addition, ChIP-on-Chip's genomic resolution was limited by the probe pool on the chip, often limited to 500-1000 bp bins, which is too low to accurately determine new transcription factor motifs. In 2007, three papers were released describing ChIP-seq, chromatin immunoprecipitation by sequencing.
 
-% RNA-Seq emerged as one of the earliest transformative applications enabled by NGS. Prior to RNA-Seq, gene expression studies relied heavily on microarrays, which measured RNA levels indirectly through hybridization. Microarrays were constrained by their dependence on pre-designed probes, which limited their ability to detect novel transcripts, splice variants, and non-coding RNAs. RNA-Seq replaced these limitations with a direct, unbiased, and quantitative approach to transcriptomics. Researchers could profile entire transcriptomes, detect rare transcripts, and identify alternative splicing events. This shift proved especially impactful in understanding diseases like cancer, where transcriptomic dysregulation plays a key role. RNA-Seq also facilitated comparative transcriptomics across species, developmental stages, and experimental conditions, broadening its utility in evolutionary biology and functional genomics.
+
+
+
+The first paper:
+methylation ChIP-seq\sjcitep[.]{barskiHighresolutionProfilingHistone2007}
+used solexa 1G
+
+
+second paper:
+both barbara wold and ali mortazavi!
+chip-seq\sjcitep[.]{johnsongenomewidemappingvivo2007}
+Cells are fixed and lysed. The transcription factor of interest, still bound to its DNA, is immunoprecipitated. The DNA is then purified and sequenced. robust statistical confidence (ROC > 0.96) = more reliable than chip-chip or SAGE, genome-wide (not on arrays) --> identify unknown binding sites and as a result non-canonical binding motifs. high positional resolution (50 bp). correctly predicted that sequencing depth will increase due to costs. correctly predicted combination with rna-seq ("gene expression", rna-seq didn't exist yet). predict use for drug targets by mapping aberrant TF binding sites in disease states
+new notion: strong and weak binding sites for NRSF!
+The observation that some non-canonical sites were functional only when clustered or when associated with specific chromatin features implies that binding specificity can be influenced by chromatin context and local DNA architecture.
+varied and context-specific binding. They observed that genes with NRSF-binding sites near their promoters displayed significantly lower transcript levels, consistent with NRSF's role as a transcriptional repressor.
+before this: individiual tfs linked to individual genes or small regions, NOT entire networks of genes being regulated by one tf!
+ChIP-chip required pre-designed arrays and lacked genome-wide coverage.
+ChIP-SAGE offered some breadth but had lower resolution and required more complex workflows.
+
+
+third paper, but for TFs:
+TF ChIP-seq\sjcitep[.]{robertsonGenomewideProfilesSTAT12007}
+studied STAT1 binding in HeLa cells, difference if IFN-\textgamma-stimulated and -unstimulated. found 41582 peaks in to stimulated cells, and 11004 peaks unique to unstimulated cells, with only 15\% of unstimulated being unique to that condition. Stimulated peaks were significantly more enriched for STAT1 binding motifs than unstimulated peaks, something that could not be assesse dwith chip-on-chip. Peak height was positively correlated with STAT1 motif enrichment, meaning the strongest STAT1 binding events occurred in the stimulated condition!!
+used solexa 1G
+
+
+
+they measured genome-wide transcript levels in Jurkat cells using Illumina RefSeq8 Sentrix arrays to assess RNA abundance.
+
+
+Whereas RNA-seq replaced microararys, ChIP-seq replaced ChIP-on-Chip.
+ChIP-on-Chip: pull down protein-bound dna with ab, then hybridise to a chip --> low resolution base-pair (500-1000bp) microarray-like technique, pinpoint binding sites on the genome impossible --> shit for motifs. ChIP-PET (Paired-End Tag sequencing) existed, but required complex library preparation.
+
+
+The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
 
 
 \begin{itemize}
@@ -231,32 +265,13 @@ The widespread availability of NGS directly led to the development of a new clas
 	\item bulk ATAC-seq
 \end{itemize}
 
-both barbara wold and ali mortazavi!
-chip-seq\sjcitep[.]{johnsongenomewidemappingvivo2007}
-Cells are fixed and lysed. The transcription factor of interest, still bound to its DNA, is immunoprecipitated. The DNA is then purified and sequenced.
-
-robust statistical confidence (ROC > 0.96) = more reliable than chip-chip or SAGE, genome-wide (not on arrays) --> identify unknown binding sites and as a result non-canonical binding motifs. high positional resolution (50 bp). correctly predicted that sequencing depth will increase due to costs. correctly predicted combination with rna-seq ("gene expression", rna-seq didn't exist yet). predict use for drug targets by mapping aberrant TF binding sites in disease states
-new notion: strong and weak binding sites for NRSF!
-The observation that some non-canonical sites were functional only when clustered or when associated with specific chromatin features implies that binding specificity can be influenced by chromatin context and local DNA architecture.
-varied and context-specific binding.
-
-They observed that genes with NRSF-binding sites near their promoters displayed significantly lower transcript levels, consistent with NRSF's role as a transcriptional repressor.
-before this: individiual tfs linked to individual genes or small regions, NOT entire networks of genes being regulated by one tf!
-ChIP-chip required pre-designed arrays and lacked genome-wide coverage.
-ChIP-SAGE offered some breadth but had lower resolution and required more complex workflows.
-
-chip-chip: A precursor to ChIP-Seq, ChIP-chip combines chromatin immunoprecipitation (ChIP) with microarray technology. After immunoprecipitating DNA bound by a TF, the enriched DNA is hybridized to a microarray containing pre-designed oligonucleotides corresponding to genomic regions.
-
-
-they measured genome-wide transcript levels in Jurkat cells using Illumina RefSeq8 Sentrix arrays to assess RNA abundance.
-
-
-The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
-
-methylation sequencing\sjcitep[.]{barskiHighresolutionProfilingHistone2007}
+%% ## RNA-seq
+% RNA-Seq emerged as one of the earliest transformative applications enabled by NGS. Prior to RNA-Seq, gene expression studies relied heavily on microarrays, which measured RNA levels indirectly through hybridization. Microarrays were constrained by their dependence on pre-designed probes, which limited their ability to detect novel transcripts, splice variants, and non-coding RNAs. RNA-Seq replaced these limitations with a direct, unbiased, and quantitative approach to transcriptomics. Researchers could profile entire transcriptomes, detect rare transcripts, and identify alternative splicing events. This shift proved especially impactful in understanding diseases like cancer, where transcriptomic dysregulation plays a key role. RNA-Seq also facilitated comparative transcriptomics across species, developmental stages, and experimental conditions, broadening its utility in evolutionary biology and functional genomics.
 
 % % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
 
+
+% atac-seq emerges from library prep
 
 This enzyme was first used by Adey and Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing")\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{adeyRapidLowInputLowbias2010,shendureMassivelyParallelContiguity2013} Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. (This is important for single-cell later.)
 
@@ -278,6 +293,7 @@ already shown as a molecular tool in genetics\sjcitep[]{reznikoffTn5MolecularGen
 
 % further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
 % toadd: salmen et al, spindrop --> pico injectil
+
 \section{Single-cell sequencing technologies}
 \label{sect:single_cell_sequencing_tech}
 % \begin{itemize}
