@@ -8,6 +8,15 @@
 
 \ExecuteBibliographyOptions{citetracker,sorting=none}
 
+% Add this new name format definition at the top of the file
+\DeclareNameFormat{lastonly}{%
+  \ifnum\value{listcount}=1
+    \namepartfamily
+    \isdot
+  \fi
+  \usebibmacro{name:andothers}%
+}
+
 %==========================================================%
 % \DeclareCiteCommand below creates a citation with the 
 % normal-sized citation index (in brackets - \mkbibbrackets)
@@ -79,23 +88,22 @@
   {\usebibmacro{cite:dump}}%
 
 \newbibmacro*{supershortnotecite}{%
-  \ifciteseen%
-    {}%
-    {\iffieldequalstr{entrytype}{article}% checks if the entry type is "article",
-                                         % and if true, entry fields and punctuation are 
-                                         % printed as specified below; if false, default  
-                                         % biblatex citation scheme is used
-      {%
-        \xappto\cbx@citehook{%
-          \noexpand\footnotetext[\thefield{labelnumber}]{%
-            \entrydata{\thefield{entrykey}}{%
-            \usebibmacro{author/translator+others}\addperiod\addspace%
-            \mkbibemph{\printfield{journaltitle}}\addspace%
-            \printfield{volume}%
-            \printfield{pages},\addspace%
-            \printfield{year}\addperiod}}}%
-      }%
-      {\usebibmacro{superfullcite}}}}%
+  \ifciteseen
+    {}
+    {%
+      \xappto\cbx@citehook{%
+        \noexpand\footnotetext[\thefield{labelnumber}]{%
+          \entrydata{\thefield{entrykey}}{%
+            \printnames[lastonly][1-1]{author}%
+            \addcomma\addspace%
+            \printtext[title]{\iffieldundef{shorttitle}
+              {\printfield[titlecase]{title}}
+              {\printfield[titlecase]{shorttitle}}}%
+            \addperiod\addspace%
+            \mkbibemph{\printfield{journaltitle}}%
+            \addcomma\addspace%
+            \printfield{year}\addperiod}}}}%
+}
 
 %==========================================================%
 \newrobustcmd{\cbx@superscript}[1]{%

@@ -262,3 +262,11 @@
     captionpos=b,         % Caption position (bottom)
 }
 
+% Add this with your other biblatex settings
+\DeclareFieldFormat{title}{%
+  \ifnum\value{listcount}=1
+    \mkbibemph{#1}%
+  \else
+    #1%
+  \fi}
+
