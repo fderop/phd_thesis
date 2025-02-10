@@ -46,18 +46,11 @@ One disadvantage of the screening methods above is that most of the vectors desc
     \item DRUG-seq -> also interplay with automation
 \end{itemize}
 
-one of the weaknesses of droplet-based methods...
-
-this will require many conditions!
-
-so, we will need to multiplex!
-
 Sample multiplexing for droplet microfluidics has also been achieved through other means. The main strategy is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkaComparativeAnalysisAntibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
 
-layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out
+[draft idea: layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
 
-dsciatac!!
-scifi-seq paper: also uses crop-seq! same lab!
+% dsciatac, scifi-seq paper: also uses crop-seq, same lab
 Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
 
 A number of ATAC-seq specific multiplexing techniques depending on the straightforward "indexability" of Tn5 have also been published.
@@ -72,15 +65,9 @@ A number of ATAC-seq specific multiplexing techniques depending on the straightf
 
 One weakness of droplet methods: difficult to automate.
 Droplet-based assays require large amounts of labour and skill to implement. Automating flow-focusing-based droplet microfluidics is generally challenging. The 10x Chromium Connect, a modified Hamilton Nimbus liquid handler with an on-deck Chromium, offers fully automated droplet generation and library prep, but is serial in nature: one batch of up to 8 samples is processed at a time. This approach does thus does not offer increased sample throughput. Droplet generation itself is also a confounding process that affects the entire sample. If the process fails (by the hand of dust, cell or DNA aggregates, air bubbles, chip imperfections, pump controller or gasket failures, ...), the entire sample can be compromised, or will at least suffer a delay. Manual droplet generation on an Onyx or Chromium followed by partial automation of the library prep only is also not very practical for many (96+) samples due to time spent on ice before/after droplet generation for the first/last samples. Native plate-based methods deal with this problem more elegantly, for example by pre-sorting cells into plates using FACS, freezing the plates, and thawing the plates for processing on demand - a workflow which can be automated end to end. Moreover, the most recent SMART-seq assays have scaled down reagent cost through the use of acoustic nanoliter dispensing and 1536 well-plate formats, and combinatorial indexing methods have come closer to 10x Chromium in terms of sensitivity. Does this mean that droplet-based assays have no practical application for the large scale of data generation required to feed the beast?
-spindrop?
-oak-seq
-One development I find very interesting is PIP-seq\sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023} Here, droplet partitioning is achieved by vortexing aqueous and lipid phases until an emulsion is achieved, which can be performed in 96-well plates. It is thus conceivable that the entire workflow can be automated end to end. The original Clark article only shows scRNA-seq through this method. scATAC-seq poses a challenge: recall from our HyDrop work that droplet PCR does not go well with solid or hydrogel beads - the beads must dissolve. HyDrop and 10x achieve this by disulfide bonds which are cleaved when they are reduced by contact with the cell and enzyme mix. PIP-seq requires cell and reagent mix to be mixed and vortexed together, so the disulfide approach would not work. However, inDrop has previously used ortho-nitrobenzyl-mediated UV cleavage to release primers, an idea which could potentially be translated to for PIP-ATAC-seq.
 
-validation
-\begin{itemize}
-    \item mpras
-    \item reporter assays
-\end{itemize}
+One development I find very interesting is PIP-seq\sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023} Here, droplet partitioning is achieved by vortexing aqueous and lipid phases until an emulsion is achieved, which can be performed in 96-well plates. It is thus conceivable that the entire workflow can be automated end to end. The original Clark article only shows scRNA-seq through this method. scATAC-seq poses a challenge: recall from our HyDrop work that droplet PCR does not go well with solid or hydrogel beads - the beads must dissolve. HyDrop and 10x achieve this by disulfide bonds which are cleaved when they are reduced by contact with the cell and enzyme mix. PIP-seq requires cell and reagent mix to be mixed and vortexed together, so the disulfide approach would not work. However, inDrop has previously used ortho-nitrobenzyl-mediated UV cleavage to release primers, an idea which could potentially be translated to for PIP-ATAC-seq.
+OAK\sjcitep[]{wuOverloadingAndUnpacking2024}OAK-seq
 
 tackling multimodality: not a great strength
 historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
@@ -92,10 +79,7 @@ historically, most multiomics methods have relied on plates. this makes sense, b
 \end{itemize}
 
 
-this will lead to circular automation that self-learns
-10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab}
-maybe better ai? better hardware? scaling laws? bitter pill?
-maybe say something about the nvidia collabs?
+this will lead to circular automation that self-learns. 10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab} maybe better ai? better hardware? scaling laws? bitter pill? maybe say something about the nvidia collabs?
 
 
 examples of predictive tools
@@ -105,18 +89,8 @@ An early example was DeepSEA\sjcitep[,]{zhou2015predicting} a CNN trained on ENC
 
 seq2PRINT (levering PRINT data)\sjcitep[.]{hu2023single}
 
-mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022decodingmechanism}
-- by using combination of bulk ATAC-seq and RNA-seq, in a simple study design (2 cell lines, 3 time points, 3 replicates, treatment vs control)
-- despite measuring similar levels of 3-CeP induced DNA damage in both cancer cell lines, the outcome was different, with one cell line engaging dna repair mechanisms earlier and more efficiently, and surviving the treatment at a higher rate, than the other. IC50 concentrations were also 10-50x higher in one cell line than the other --> viability
+mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022decodingmechanism}. by using combination of bulk ATAC-seq and RNA-seq, in a simple study design (2 cell lines, 3 time points, 3 replicates, treatment vs control). despite measuring similar levels of 3-CeP induced DNA damage in both cancer cell lines, the outcome was different, with one cell line engaging dna repair mechanisms earlier and more efficiently, and surviving the treatment at a higher rate, than the other. IC50 concentrations were also 10-50x higher in one cell line than the other --> viability
 
-
-\sjcitep[.]{janssens2022decoding}
-by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain
-identified key TFs for each cell type using cisTarget (ref)
-[deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!)
-
-mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs
-
-out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.
+\sjcitep[.]{janssens2022decoding} by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain. identified key TFs for each cell type using cisTarget (ref). [deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!) mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs. out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.
 
 \sjcitep[.]{wierenga2023pylabrobot}
