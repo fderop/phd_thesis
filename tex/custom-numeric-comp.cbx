@@ -96,11 +96,9 @@
           \entrydata{\thefield{entrykey}}{%
             \printnames[lastonly][1-1]{author}%
             \addcomma\addspace%
-            \printtext[title]{\iffieldundef{shorttitle}
-              {\printfield[titlecase]{title}}
-              {\printfield[titlecase]{shorttitle}}}%
-            \addperiod\addspace%
-            \mkbibemph{\printfield{journaltitle}}%
+            \mkbibemph{\iffieldundef{journaltitle:short}
+              {\printfield{journaltitle}}
+              {\printfield{journaltitle:short}}}%
             \addcomma\addspace%
             \printfield{year}\addperiod}}}}%
 }
