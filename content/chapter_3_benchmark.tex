@@ -5,7 +5,7 @@
 	\newpage
 \fi
 
-\setcounter{chapter}{4} % Manually set the chapter counter to 4, so that the figure below will receive a chapter numbering of 4
+\setcounter{chapter}{3} % Manually set the chapter counter to 4, so that the figure below will receive a chapter numbering of 4
 \setcounter{figure}{0}  % Reset the figure counter to 0 so that this figure will be the first figure in chapter 3
 \thispagestyle{empty}
 
@@ -20,7 +20,7 @@
 		\label{fig:article_title_benchmark}
 	}%
 \end{minipage}
-\setcounter{chapter}{3} % Manually reset the chapter counter to 3
+\setcounter{chapter}{2} % Manually reset the chapter counter to 3
 
 \chapter{Benchmarking the performance of single-cell chromatin accessibility sequencing methods}
 \setcounter{figure}{1}  % Set the figure counter to 1 already to include the first figure
@@ -54,13 +54,13 @@ Several other techniques were considered, but not included for various reasons:
 
 Initially, [x] institutes were agreed to be part of the benchmarking effort ([list]), and generated a total of 16 datasets across these 7 protocols. In first revisions, reviewers unanimously agreed that we had too few replicates to draw significant conclusions from these datasets. Moreover, 10x Genomics had just released a version 2 of their scATAC-seq method, promising a 50\% increase in sensitivity. We decided to include this method and generate more technical replicates on the initial 7 techniques, yielding a total of 47 individual scATAC-seq datasets across 8 methods (\autoref{fig:scatac_seq_benchmark_study_final_datasets}). Each dataset was sequenced to sufficient depth, deposited centrally, and analysed at VIB.
 
-	{%
-		\centering
-		\includegraphics[width=0.85\textwidth,height=5cm]{example-image-a}
-		\captionsetup{width=0.80\linewidth}
-		\captionof{figure}[scATAC-seq benchmark study final datasets]{scATAC-seq benchmark study final datasets}
-		\label{fig:scatac_seq_benchmark_study_final_datasets}
-	}%
+	% {%
+	% 	\centering
+	% 	\includegraphics[width=0.85\textwidth,height=5cm]{example-image-a}
+	% 	\captionsetup{width=0.80\linewidth}
+	% 	\captionof{figure}[scATAC-seq benchmark study final datasets]{scATAC-seq benchmark study final datasets}
+	% 	\label{fig:scatac_seq_benchmark_study_final_datasets}
+	% }%
 
 \section{Analysis}
 Early on in the project, we foresaw that data stemming from the 8 different techniques would strongly differ in sequencing format. The 10x Genomics format set the standard, each fragment yielding two paired-end genomic reads, a sample index read, and a 16 basepair barcode read matching a whitelist containing ~2.7M entries. HyDrop was designed with a similar structure in mind, but with a barcode length of 50 bp. Bio-Rad and s3-ATAC used a very different logic: [] (\autoref{fig:library_types_and_sequencing_schematics}).
@@ -93,21 +93,17 @@ The use of NextFlow provides several advantages over shell scripts:
 	\item Built-in support for software containers (docker, singularity), improving environment-independent compatibility.
 \end{enumerate}
 
-Due to the large scale and collaborative nature of the project, sequencing data trickled in on an unpredictable basis.
+% Due to the large scale and collaborative nature of the project, sequencing data trickled in on an unpredictable basis.
 
-	{%
-		\centering
-		\includegraphics[width=5cm,height=5cm]{example-image-a}
-		\captionsetup{width=0.80\linewidth}
-		\captionof{figure}[Data analysis workflow]{Data analysis workflow}
-		\label{fig:data_analysis_workflow}
-	}%
+	% {%
+	% 	\centering
+	% 	\includegraphics[width=5cm,height=5cm]{example-image-a}
+	% 	\captionsetup{width=0.80\linewidth}
+	% 	\captionof{figure}[Data analysis workflow]{Data analysis workflow}
+	% 	\label{fig:data_analysis_workflow}
+	% }%
 
 
 \section{Key results}
 One of the most surprising findings of the benchmark was the comparison between different sources of data "loss" among different methods. While analysing data for unrelated projects, I noticed that in a given dataset, only a very small fraction of all sequenced reads ends up being "useful". For example, if a single-cell library of 10 000 cells is sequenced to 400 million reads total, and the resulting median number of unique fragments per cell in the count matrix is 5 000, then only 50 million reads are really used - a mere 12.5\% of the total. One of the most significant losses occurred during the "cell filtration" step. 
-
-
-\section{Conclusions}
-
-\lipsum[1]
+[fill this out further]
