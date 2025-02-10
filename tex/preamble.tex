@@ -85,32 +85,46 @@
 \usepackage{hyphenat} % to disable hyphenation in titles
 
 %--- typesetting
-\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10, verbose=silent]{microtype}
+% \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10, verbose=silent]{microtype}
+
+\usepackage{iftex}
+
+% \ifPDFTeX
+%     \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10,verbose=silent]{microtype}
+%     \microtypecontext{spacing=nonfrench}
+% \else
+%     % XeTeX does not support tracking, so disable it
+%     \usepackage[kerning=true,spacing=true,factor=1100,verbose=silent]{microtype}
+% \fi
+
+
+% \DisableLigatures{encoding = *, family = *} % Helps XeTeX avoid issues
+
 % activate={true,nocompatibility} - activate protrusion and expansion
 % final - enable microtype; use "draft" to disable
 % tracking=true, kerning=true, spacing=true - activate these techniques
 % factor=1100 - add 10% to the protrusion amount (default is 1000)
 % stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
-\microtypecontext{spacing=nonfrench}
+% \microtypecontext{spacing=nonfrench}
 
-\SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
-{1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
-	6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
+% \SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
+% {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
+	% 6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
 
-\SetExtraKerning[unit=space] % for main text (bch font)
-{encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
-{\textendash={400,400}, % en-dash, add more space around it
-	28={ ,150}, % left bracket, add space from right
-	29={150, }, % right bracket, add space from left
-	\textquotedblleft={ ,150}, % left quotation mark, space from right
-	\textquotedblright={150, }} % right quotation mark, space from left
+% \SetExtraKerning[unit=space] % for main text (bch font)
+% {encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
+% {\textendash={400,400}, % en-dash, add more space around it
+% 	28={ ,150}, % left bracket, add space from right
+% 	29={150, }, % right bracket, add space from left
+% 	\textquotedblleft={ ,150}, % left quotation mark, space from right
+% 	\textquotedblright={150, }} % right quotation mark, space from left
 
-\SetExtraKerning[unit=space] % for headers (qhv font)
-{encoding={*}, family={qhv}, series={b}, size={large,Large}}
-{1={-200,-200},
-	\textendash={400,400}}
+% \SetExtraKerning[unit=space] % for headers (qhv font)
+% {encoding={*}, family={qhv}, series={b}, size={large,Large}}
+% {1={-200,-200},
+% 	\textendash={400,400}}
 
-\SetTracking{encoding={*}, shape=sc}{40}
+% \SetTracking{encoding={*}, shape=sc}{40}
 
 \usepackage{enumitem}
 \setlist[enumerate]{itemsep=0pt}
@@ -206,7 +220,8 @@
 %--- some necessary modifications to the citation format
 \renewcommand{\finentrypunct}{} % removes period at the very end of bibliographic record
 \renewcommand{\newunitpunct}{\addspace\midsentence} % remove doi code period
-\DeclareFieldFormat{journaltitle}{\mkbibemph{#1},} % italic journal title with comma
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1},}
+
 \DeclareFieldFormat[inbook,thesis]{title}{\mkbibemph{#1}\addperiod} % italic title with period
 \DeclareFieldFormat[article]{title}{#1} % title of journal article is printed as normal text
 \DeclareFieldFormat[article]{volume}{\textbf{#1}\addcolon\space} % makes volume of journal bold and adds colon
@@ -215,6 +230,8 @@
 % the footmisc package with para parameter will add footnotes continuously as opposed to in a list format
 % \usepackage[para]{footmisc}
 \usepackage[flushmargin]{footmisc}
+
+
 
 % The following line indents the second line of a footnote in case it wraps multiple lines
 \makeatletter
@@ -274,3 +291,6 @@
 \DeclareFieldFormat{journaltitle:short}{\mkbibemph{#1}}
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
 
+
+\usepackage[extrafootnotefeatures]{bidi}
+\twocolumnfootnotes
