@@ -1,29 +1,44 @@
-\pagebreak
+\clearpage
 \checkoddpage
 \ifodd\thepage
-	\null
-	\newpage
+    \null
+    \newpage % Ensures we are now on an even (left) page
 \fi
 
-\setcounter{chapter}{3} % Manually set the chapter counter to 4, so that the figure below will receive a chapter numbering of 4
-\setcounter{figure}{0}  % Reset the figure counter to 0 so that this figure will be the first figure in chapter 3
-\thispagestyle{empty}
+\setcounter{chapter}{3} % Set chapter counter to 3
+\setcounter{figure}{0}  % Reset figure counter
 
+\thispagestyle{empty} % Remove page numbers
+
+% Minipage on left-hand page (even-numbered)
 \begin{minipage}{\textwidth}
-	\vspace{2.25cm}
-	{%
-		\centering
-		\includegraphics[width=\textwidth]{im/2023_nbt_fixed.pdf}
-		\captionsetup{width=0.80\linewidth}
-		\vspace{0.5cm}
-		\captionof{figure}[Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"]{Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"}
-		\label{fig:article_title_benchmark}
-	}%
+    \vspace{2.25cm}
+    {%
+        \centering
+        \includegraphics[width=\textwidth]{im/2023_nbt_fixed.pdf}
+        \captionsetup{width=0.80\linewidth}
+        \vspace{0.5cm}
+        \captionof{figure}[Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"]{Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"}
+        \label{fig:article_title_benchmark}
+    }%
 \end{minipage}
-\setcounter{chapter}{2} % Manually reset the chapter counter to 3
 
+\clearpage  % Move to next page
+
+% Force chapter to start on right (odd) page
+\ifodd\thepage
+    % If already on an odd page, do nothing
+\else
+    % If on an even page, insert blank page
+    \null
+    \newpage
+\fi
+
+\setcounter{chapter}{3} % Reset chapter counter to 3
 \chapter{Benchmarking the performance of single-cell chromatin accessibility sequencing methods}
-\setcounter{figure}{1}  % Set the figure counter to 1 already to include the first figure
+\setcounter{figure}{1}  % Ensure the first figure starts with 1
+
+
 The following chapter will describe how we benchmarked several of the most prominent scATAC-seq techniques available in 2023. We performed 47 experiments across 8 different scATAC-seq methods to generate 169k single-cell chromatin accessibility profiles. Our benchmark quantified reproducible technical biases in not only the sensitivity, but also the specificity of these methods, produced a scATAC-seq pre-processing pipeline with best practices tutorials, and yielded the largest dataset of scATAC-seq in PBMCs to date. This work was published in \fullcite{deropSystematicBenchmarkingSinglecell2023} (\autoref{fig:article_title_benchmark}).
 
 \section{Motivation and approach}
@@ -103,10 +118,16 @@ The use of NextFlow provides several advantages over shell scripts:
 	% 	\label{fig:data_analysis_workflow}
 	% }%
 
+"Background noise barcodes are barcodes enriched with trace amounts of fragments through three mechanisms: (1) ambient accessible chromatin fragments may initiate barcoding reactions inside cell-free droplets, (2) unbound barcodes in the bead stock solu- tions may contaminate legitimate barcoding reactions, or (3) barcode impurities on the beads may lead to ambivalent labeling of chromatin fragments from a single nucleus15."
+
 
 \section{Key results}
 We targeted a recovery of \textasciitilde{3000} cells for each dataset. The complete, filtered dataset spans \num{169227} cells, [[n reads]], across \num{198421} peaks.
 
-One of our most surprising findings was the wide variability in "sequencing efficiency", the fraction of reads "used" compared to the total number of reads sequenced, between methods. During pre-processing, sequenced reads are filtered out of the dataset for various reasons. For example, no valid barcode associated or bad genomic alignment (10-20\% of total lost), not within a peak region (5-15\%) etc, but the most significant losses are incurred when true cells are filtered from noise (7-60\%[[see also introd]]). FAC sorting live cells before nuclei extraction reduced this noise from 32\% to 7\% in mtscATAC-seq experiments, suggesting that much of it is caused by contaminating DNA from damaged cells. Removal of duplicate reads also led to large losses, but this inefficiency can be mitigated by sequencing less. In this case, per-cell sensitivity suffers, but increasing the total number of cells may be able to compensate, at least partially. For example, both annotation quality (Seurat label transfer scores) and significance of differentially accessible regions scaled with higher cell counts. However, in the limit, global optima for the trade-off between cell-count, per-cell-sensitivity and cost remain an open question for the field [[ref to introd]].
+hydrop: higher rate of barcode errors most likely due to PCR
 
-Our study also confirmed that specificity is distinct between methods. For example, high-signal peaks are easily recovered by all techniques, but weak peaks are strongly technique-dependent (paper fig. 3e-f), implying process biases between methods. Process biases already lead to issues in scRNA-seq technologies, but are especially important to consider for scATAC-seq studies: the count-region vector for (sc)RNA-seq (genes) can be transported between samples, whereas these region sets are the properties of interest of the samples themselves. When public references (e.g. ENCODE ChIP-seq or DNase-seq region sets) are not available a priori, high-sensitivity methods should be used to accurately determine a reference region set, after which more cost-efficient methods in large cell volumes can be employed for scale.
+One of our most significant findings was the wide variability in "sequencing efficiency", the fraction of reads "used" compared to the total number of reads sequenced, between methods. During pre-processing, sequenced reads are filtered out of the dataset for various reasons: no valid barcode associated or bad genomic alignment (10-20\% of total lost), not within a peak region (5-15\%) etc, but the most significant losses are incurred when true cells are filtered from noise (7-60\%[[see also introd]]). FAC sorting live cells before nuclei extraction reduced this noise from 32\% to 7\% in mtscATAC-seq experiments, suggesting that much of it is caused by contaminating DNA from damaged cells. For all techniques, the number of "useful" sequencing reads is only a small fraction of the total number of reads sequenced, ranging between \num{28}\% for 10x v2 to below \num{4}\% for s3-ATAC and HyDrop v1. Of course, sequencing inefficiency can be increased by sequencing less since fewer reads are then lost to duplicates. When sequencing depth is reduced, per-cell sensitivity suffers, but increasing the total number of cells may be able to partially compensate. For example, both cell type annotation quality (Seurat label transfer scores) and significance of differentially accessible regions increased with higher cell counts, though this effect exhibits diminishing returns [[ref pub fig]]. In the limit, global optima for the trade-offs between cell counts, per-cell depth, and total experimental cost with respect to maximum model predictive value remain an open problem.
+
+Our study also confirmed that specificity is distinct between methods, not only in raw FRIP (fig. 1h), but also in the identities of detected regions: high-signal peaks are easily recovered by all techniques, but weak peaks are strongly technique-dependent (paper fig. 3e-f), implying differences in the wet-lab process induce biases. This is also evident in the difficulty at which samples fail to integrate across technology, even with batch-effect correction (paper fig. 4c-d). In addition, we observed clear differences between 10x and Bio-Rad technologies: ddSEQ fragments were significantly more TSS-proximal than 10x fragments, which is reflected in the DARs they detect (paper fig. 2j) and subsequent motif analyses (paper fig. 3g)
+
+Process biases already lead to issues in scRNA-seq technologies, but are especially important for scATAC-seq studies: in (sc)RNA-seq, the count-region vector for (genes) is portable between samples, whereas (sc)ATAC-seq, these region sets are the properties of interest of the samples themselves. When public references (e.g. ENCODE ChIP-seq or DNase-seq region sets) are not available a priori, high-sensitivity methods should be used to accurately determine a reference region set, after which application of more cost-efficient methods on large cell volumes can be used for scaling.
