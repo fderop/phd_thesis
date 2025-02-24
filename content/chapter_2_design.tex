@@ -52,10 +52,12 @@ Both inDrop and Drop-seq's approaches face diffusion-related limitations: in Dro
 % 	\caption[inDrop \& Drop-seq diffusion limits]{inDrop \& Drop-seq diffusion limits}
 % \end{figure}
 
+Next, we considered the bead barcoding reaction. In Drop-seq, oligonucleotide barcodes are synthesized directly on the resin bead in 4\textsuperscript{12}. In inDrop, oligonucleotide sub-barcodes are annealed and copied to a primer stub by linear extension in 96\textsuperscript{3} split-pooling. We considered that linear amplification rather than isothermal extension could lead to higher bead barcoding reaction efficiency, subsequent higher density of barcodes within the bead, and higher in-droplet target capture as a result.
+
 We also wanted to replace inDrop's photocleavable oligonucleotide linker by a disulfide bond, permitting the release of barcodes by reduction with DTT. This change would remove inDrop's requirement to work in the dark and possibly increase sensitivity. After all, ambient light exposure to light could cause the beads to prematurely release their barcodes - reducing the assay's specificity. (see \notefullcite{deropOptimisationInDropScRNAseq2019} for more details). By the end of the year, we had accomplished the following:
 
 \begin{enumerate}[noitemsep]
-	\item We designed and manufactured a microfluidic chip for the generation of the stable acrylamide monomer emulsions needed to produce polyacrylamide hydrogel beads. We characterised the relationship between oil and water flow rates on this chip, and predicted flow rates that would generate \SI{50}{\micro\metre} diameter droplets with minimal size variance using iterative linear model optimisation (\autoref{fig:bead_diameter_optimisation}). The resulting beads were indeed of a stable \SI{53}{\micro\metre} diameter with a standard deviation of \SI{5}{\micro\metre}.
+	\item We designed and manufactured a microfluidic chip for the generation of the stable acrylamide monomer emulsions needed to produce polyacrylamide hydrogel beads using soft lithography\sjcitep[.]{xiaSoftLithography1998} We characterised the relationship between oil and water flow rates on this chip, and predicted flow rates that would generate \SI{50}{\micro\metre} diameter droplets with minimal size variance using iterative linear model optimisation (\autoref{fig:bead_diameter_optimisation}). The resulting beads were indeed of a stable \SI{53}{\micro\metre} diameter with a standard deviation of \SI{5}{\micro\metre}.
 
 		\svgfigure{im/indrop_model.pdf_tex}
 				{Bead diameter optimisation}
@@ -71,321 +73,43 @@ We also wanted to replace inDrop's photocleavable oligonucleotide linker by a di
 				{Droplet encapsulation chip design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
 				{fig:indrop_chip_zoom}
 
-	\item To implement scRNA-seq on our now functional droplet platform, we tested several different cDNA generation and subsequent sequencing library preparation strategies. We ultimately settled on a protocol that incorporated Maxima H Minus reverse transcriptase, KAPA DNA polymerase for amplification of the cDNA, and NEB Next Ultra II FS DNA sequencing library preparation. Sequencing libraries produced using this method returned favourable fragment length distributions measured by Agilent BioAnalyzer.
+	\item To implement scRNA-seq on our now functional droplet platform, we tested several different cDNA generation and subsequent sequencing library preparation strategies. We ultimately settled on a protocol that was based on in-droplet Maxima H Minus reverse transcription, PCR amplification of cDNA by KAPA polymerase, and NEB Next Ultra II FS DNA sequencing library preparation. This protocol was different from both inDrop, which uses a more involved reverse transcription \textrightarrow second-strand synthesis \textrightarrow in-vitro transcription \textrightarrow random hexamer reverse transcription \textrightarrow PCR workflow, and Drop-seq, which relies on Tn5-based sequencing library prep from cDNA.
 \end{enumerate}
 
-ATAC-seq: We had begun by encapsulating pre-tagmented single nuclei into droplets together with ATAC-seq compatible beads and a variety of polymerases and commercial PCR master mixes. The idea was that PCR-cycling this emulsion would lead to linear amplification of the nuclei's accessible fragments with the ATAC-compatible cell barcode as a primer. 
+In short, we had set up a workflow for producing hydrogel beads, barcoding those beads using linear amplification, and using those in scRNA-seq experiments that produced sequenceable libraries. In parallel to the scRNA-seq research, we began began preliminary scATAC-seq trials. This required the production of a new type of beads, this time with oligos that annealed to the Tn5 insertion adapter sequence instead of to poly(A) tails. Our scATAC-seq protocol relied on encapsulating pre-tagmented single nuclei into droplets together with the new ATAC-seq compatible beads and a variety of polymerases and commercial PCR master mixes. PCR cycling these emulsions should then lead to pre-amplified scATAC-seq libraries. What followed was a long series of trial and error where we troubleshot a number of issues, often shared between the scRNA-seq and scATAC-seq protocols. In rough chronological order, we dealt with the following issues and optimisations:
 
+\textbf{Problem:} While the bulk characteristics of our earliest scRNA-seq libraries were very promising (expected cDNA and final library fragment size distributions, 3' enriched as designed, decent alignment to reference transcriptome of \textasciitilde{40}\%), we were not able to sequence barcodes fully at first. Between 67\% and 70\% of the barcode reads contained poly-G repeats. Out of the remaining ~30\%, only 0.2\% matched our barcode whitelist, compared to the > 95\% expected for 10x Genomics scRNA-seq datasets. This failure made it impossible to assign transcripts to cell of origin.
 
-These problems were worked on in parallel:
-\textbf{Problem:} Bulk features of our earliest scRNA-seq libraries were good (3' enriched as designed, decent alignment to reference transcriptome of \textasciitilde{40}\%), but we were not able to sequence barcodes fully. Between 67\% and 70\% of the barcode reads contained poly-G repeats. Out of the remaining ~30\%, only 0.2\% matched our barcode whitelist, compared to the > 95\% expected for 10x Genomics scRNA-seq datasets. This failure made it impossible to assign transcripts to cell of origin.
+\textbf{Solution:} At first, we thought that the custom sequencing primer used to sequence the cell barcodes might be at fault. We knew that our NextSeq500 used Illumina's 2-channel laser technology. G bases are encoded by the absence of signal, whereas the other three bases are encoded by positive fluorescence in either or both of the two dyes used. Poly-G base calls in the final data could thus be interpreted as the absence of any signal from the sequenced molecule, indicating that the sequencing primer may not have annealed properly - precluding the generation of any signal. We attempted to test this hypothesis by making a batch of mock beads in which the custom priming site was replaced by Illumina's standard primers - which are highly optimized for specificity. The resulting dataset yielded barcode reads of which now only 33\% had a poly-G problem, but still only around 23\% matched the whitelist - still far below what was necessary to do a successful single-cell sequencing experiment. Next, we redesigned the barcode structure so that the cell barcode was now read in one go, and did not require the use of a custom sequencing primer (\autoref{fig:sequencing_diagram_for_second_bead_design}). More than 90\% of the new barcode reads matched our whitelist. The remaining 10\% could be attributed to incorporation errors during vendor oligonucleotide synthesis, PCR, and sequencing errors.
 
-\textbf{Solution:} At first, we thought that the custom sequencing primer used to sequence the cell barcodes might be at fault. We knew that our NextSeq500 used Illumina's 2-channel laser technology. G bases are encoded by the absence of signal, whereas the other three bases are encoded by positive fluorescence in either or both of the two dyes used. Poly-G base calls in the final data could thus be interpreted as the absence of any signal from the sequenced molecule, indicating that the sequencing primer may not have annealed properly - precluding the generation of any signal. We attempted to test this hypothesis by making a batch of mock beads in which the custom priming site was replaced by Illumina's standard primers - which are highly optimized for efficient hybridisation. The resulting dataset yielded barcode reads of which now only 33\% had a poly-G problem, but still only around 23\% matched the whitelist - still far below what was necessary to do a successful single-cell sequencing experiment.
+Later on, this change also had an important effect on our scATAC-seq assay: it allowed us to sequence both ends of the chromatin fragments as opposed to only a single end. Since ATAC-seq quantifies Tn5 insertion events, this increases the counting sensitivity and positional accuracy of called peaks. Note that insertion events within the same enhancer are correlated due to proximity, so total count information content is not doubled. Finally, paired-end information also improves cross-contamination estimation: when two cell barcodes are statistically enriched in identical fragments (exact same insertion sites with base-pair accuracy), they are highly likely to be cross-contaminated\sjcitep[.]{lareau2020inference}
 
-We decided to redesign the barcode structure so that the cell barcode was now read in one go, and did not require the use of a custom sequencing primer (\autoref{fig:sequencing_diagram_for_second_bead_design}). The first sequencing library made with these beads yielded positive results: more than 90\% of the new barcode reads matched our whitelist. The remaining 10\% could be attributed to incorporation errors during vendor oligonucleotide synthesis, PCR, and sequencing errors.
+\textbf{Problem:} Our first generation of beads had its barcode oligo payload dispersed and linked to the the bead's hydrogel matrix using a cleavable disulfide linker. We hypothesized that diffusion of barcodes from the center of the polyacrylamide hydrogel bead into the droplet would be a slow and reaction rate-limiting process. To test diffusion, we measured the beads' total primer content before and after DTT incubation, using probe fluorescence as a proxy. A strong residual fluorescent signal after even 50 minutes of continuous incubation with 50 mM DTT confirmed that much of the initial primer population was retained within the bead. Since DTT has a molecular weight comparable to a single nucleotide, and has good water solubility, we did not expect its diffusion to be the rate-limiting factor.
 
-\textbf{Problem:} We thought that the diffusion of barcodes from the center of the polyacrylamide hydrogel bead into the droplet was a slow and inefficient process. To test this, we measured the beads' total primer content before and after DTT incubation, using probe fluorescence as a proxy (\autoref{fig:before_after_dtt}). A strong residual fluorescent signal after even 50 minutes of continuous incubation with 50 mM DTT confirmed that much of the initial primer population was retained within the bead during supposed release (\autoref{fig:before_after_dtt}). Since DTT has a molecular weight comparable to a single nucleotide, and has good water solubility, we did not expect it to be the rate-limiting factor. Instead, we thought that the barcode oligonucleotide itself may be too large to efficiently diffuse out of the hydrogel matrix.
-\textbf{Solution:} Make dissolvable
+\textbf{Solution:} We included N,N'-Bis(acryloyl)cystamine (BAC) in the hydrogel polymerisation reaction, replacing classic bisacrylamide and making the gel polymer's crosslinks reversibly cleavable under reducing conditions. These beads dissolved in under 10 minutes of exposure to 10 mM DTT at room temperature.
 
-\textbf{Problem:} Cell-in-oil emulsions did not survive PCR thermocycling. Droplets aggregated, meaning that bulk rather than single-cell libraries would be generated.
+\textbf{Problem:} Cell-in-oil emulsions did not survive PCR thermocycling, which was necessary for amplifying accessible genome fragments in ATAC-seq. Microdroplets coalesced into large oil drops, meaning that bulk rather than single-cell libraries would be generated.
 
-\textbf{Solution:} We tried various things, including testing various PCR master mixes (NEB, KAPA, Terra, Q5), PCR programs and density regulators (PEG-8000, Iodoxanol), but this issue was ultimately solved as a welcome side-effect of making the beads dissolvable. We realised that the thermocycling induced convective flows in the emulsions, leading to bead collisions and emulsion breaking. When the beads were dissolved within the droplets, this effect disappeared and emulsions remained stable throughout PCR cycling.
+\textbf{Solution:} We tested various changes to the protocol, including different PCR master mixes (NEB, KAPA, Terra, Q5), PCR programs (number of cycles, temperatures) and density regulators (PEG-8000, Iodoxanol), but this issue was ultimately solved as a welcome side-effect of making the beads dissolvable. We then realised that the thermocycling induced convective flows in the emulsions, leading to bead collisions which resulted in emulsion breaking. When the beads were dissolved within the droplets, this effect disappeared and emulsions remained stable throughout PCR cycling.
 
-\textbf{Problem:} After solving the above problems, we were able to sequence cell barcodes, align them to a whitelist, align the genomic reads to a reference, and keep stable emulsions throughout the process. However, data in our libraries did not aggregate into pure cells in mixed-species experiments: all "cells" contained a mixture of human and mouse reads. This problem would be the bane of the next \textasciitilde{2} years.
-\textbf{Solution:}
+We were now able to sequence cell barcodes, align them to a whitelist, align the genomic reads to a reference (both transcriptomic and genomic), and keep stable emulsions throughout the process. Our scRNA-seq data was 3' transcriptome enriched, and our scATAC-seq data aggregated into peaks and exhibited typical ATAC-seq fragment length distribution, with nucleosome and helical pitch. However, data in both our scATAC-seq and scRNA-seq libraries did not aggregate into pure cells in mixed-species experiments: all "cells" contained a mixture of human and mouse reads. This problem also manifested during cell filtration: rather than sharp cutoffs between cell barcodes and low-signal noise barcodes, we had a gradual transition from cell to noise. This would prove to be the most challenging issue during the entire HyDrop research campaign.
 
-\begin{itemize}
-	\item Extra purifications
-	\item Reduce beads to 384x384
-	\item Switch to ligation
-	\item (separate washes)
-\end{itemize}
+This idea was strongly supported by evidence in Sanger sequencing, where we observe that the first sub-barcode locus is very pure, but the middle sub-barcode locus is not, and the third sub-barcode locus is pure again. This could be explained by [[x]].
 
-% \begin{figure}[h]
-% 	\centering
-% 	\includegraphics[width=0.75\textwidth]{before_after_dtt.jpg}
-% 	\captionsetup{width=0.80\linewidth}
-% 	\caption[Beads before \& after DTT incubation]{Beads before \& after DTT incubation}
-% 	\label{fig:before_after_dtt}
-% \end{figure}
+\textbf{Solution:} One of the first things we changed was introducing extra primer purifications after emulsion breaking. We had noticed that at this stage, even after a magnetic bead purification, our libraries still had extreme enrichment of barcode primers. 
 
-Introduction of the dissolvable bead had an unexpected but welcome side-effect: emulsions made with these beads remained completely stable during and after PCR thermocycling, finally allowing us to proceed with the development of scATAC-seq downstream of emulsification. In hindsight, we realised that the convective flows induced by PCR thermocycling probably caused collisions between beads across droplets, mechanically destabilising the emulsion. We were quickly able to generate and sequence the first viable scATAC-seq libraries. The 4x4x4 barcodes sequenced well, but most importantly our libraries exhibited typical ATAC-seq characteristics. Genomic coverage was concentrated in specific peak regions, and many of these peak regions were located around gene transcription start sites or known enhancers (\autoref{fig:first_scatac})
+This mechanism of contamination could explain both observations that convinced us that our method was not single-cell: the vague separation between true cells and background noise barcodes on the kneeplot could be caused by all unused barcodes associating with transcripts/fragments post-emulsion breaking, and the lack of cell types could be explained by the dilution of each single-cell profile with random transcripts/fragments due to barcode promiscuity
 
-% {%
-% 		\centering
-% 		\fontsize{10.95pt}{11pt}\selectfont
-% 		\includegraphics[width=0.85\textwidth,height=1cm]{example-image-a}
-% 		\captionsetup{width=0.80\linewidth}
-% 		\captionof{figure}[First scATAC-seq coverage]{First scATAC-seq coverage.}
-% 		\label{fig:first_scatac}
-% 	}%
+We reasoned that these primers would carry over into downstream PCR amplification, where they could randomly capture un-tagged mRNA or ATAC fragments, or even out-compete PCR primers annealing to correctly barcoded DNA molecules. Adding a second bead wash strongly reduced this peak, but only mildly improved the species mixing we observed in our libraries. For scATAC-seq, we also tried using exponential in-droplet PCR by adding a reverse primer to the reaction, hoping to improve barcode consumption at the risk of introducing PCR biases, but this did not improve purity.
 
-% \item march 17th hydrop-atac larval brain, tried 55c 30 min instead of 37c 60 min, both conditions get a very small nfr peak, but 55c is better
-% \item march 30 2020: starsolo results, larval sample with pitstop, pbmc with pitstop, without pitstop, really great results for pbmc run.
-% \item march 30 2020: stein: "very exciting !!! I can almost feel the tSNE emerging here". both larval brain and pbmc look exactly like 10x on same sample
-% \item march 31 2020: crap kneeplots coming out...
-% \item Note the previous is all sequenced single end!!! diagram on march 30th word file --> problems generating count matrix
+\textbf{Problem:} Thus far, we had not yet confirmed that our PCR-produced beads were pure: cross-contamination could occur during bead production, leading to mixed-barcode beads which generate random noise downstream. Cross-contamination of sub-barcode primers could be amplified throughout the PCR bead barcoding procedure. In order to test this, we reduced the three rounds of sub-barcoding (96\textsuperscript{3} split-pooling) to two rounds (384\textsuperscript{2}). This change improved species purity in our species-mixing experiments, but still not to usable levels.
 
-Just like our latest batch of scRNA-seq beads, the first batch of 96x96x96 scATAC-seq beads were strongly fluorescent when probed for the "capture oligo" sequence. We performed a first scATAC-seq run on PBMC, which was shallowly sequenced to test the first library generated with the 96x96x96 ATAC bead design. We then generated an additional scATAC-seq library on Drosophila larval brain to assess how the method would handle small input cells. Both of these libraries were sequenced deeply. The aggregate characteristics of both datasets matched expectations for ATAC-seq (\autoref{fig:pbmc_larval_brain}a), but the distribution of reads across cell barcodes seemed random. This can be observed in the barcode-ranking of the number of transcripts "knee" or "elbow" plots did not exhibit the clean cut-off between true cells and background noise barcodes usually observed in 10x Genomics-generated libraries ((\autoref{fig:pbmc_larval_brain}b)). These background noise barcodes were presumed to originate from ambient RNA present in droplets without a cell.
+\textbf{Solution:} Finally, we reduced the acrydite primer load during bead generation from \SI{50}{\micro\molar} to \num{1.5}, \num{6}, \num{12.5} and \SI{6.25}{\micro\molar}, drastically reducing the total number of available sites for barcoding. Beads made with the 6 and \SI{12.5}{\micro\molar} primer concentrations immediately produced species-pure scRNA-seq, and later scATAC-seq libraries, whereas the \SI{1.5}{\micro\molar} condition did not produce detectable cDNA. Most likely, this change affected purity in two ways: first, the polymerase reaction is now more likely to saturate the number of available barcode sites, reducing the number of available "previous-round" priming sites in the next round. Second, a lower total primer load released into the droplet is more likely to be purified out completely. Later research (post-publication) also indicated that washing bead wells individually during barcoding rather than in a pooled manner further increased bead purity and thus sensitivity. Individual dilutive washing of the sub-barcoding primers before pooling prevents these barcodes from annealing with remaining un-templated sites from the previous round of barcoding, improving barcode purity.
 
-After alignment and (admittedly arbitrary) cell filtering, we were not able to discern any different cell types in either the PBMC or the larval brain cells. Similarly to the TSA/DMSO scRNA-seq experiments I had performed earlier, all cells formed a homogeneous mass after dimensionality reduction.
+At this point, we were certain we had functional scRNA-seq and scATAC-seq working with our beads and library preparation workflows. Mixed-species experiments returned pure (\textasciitilde{90}\%) single-cell profiles, and we were able to assign cell types to our first experiments on \textit{Drosophila} and mixed-cancer cell lines. In parallel we had also implemented a number of small novelties. For example, addition of Pitstop 2, a selective clathrin-mediated endocytosis inhibitor which also permeabilizes the nuclear membrane by destabilizing nucleoporin complexes, to the tagmentation reaction was known to improve Tn5 diffusion into the nucleus\sjcitep[.]{mulqueen2020improved} We also added guanidinium isothiocyanate, a strong chaotrope known to denature proteins and solubilize nucleic acids, to the emulsion after PCR. Both additions led to slight library yield improvements. We also titrated several different sources of Tn5 and found no discernible difference in performance or fragment biases between commercial (Illumina, diagenode) and open-source Tn5\sjcitep[.]{picellitn5transposasetagmentation2014} Since Nextera Tn5 comprises 46\% of the droplet reaction cost, savings made by using in-house Tn5 are considerable.
 
-	% \svgfigure{example-image-a}{3' enrichment and barcode rank plot for PBMC and larval brain scRNA-seq}{3' enrichment (a) and barcode rank plot (b) for PBMC and larval brain scRNA-seq}{fig:pbmc_larval_brain}
+In addition, we tested a number of optimisations for HyDrop-RNA. Exonuclease I (Exo I) has been used in single-cell RNA-seq workflows to remove excess primers and barcodes that could lead to non-specific priming\sjcitep[.]{macoskohighlyparallelgenomewide2015} Addition or exclusion of Exo I did not appear to make a difference in sensitivity. Introduction of two riboguanosines in the template-switching oligo, which improve thermal annealing stability to 3' \verb|CCC| motif of the untemplated cDNA, also did not appear to increase sensitivity[.]{picellifulllengthrnaseqsingle2014} Second-strand synthesis through Bst2.0 or Klenow fragment\sjcitep[]{stickels2020highly} showed improvements, but the best cDNA amplification strategy was PCR thermocycling supplemented with GTP\sjcitep[.]{hagemannjensensinglecellrnacounting2020}
 
-% \item april 3 2020: crap tSNE from snapatac/cistopic in R (?), "so there is evidence that we have a serious barcoding issue, my main suspicion is carryover of gel/barcodes from pcr 1 to pcr 2, this would explain the knee plot and lack of clustering, i don't think it's the barcoded beads, there's no way to verify this without doing a couple of qpcrs on one bead, but the barcoding process should be very robust" --> this is usable in the thesis. suresh suggests "Perhaps a way to check this is by performing bio A after the first linear PCR. If there are significant carryover, we should see a significant spike in the trace corresponding to the barcode length."
-% \item april 7 2020: more discussion about the barcode carryover. suresh also suggests "2. second is to try exponential amp instead of linear. The reason behind this is that our bead have tons of primer in them but it is not getting sufficiently “ultilized” in the linear PCR sheme. WIth the expoenetial scheme there is doubling of templates and could in turn improve detection of atac fragments, while reduding the carryover of the primers. In the exponential we will add another primer, for the other end.what I would also try with this is: (i) double ampure purification, and (ii) Exo-I treatment to get rid of the unreacted primers"
-
-In parallel, we had sequenced the first HyDrop-ATAC libraries, and were stunned to observe the same problem: a promising aggregate ATAC-seq signal, with no cell types discernable. We reasoned that if both our scRNA-seq and scATAC-seq assays were failing in this manner, a common part between both the assays would be most likely at fault. In both methods, the cell/bead emulsion is broken after the barcoding of RNA transcripts/DNA fragments is complete, and these barcoded transcripts/fragments are size-selected out of the reaction mixture and amplified further. It is imperative that a cell's associated barcode is reserved for that cell only going further. We figured that leftover, unused cell barcodes inadvertedly carried over through the size-selection step could cause spurious barcoding events in the downstream PCRs used to amplify and index the libraries. This mechanism of contamination could explain both observations that convinced us that our method was not single-cell: the vague separation between true cells and background noise barcodes on the kneeplot could be caused by all unused barcodes associating with transcripts/fragments post-emulsion breaking, and the lack of cell types could be explained by the dilution of each single-cell profile with random transcripts/fragments due to barcode promiscuity (\autoref{fig:barcode_carryover_mechamism}).
-
-	% {%
-	% 	\centering
-	% 	\fontsize{10.95pt}{11pt}\selectfont
-	% 	\includegraphics[width=0.85\textwidth,height=4cm]{example-image-a}
-	% 	\captionsetup{width=0.80\linewidth}
-	% 	\captionof{figure}[Effect of barcode carryover on transcript/fragment distribution across barcodes]{Effect of barcode carryover on transcript/fragment distribution across barcodes}
-	% 	\label{fig:barcode_carryover_mechamism}
-	% }%
-
-% \item april 9 2020: bioanalyzer experiment to figure out the contamination issue, as well as further downstream pcr2 which yields super nice atac-seq. "So, it looks like that the first purification is not sufficient and there is a considerable bead primer carryover..", "so it seems that our initial hypothesis of the carryover is indeed true"
-% \item april 16 2020: new miseq run (3 MM lines mix, on the one where i posted the bioA earlier with post pcr1 plot). stein becomes requests all lab members to help. i am given fluidigm c1 data by liesbeth, and regions/vcfs by zeynep/ibrahim/jwouters
-% \item april 21 2020: i post an overview of tsne/freemuxlet/demuxlet run on the MM mixture, and it looks very bad. i also post a bioA from a double ampure, and it's still there
-% \item april 22 2020: suresh posts more molecular interactions that could be possible when we use spike-ins. not sure if this is useful. suresh also proposes barcode stealing, one barcode templating an already barcoded fragment
-% \item april 30 2020: triple ampure purification did not work! --> nothing left
-
-To confirm this hypothesis, we attempted to detect the presence of free barcode in the product of PCR 1 (or RT? check) after the first size selection, right before the indexing PCR [[or cDNA PCR]]. Indeed, a large primer peak was clearly visible on size-chromatograms in these PCR products, dwarfing the rest of the (unamplified) material. Our working hypothesis was confirmed, and we added a second size-selective purification step after emulsion breaking. Re-running bioanalyzer after the additional purification step showed that the primer peak was now heavily reduced, but there was still a faint signal left. Performing a third size-selection reduced the cDNA yield to 0, and was thus unusable. We knew that losses incurred before the cDNA amplification PCR would translate 1:1 to a loss in RNA-seq sensitivity, as the complementary DNA is unamplified. Anxious to see the effect on the single-cell characteristics, we sequenced the double purification run (?), but to no avail: our knee plots were still weak, and the cells were still mixed (is this barnyard yet?).
-
-% \item april 10 2020: exponential amplification protocol written by suresh
-% \item april 23 2020: exponential amplification trial in pcr1. suresh also talks about phosphothionate. i also post some more demuxlet but now with unique snps only --> also did not work. i can include this.
-% \item april 27 2020: exponential amp results, as well as exo in this run
-
-Sideline: suresh proposes exponential PCR in droplet to use up all of the primers.
-
-
-% \item april 1 2020: weitz lab publishes dissolvable beads, but in a paper with almost no info in it. i can use this to make my own figure
-
-While we were still developing our protocol, we were suddenly stunned by a publication from the Weitz lab which detailed the production of dissolvable barcoded hydrogel beads almost identical to ours. Their manuscript contained some control experiments to demonstrate that the beads indeed dissolved, but only a barnyard control experiment in terms of single-cell data [[ref]].
-
-% \item may 6th: spike in experiments on mm and mouse 3t3
-% \item may 11th: "the spike-in experiment confirms that even after double ampure to filter out barcode primers, there is amplification of spike-in"
-
-% \item may 7th: suresh reported that his 4x4x4 hydrop-rna have libraries now, with NEB
-% \item may 12th 2020: miseq run on suresh experiments, includes exo treatment, 77\% map to transcriptome --> ready for the new barcode plate (previous was 384x384, now we want to do 96x96x96, these beads were dissolvable for the first time (? no i don't think so. doublecheck use of DTT etc in earlier protocols)), good whitelist reading now (here i need to know what changed between this and the master thesis run!) "suresh suggested that the extra double ampure that we do now reduces primer contamination, and thereby increases mapping \%"
-
-% \item may 18th 2020: TSA DMSO run ended nextseq500
-
-% \item may 22nd 2020: first barnyard, is hydrop-atac, miseq S1: linear pcr1 as we usually do, but with lower primer, S2: linear pcr1, same old primer conc, S3: Exponential pcr1. both kneeplot and barnyard look horrible. this is suresh's run, contains linear and exponentioal pcr1
-
-% \item may 28th 2020: new bioanalyzers of hydrop-atac with different enzymes, more washes. here i can note which enzymes we should use
-
-% \item june 1 2020: mixing of hydrop and 10x reagents first mentioned
-% \item june 3 2020: Today, I did the 10x HyDrop comparison to see if the enzymes/reagents of 10X makes any difference in terms of the performance. Following were the trials that I performed: S1: HyDrop beads + HyDrop PCR primers + rest of the 10X reagents, run on the HyDrop chip, S2: 10X beads + reagents, again run on the HyDrop chip. The cell load in each of these samples were 2000-2500 cells combined MM74 + 3T3. All the rest of the library preparation was according to the 10X protocol. cDNA quantification (by Qbit measurements) already shows a clear difference between the beads: S1: 5.4 ng/ul, S2: 26.5 ng/ul. Also its apparent from the Bioanalyzer traces. The shorter fragments are preferentially amplified in the case of S2 (NFR regions and single nucleosome fragments), indicating an efficient enrichment during the linear amplification step.. Whereas in the case S1, there are also longer fragments 2, 3 nucleosome spanned regions as well which are enriched and I think this could be getting enriched during the outdrop amplification..
-% \item additionally: "I also did a comparison of two sample lysis conditions for each samples. One provided by the 10X with their clean up buffer and the GITC-Triton X100 based buffer that I made in house based on litrature. So the light blue is of sample S2 with the lysis cleanup buffer made in house (GITC-TX100 buffer) and the red trace is then corresponding S1 cleaned up with in house GITC-TX100 buffer. I started using this cleanup buffer to make sure the whole cell is lysed completely and all the content of cell is available after purification for the next round of amplification. I think this is important to improve the yield. The yield of red trace (S1; cleaned with inhouse lysis buffer): 1.78 ng/ul and the yield of ligh blue trace (S2; cleaned with inhouse lysis buffer): 14.7 ng/ul. Just to remind: the cleanup buffer is used after breaking the droplet 10X uses a buffer to lyse everything and then perform the DNA purification. This is common to all their protocols.". stein: " - I agree with the yield worry and with Suresh' worry about how that can be due to the beads - it must be a lower capture efficiency, either due to having less oligos released from the bead, or suboptimal annealing or our barcodes to the fragments, but, this also means that even though we capture less fragments, in these runs the outdrop is under control (otherwise it would have re-gained the yield there) which in turn means that not capturing enough fragments is not the cause of outdrop.
-% \item june 8: i return analysis for new barnyard, mouse reads absent? mixture of 10x and hydrop reagents --> really the hydrop beads are crap man. but we don't realise it yet i think. suresh begins to dream about proteinase K ("About the polymerase, I think what Andrew suggested is good for well based protocols that they are working with, where the nuclei is disintegrated with SDS/proteinase K and the templates are available for PCR (like whhat is done with combinatorial indexing protocols. But in the case of droplets where the nuclei is intact, and the barcoding happens in situ, these polymerases may not be optimal. The polymerase that we use do not have strand displacement and have strong proof reading capacity, both of which are not ideal for in situ PCR. In situ PCR within nuclei happens in crowded environment where reagents (dNTP and primers) are limited and this results in the polymerase chewing up the single strand that is generated during linear PCR))" as well as different enzymes now "Yes, 10X polymerase (they term it as Barcoding reagent). That one also we dont have a lot. I think it should be good for 1 or 2 runs. In the next trial I can use thhis for PCR1 and all the rest we can use the HyDrop reagents. Along with this we can also try Taq polymerase, BST 2 polymerase and other commonly used polymerases with in situ PCRs."
-% \item june 9th 2020: new plot, "definite improvement" with the new conditions.
-
-% \item june 6: new batch of 96x9x9x96 beads. still mega hard fluorescent beads.
-
-% \item june 6: important! first 1/96 fluorescent primer experiment.
-% \item june 10 2020: very useful probe comparisons!
-
-% \item june 16 2020"Last week I started the mouse melanoma culture, and I think they are growing alright. today, i'll do a run with the illumina nextera tn5, but the 10x pcr1 reagents ("barcoding reagents"). shall i use the mouse melanoma cells this time? the previous trial was performed on 3t3." and "cell purity for the 10x beads on our chip is good: 7.4\% multiplets. currently indexing star genome for dual mouse/human, and will then remake the barnyard for previous sample. 87\% maprate too" --> baseline
-% \item june 19 2020:     and FIRST GOOD barnyard!!!, with GITC. how? "good news, the lack of mouse cells was due to a stupid mistake i made previously: i sorted all cells by total read count, and of course human cells are bigger --> mouse cells were dropped from previous plot". was this hydrop beads with 10x reagents?. "OK so this is an important milestone - showing that the beads with pcr barcoding works. Great achievement". also has barnyard plots that are very messy. i persevere in thinking that the beads are ok "i think the beads themselves can be trusted completely, judging from the way we make them + the qc. we are also getting a ton of single species reads, so we know there is no general widespread barcode mixing problem on the beads. but the nuclear lysis buffer is also fixed to the beads - the beads come sealed in the lysis buffer in the 10x kit, whereas we still have to make our own lysis buffer when we use our beads with the rest of the 10x reagents". I think these plots may have been used in the paper!
-
-% \item june 19 2020: more barnyard plots, linear vs exponential hydrop pcr, and low vs high primer in exponential. all barnyards fucked again. suresh remarks that hydrop beads have more species mixing, and also has a 3x lower dna yield
-
-% ??? which experiment is this? \item june 25 2020: new bioanalyzer, i believe of 96x96x96 hydrop-rna, miseq, gitc vs no gitc, knees looking weak, barnyard is fucked completely mixed! i think this may be the first hydrop-rna barnyard as people are comparing it to the atac. removing multimappers increases species purity " like i suspected, probably due to conservation of 3' exon end we see that removing multimappers does increase quality. but similar to atac we again have this population of barcodes that are shared". also, the pure cells are low in quality "you can see on the barnyard plots that the ones that have 80-90\% purity only have around 100-200 reads. what do you mean by fine exactly? as in, if the mixing doesn't occur, these cells would get sequenced to higher depth?"
-
-% \item july 17 2020: very very VERY insightful document that I made! definitely re-read
-
-% \item july 22: sequencing the latest hydrop rna libraries
-% \item july 23: analysis, on 28th of july, lots of exo trials hydrop-rna. i post a tsne that shows 2 clusters.
-
-% \item july 28 2020: suresh also shows that he has loaded tn5. we also do a trial with gDNA to titrate the tn5. could be useful to include.
-% \item july 30 2020: more tn5 titration. we also extract gDNA for (?) i think for testing beads
-% \item july 31 2020: embl tn5 produces identical bulk atac to previous data from zeynep
-
- we had never confirmed that we had sequenced a single cell's material. We began to doubt whether the much stronger fluorescence (and thus total primer content) of our beads played to our advantage as much as we had initially thought. Blinded by the good faith in our beads (or the bright flashes of fluorescence they generated), I was initially sceptical of this hypothesis, and it was mainly Suresh who pushed the idea to barcode a batch of beads with 1.5 and \SI{6}{\micro\molar} of barcode primer instead of the previous \SI{50}{\micro\molar}. Suresh's new HyDrop-RNA barnyard experiments quickly erased my doubts.
-
-At the time, we had no good mechanistic understanding as to why this change solved the issue of cell purity. We considered that if the total primer load released by the bead into the droplet far exceeds what is needed, it will be more difficult to filter out this large mass of unused primers later on. This idea looped back to our previous observation that a single SPRI purification was not sufficient to remove all free barcode oligos from the emulsion PCR product. However, the double purification had (largely) resolved this issue for some time, so this alone could not have been the full explanation of the mechanism. We then considered that if sub-barcode primers are carried over from the first barcoding round into the second, and from the second into the third, these free and unwanted sub-barcode primers could hybridise with sites left free from the previous barcoding round. This idea was strongly supported by evidence in Sanger sequencing, where we observe that the first sub-barcode locus is very pure, but the middle sub-barcode locus is not, and the third sub-barcode locus is pure again. This could be explained by [[x]]. We figured that one way to circumvent this problem was to reduce the number of barcoding rounds from three (in a 96 x 96 x 96 fashion) to two (384 x 384). A drawback was an increase in up-front cost (now eight 96-well plates were needed instead of three), but we figured that prospects of getting the bead purity up were worth this risk, so we proceeded.
-
-While the barcoding round cross-contamination hypothesis still holds strongly today, we failed to explain fully how acrydite primer concentration was related to this issue. Later on, after HyDrop v1 was already published, I came up with a new hypothesis that made more sense: if a high concentration (e.g. 50 uM) of free acrydite template oligos are incorporated into the matrix of the unbarcoded hydrogel bead, more sites will be available for the sub-barcode primers to hybridize with. While this will lead to increased overall signal, it will also lead to a larger fraction of untemplated acrydite oligos to remain unreacted after each round of sub-barcode. This inefficiency could be driven by either a lack of sub-barcode primers necessary to saturate the acrydite sites, or by inefficiency of the barcoding PCR itself. If any sub-barcodes from the previous rounds are then carried over to the next during splitting-and-pooling, these could  hybridise with such free acrydite stubs. While increasing the concentration of the sub-barcode oligo during PCR could lead to better saturation, it would exacerbate any carry-over problems. In addition, we used PCR cycling throughout the bead barcoding process. While the barcoding process included a
-
-
-% \item august 25: first experiment with lower concentration beads: hydrop-rna with 1.5 um and 6 um beads, exo I/thermolabile exo I/nextera instead of NEBNext 3 conditions per bead set, on mouse/human
-% item september 4: first working barnyards from suresh, separated into two clusters
-
-% \item september 15: new atac run
-% \item september 16: optimizing pcr mixes, did barnyards
-% \item september 18: hydrop-atac works! pooled with hydrop-rna which i sequenced 3 bases too short on umi = more good atac experiments, definitely include
-
-% \item september 19 2020: chris generates first tss/frags plot. at this time we are doing a lot of firsts with the analysis. using STAR etc still, fake paired-end, all this stuff
-% \item september 24 2020: chris does more stuff, single end vs paired end, new sequencing proposal
-
-% \item october 1 2020: analysis of new atac sequencing run now with paired end sequencing
-% \item also bioanalyzer result from fly body hydrop atac --> also usable
-
-% \item we acquire the onyx in october 2020
-
-% \item october 29: hydrop-rna optimisation trials for the paper --> definitely include
-% \item november 8 2020: comparison between hydrop-rna, drop-seq and 10x on mm87
-
-% important \item november 12 2020: suresh plans more hydrop-rna optimisation trials, first comparison between 10x and hydrop beads in terms of fluorescence -> now it looks equal 
-
-% \item november 18 2020: i post more hydrop-atac results, in-house vs nextera tn5, wash/no wash -- first mouse brain experiment
-
-% \item december 18 2020: suresh shows his hydrop-rna runs
-% \item december 21 2020: i show new hydrop rna data on pbmc
-% \item january 11 2021: mouse brain and fly hydrop-rna runs sequenced --> for paper, probably
-
-% \item january 12: jasper posts analysis of fly data facs
-% \item january 14: 6 um vs 12 um beads on mouse (?) hydrop-rna
-
-% \item january 20: hydrop-atac control run to check frozen vs non frozen bead stock (so we know how to store the bead batches we are making now)
-
-% \item january 25 2021: chris shows bap output of hydrop-atac -> quite an enrichment
-
-% \item january 26 2021: "both runs finished well today. we tried 6 uM vs 12 uM beads, 55C 15 min with shaking, Phusion/BST3/ETSSB polymerases"
-
-
-Still, there was a high level of background noise barcodes. We began to question whether the barcode sequences on our beads were pure. If a supposedly uniquely barcoded bead contained a distribution of different barcodes, none of our post-hoc cell barcodes represented a cell, but rather a mixture of transcripts/fragments originating from many cells. Importantly, if 20\% of the
-
-!!! Could be estimated as so: if 5\% of the transcripts are from the other species, then double of that will be from another cell (add another 5\% from the same species that we can't see.) This means that 10\% of the fragments that we see in one barcode are from another cell -- this is the fraction lost to ambient RNA from other cells. Now, take all of the transcripts in noise barcodes, and divide them all over the n cells that are called in the sample. This is the average number of reads that are lost to a droplet with a cell, and in that cell the random barcodes on a bead barcode these cells. Using these numbers, you can estimate the purity of your bead.
-
-
-
-% \begin{enumerate}
-% 	% \item December 2019: I propose a model for Nextera generating unbarcoded fragments that do get sequenced: when an n5xx/n5xx loaded tn5 dimer tagments our transcript, we get a 5' unbarcoded fragment that has an n5xx. this fragment also has TSO on the other side due to RT... the complementary strand of this fragment can thus be amplified in our post-tagmentation pcr, because we use TSO and n5xx-complementary primers.. --> If we use NEBNext, we apparently get improved result
-% 	% \item December 2019: Curie institute visit
-% 	\item December 2019: I am trying runs with TSA and DMSO (?)
-% 	      % \item 25th of december: suresh posts scifi trial bioanalyzer --> inefficient, fragments too large "Its not ATAC trace and looks like the Tn5 fragmentation is inefficient and due to inaccessibility randomly cuts the DNA fragments in the cells… So, it seems the permeabilisation by methanol is insufficient for ATAC..."
-% 	\item december 2019: i post results for more indrop tsa and dmso -- is this the first runs with the newest bead barcode design? are these the first true sequecing of barcodes? check this.
-% 	      % \item january 2020: more indrop tsa/dmso
-% 	\item january 2020: suresh makes first hydrop-atac library with bac beads
-% 	      % \item january 24 2020: i post tsa/dmso results starsolo
-% 	\item january 2020: suresh mentions pitsop/atacsee
-% 	\item january 27 2020: i'm mapping suresh 4x4x4 atac-seq data with starsolo
-% 	\item february 2020: miseq run on hydrop-rna, now all of a sudden nextera - xt has better 3' enrichment than nebnext, drop-seq is revealed to cover entire gene
-% 	\item february 2020: we realise that our beads are super bright vs 10x, we are happy at the time
-% 	\item february 24 2020: really nice looking hydrop-atac run with bac beads (?), results on feb 27, looks good on igv, gert shows hydrop-atac stats on starsolo
-% 	\item march 3-6 2020: raw bc counting, bad knees with a lot of background (unknown at the time) --> we were already talking about publication at the time
-% 	\item march 13 2020: second (?) pbmc hydrop-atac trial "NFR peak is quite tiny. Looks like the ATAC fragmentation is not as efficient compared to larger cells... Indeed lets see what we get out of sequencing." -- why didn't we realise here that our beads were not good? was this not full complexity? fewer cells? little sequencing?
-% 	\item march 17th hydrop-atac larval brain, tried 55c 30 min instead of 37c 60 min, both conditions get a very small nfr peak, but 55c is better
-% 	\item march 2020: corona begins to hit
-% 	\item march 2020: suresh wants to finalize his 4x4x4 hydrop-rna run rna-seq lib
-% 	\item march 2020 me: "I went over the profiles and noticed that we started getting more significant primer bumps once we increased primer volume from 7.5 uL to 10 uL. I think we should revert back to the old volume, the increase in yield will probably be offset by the loss after second purification" this is about pcr in library prep i think
-% 	\item march 30 2020: sequencing run
-% 	\item march 30 2020: my remark on the addition of phix: "no, that doesn't work with our library. it would mean that we have to spike in our primer together with standard primer. and that standard primer can also hybridise to our library in another priming site - we'd have a double read. actually, this happened last year with our drop-atac library. we had a poly-A problem in the atac library along with poly-G. A is coded as both dyes on nextseq."
-% 	\item march 30 2020: starsolo results, larval sample with pitstop, pbmc with pitstop, without pitstop, really great results for pbmc run.
-% 	\item march 30 2020: stein: "very exciting !!! I can almost feel the tSNE emerging here". both larval brain and pbmc look exactly like 10x on same sample
-% 	\item march 31 2020: crap kneeplots coming out...
-% 	\item Note the previous is all sequenced single end!!! diagram on march 30th word file --> problems generating count matrix
-% 	\item april 3 2020: crap tSNE from snapatac/cistopic in R (?), "so there is evidence that we have a serious barcoding issue, my main suspicion is carryover of gel/barcodes from pcr 1 to pcr 2, this would explain the knee plot and lack of clustering, i don't think it's the barcoded beads, there's no way to verify this without doing a couple of qpcrs on one bead, but the barcoding process should be very robust" --> this is usable in the thesis. suresh suggests "Perhaps a way to check this is by performing bio A after the first linear PCR. If there are significant carryover, we should see a significant spike in the trace corresponding to the barcode length."
-% 	\item april 7 2020: more discussion about the barcode carryover. suresh also suggests "2. second is to try exponential amp instead of linear. The reason behind this is that our bead have tons of primer in them but it is not getting sufficiently “ultilized” in the linear PCR sheme. WIth the expoenetial scheme there is doubling of templates and could in turn improve detection of atac fragments, while reduding the carryover of the primers. In the exponential we will add another primer, for the other end.what I would also try with this is: (i) double ampure purification, and (ii) Exo-I treatment to get rid of the unreacted primers"
-% 	\item april 8 2020: suresh suggests picking 20-30 beads into well to do a bulk experiment. i respond: "another idea could be to put single beads in wells, then add 1 primer for constant region near bead, and 1 random primer from [BC3]. we only have a 1/96 chance to get BC3 right, so if all of them come out positive this could indicate that every bead carries every primer"
-% 	\item april 9 2020: bioanalyzer experiment to figure out the contamination issue, as well as further downstream pcr2 which yields super nice atac-seq. "So, it looks like that the first purification is not sufficient and there is a considerable bead primer carryover..", "so it seems that our initial hypothesis of the carryover is indeed true"
-% 	\item april 10 2020: exponential amplification protocol written by suresh
-% 	\item april 16 2020: new miseq run (3 MM lines mix, on the one where i posted the bioA earlier with post pcr1 plot). stein becomes requests all lab members to help. i am given fluidigm c1 data by liesbeth, and regions/vcfs by zeynep/ibrahim/jwouters
-% 	\item april 21 2020: i post an overview of tsne/freemuxlet/demuxlet run on the MM mixture, and it looks very bad. i also post a bioA from a double ampure, and it's still there
-% 	\item april 22 2020: suresh posts more molecular interactions that could be possible when we use spike-ins. not sure if this is useful. suresh also proposes barcode stealing, one barcode templating an already barcoded fragment
-% 	\item april 23 2020: exponential amplification trial in pcr1. suresh also talks about phosphothionate. i also post some more demuxlet but now with unique snps only --> also did not work. i can include this.
-% 	\item april 27 2020: exponential amp results, as well as exo in this run
-% 	\item april 30 2020: triple ampure purification did not work! --> nothing left
-% 	\item april 1 2020: weitz lab publishes dissolvable beads, but in a paper with almost no info in it. i can use this to make my own figure
-% 	\item may 6th: spike in experiments on mm and mouse 3t3
-% 	\item may 7th: suresh reported that his 4x4x4 hydrop-rna have libraries now, with NEB
-% 	\item may 11th: "the spike-in experiment confirms that even after double ampure to filter out barcode primers, there is amplification of spike-in"
-% 	\item may 12th 2020: miseq run on suresh experiments, includes exo treatment, 77\% map to transcriptome --> ready for the new barcode plate (previous was 384x384, now we want to do 96x96x96, these beads were dissolvable for the first time (? no i don't think so. doublecheck use of DTT etc in earlier protocols)), good whitelist reading now (here i need to know what changed between this and the master thesis run!) "suresh suggested that the extra double ampure that we do now reduces primer contamination, and thereby increases mapping \%"
-% 	\item may 18th 2020: TSA DMSO run ended nextseq500
-% 	\item may 22nd 2020: first barnyard, is hydrop-atac, miseq S1: linear pcr1 as we usually do, but with lower primer, S2: linear pcr1, same old primer conc, S3: Exponential pcr1. both kneeplot and barnyard look horrible. this is suresh's run, contains linear and exponentioal pcr1
-% 	\item May 25th 2020: andrew adey suggests that our beads may be contaminated. i think not: " from the barnyard on the exponential run we can tell that there are some cells with a high number of reads and 100\% single species mapping, so unless that is all overamplified single fragment it seems that the barcodes themselves aren't flawed". at this time, bap also comes out. stein suggests we need to titrate tn5, but i reply that we already add a lot and we don't have overtagmentation. another idea he brings up is free tn5 adapters floating in the mix interfering
-% 	\item may 27th 2020: suresh says he has unbarcoded bac beads -- i really have to check out when we did the first bac run
-% 	\item may 28th 2020: new bioanalyzers of hydrop-atac with different enzymes, more washes. here i can note which enzymes we should use
-% 	\item june 1 2020: "Last week I performed a mock bulk run with the 10X reagents to see if the nuclei is lysed in the droplet. It looks like the nuclei is not lysed during the linear amplification stage. It seems still quite intact… So I have a feeling that the linear amplification that is happening with 10X is in-situ nucleus. So in the next weeks..."
-% 	\item june 1 2020: mixing of hydrop and 10x reagents first mentioned
-% 	\item june 3 2020: Today, I did the 10x HyDrop comparison to see if the enzymes/reagents of 10X makes any difference in terms of the performance. Following were the trials that I performed: S1: HyDrop beads + HyDrop PCR primers + rest of the 10X reagents, run on the HyDrop chip, S2: 10X beads + reagents, again run on the HyDrop chip. The cell load in each of these samples were 2000-2500 cells combined MM74 + 3T3. All the rest of the library preparation was according to the 10X protocol. cDNA quantification (by Qbit measurements) already shows a clear difference between the beads: S1: 5.4 ng/ul, S2: 26.5 ng/ul. Also its apparent from the Bioanalyzer traces. The shorter fragments are preferentially amplified in the case of S2 (NFR regions and single nucleosome fragments), indicating an efficient enrichment during the linear amplification step.. Whereas in the case S1, there are also longer fragments 2, 3 nucleosome spanned regions as well which are enriched and I think this could be getting enriched during the outdrop amplification..
-% 	\item additionally: "I also did a comparison of two sample lysis conditions for each samples. One provided by the 10X with their clean up buffer and the GITC-Triton X100 based buffer that I made in house based on litrature. So the light blue is of sample S2 with the lysis cleanup buffer made in house (GITC-TX100 buffer) and the red trace is then corresponding S1 cleaned up with in house GITC-TX100 buffer. I started using this cleanup buffer to make sure the whole cell is lysed completely and all the content of cell is available after purification for the next round of amplification. I think this is important to improve the yield. The yield of red trace (S1; cleaned with inhouse lysis buffer): 1.78 ng/ul and the yield of ligh blue trace (S2; cleaned with inhouse lysis buffer): 14.7 ng/ul. Just to remind: the cleanup buffer is used after breaking the droplet 10X uses a buffer to lyse everything and then perform the DNA purification. This is common to all their protocols.". stein: " - I agree with the yield worry and with Suresh' worry about how that can be due to the beads - it must be a lower capture efficiency, either due to having less oligos released from the bead, or suboptimal annealing or our barcodes to the fragments, but, this also means that even though we capture less fragments, in these runs the outdrop is under control (otherwise it would have re-gained the yield there) which in turn means that not capturing enough fragments is not the cause of outdrop.
-% 	\item june 6: new batch of 96x9x9x96 beads. still mega hard fluorescent beads.
-% 	\item june 6: important! first 1/96 fluorescent primer experiment.
-% 	\item june 8: i return analysis for new barnyard, mouse reads absent? mixture of 10x and hydrop reagents --> really the hydrop beads are crap man. but we don't realise it yet i think. suresh begins to dream about proteinase K ("About the polymerase, I think what Andrew suggested is good for well based protocols that they are working with, where the nuclei is disintegrated with SDS/proteinase K and the templates are available for PCR (like whhat is done with combinatorial indexing protocols. But in the case of droplets where the nuclei is intact, and the barcoding happens in situ, these polymerases may not be optimal. The polymerase that we use do not have strand displacement and have strong proof reading capacity, both of which are not ideal for in situ PCR. In situ PCR within nuclei happens in crowded environment where reagents (dNTP and primers) are limited and this results in the polymerase chewing up the single strand that is generated during linear PCR))" as well as different enzymes now "Yes, 10X polymerase (they term it as Barcoding reagent). That one also we dont have a lot. I think it should be good for 1 or 2 runs. In the next trial I can use thhis for PCR1 and all the rest we can use the HyDrop reagents. Along with this we can also try Taq polymerase, BST 2 polymerase and other commonly used polymerases with in situ PCRs."
-% 	\item june 9th 2020: new plot, "definite improvement" with the new conditions.
-% 	\item june 10 2020: very useful probe comparisons!
-% 	\item june 11 2020: new hydrop-rna run, i think now with the bac 96x96x96
-% 	\item june 16 2020"Last week I started the mouse melanoma culture, and I think they are growing alright. today, i'll do a run with the illumina nextera tn5, but the 10x pcr1 reagents ("barcoding reagents"). shall i use the mouse melanoma cells this time? the previous trial was performed on 3t3." and "cell purity for the 10x beads on our chip is good: 7.4\% multiplets. currently indexing star genome for dual mouse/human, and will then remake the barnyard for previous sample. 87\% maprate too" --> baseline
-% 	\item june 19 2020:     and FIRST GOOD barnyard!!!, with GITC. how? "good news, the lack of mouse cells was due to a stupid mistake i made previously: i sorted all cells by total read count, and of course human cells are bigger --> mouse cells were dropped from previous plot". was this hydrop beads with 10x reagents?. "OK so this is an important milestone - showing that the beads with pcr barcoding works. Great achievement". also has barnyard plots that are very messy. i persevere in thinking that the beads are ok "i think the beads themselves can be trusted completely, judging from the way we make them + the qc. we are also getting a ton of single species reads, so we know there is no general widespread barcode mixing problem on the beads. but the nuclear lysis buffer is also fixed to the beads - the beads come sealed in the lysis buffer in the 10x kit, whereas we still have to make our own lysis buffer when we use our beads with the rest of the 10x reagents". I think these plots may have been used in the paper!
-% 	\item june 19 2020: i also suggest using silane beads
-% 	\item june 19 2020: more barnyard plots, linear vs exponential hydrop pcr, and low vs high primer in exponential. all barnyards fucked again. suresh remarks that hydrop beads have more species mixing, and also has a 3x lower dna yield
-% 	\item june 25 2020: new bioanalyzer, i believe of 96x96x96 hydrop-rna, miseq, gitc vs no gitc, knees looking weak, barnyard is fucked completely mixed! i think this may be the first hydrop-rna barnyard as people are comparing it to the atac. removing multimappers increases species purity " like i suspected, probably due to conservation of 3' exon end we see that removing multimappers does increase quality. but similar to atac we again have this population of barcodes that are shared". also, the pure cells are low in quality "you can see on the barnyard plots that the ones that have 80-90\% purity only have around 100-200 reads. what do you mean by fine exactly? as in, if the mixing doesn't occur, these cells would get sequenced to higher depth?"
-% 	\item july 17 2020: very very VERY insightful document that I made! definitely re-read
-% 	\item july 22: sequencing the latest hydrop rna libraries
-% 	\item july 23: analysis, on 28th of july, lots of exo trials hydrop-rna. i post a tsne that shows 2 clusters.
-% 	\item july 28 2020: suresh also shows that he has loaded tn5. we also do a trial with gDNA to titrate the tn5. could be useful to include.
-% 	\item july 30 2020: more tn5 titration. we also extract gDNA for (?) i think for testing beads
-% 	\item july 31 2020: embl tn5 produces identical bulk atac to previous data from zeynep
-% 	\item september 9 2020: suresh posts bead production protocol
-% 	\item september 15: new atac run
-% 	\item september 16: optimizing pcr mixes, did barnyards
-% 	\item september 18: hydrop-atac works! pooled with hydrop-rna which i sequenced 3 bases too short on umi = more good atac experiments, definitely include
-% 	\item september 19 2020: chris generates first tss/frags plot. at this time we are doing a lot of firsts with the analysis. using STAR etc still, fake paired-end, all this stuff
-% 	\item september 24 2020: chris does more stuff, single end vs paired end, new sequencing proposal
-% 	\item september 30 2020: some nice pictures
-% 	\item october 1 2020: analysis of new atac sequencing run now with paired end sequencing
-% 	\item also bioanalyzer result from fly body hydrop atac --> also usable
-% 	\item october 6 2020: 6 new hydrop-rna experiments, jwouters posts the analysis
-% 	\item october 8 2020: cflerin posts more analysis regarding mapping strategies
-% 	\item october 29: hydrop-rna optimisation trials for the paper --> definitely include
-% 	\item november 8 2020: comparison between hydrop-rna, drop-seq and 10x on mm87
-% 	\item november 12 2020: suresh plans more hydrop-rna optimisation trials, first comparison between 10x and hydrop beads in terms of fluorescence -> now it looks equal
-% 	\item november 18 2020: i post more hydrop-atac results, in-house vs nextera tn5, wash/no wash -- first mouse brain experiment
-% 	\item november 19 2020: suresh posts his conditions for hydrop-rna on brain nuclei!
-% 	\item suresh shows his results of the hydrop-rna on pbmc with different conditions
-% 	\item november 20: mouse brain data atac sequenced
-% 	\item november 25 2020: i post an update about the mouse atac -- it's a setback (few cells, many dupes) probably due to reamplification, clustering looks bad
-% 	\item november 25 2020: pitstop+ barnyard hydrop-atac
-% 	\item november 25 2020: hydrop-atac on fly head
-% 	\item december 4 2020: i post a hydrop-atac screen, many conditions, dynabeads vs ampure, nextera vs custom embl tn5
-% 	\item december 11 2020: koen posts hydrop-atac on pbmc
-% 	\item december 17 2020: chris shows his analysis of pbmc data, star mapping vs bwa mapping. chris also shows label transfer - > does not cluster well, mostly random noise and central clustering when coclustering with 10x
-% 	\item december 18 2020: suresh shows his hydrop-rna runs
-% 	\item december 21 2020: i show new hydrop rna data on pbmc
-% 	\item january 4 2021: valerie shows pbmc 10x runs
-% 	\item january 11 2021: mouse brain and fly hydrop-rna runs sequenced --> for paper, probably
-% 	\item january 12: jasper posts analysis of fly data facs
-% 	\item january 14: 6 um vs 12 um beads on mouse (?) hydrop-rna
-% 	\item january 19: run overview
-% 	\item january 20: hydrop-atac control run to check frozen vs non frozen bead stock (so we know how to store the bead batches we are making now)
-% 	\item january 21: hydrop-atac control run with mouse cortex + cell lines
-% 	\item january 25 2021: suresh posts hydrop-atac optimisation protocols S1: 37C - 60 min; wash; 6uM beads - Phu/DV(-)/ET-SSB - Linear PCR(1st); S2: 37C - 60 min; wash; 6uM beads - Phu/DV(-)/ET-SSB - Exponential PCR(1st); S3: 37C - 60 min; wash; 6uM beads - KAPA /DV(-)/ET-SSB - Exponential PCR(1st)
-% 	\item january 25 2021: chris shows bap output of hydrop-atac -> quite an enrichment
-% 	\item january 26 2021: "both runs finished well today. we tried 6 uM vs 12 uM beads, 55C 15 min with shaking, Phusion/BST3/ETSSB polymerases"
-% \end{enumerate}
-
-% SNARE-seq
-% \begin{enumerate}
-% 	\item October 2019: bulk SNARE-seq, 2 conditions (EZ nuclei lysis or SNARE-NEB), yielded good DNA amounts but bad library traces. did not sequence. bioA in notebooks.
-% 	\item some dronc-seq pictures, bad! mostly microfluidics failures
-% 	\item a single-cell SNARE-seq run up to qubit stage, i apparently fucked up the pcr with a 100 um primer
-% 	\item september 8 2019: snare-seq sequenced in bulk looks ok
-% 	\item December 2019: I am trying SNARE-seq with the DRONC-seq protocol for nuclei isolatuion (?)
-% 	\item january 2020: i post snare-seq result that look "promising"
-% 	\item february 2020: snare-seq miseq run crashed
-% \end{enumerate}
-
-% SHARE-seq
-% \begin{enumerate}
-% 	\item june 19th 2020: share-seq protocol mentioned first
-% 	\item july 1 2020: meeting with buenrostro about share-seq. a lot of share-seq talk now, talking about custom tn5 loading etc
-% 	\item july 8: i delve into share-seq protocol
-% 	\item july 14: send an email to sai ma
-% 	\item august 12 2020: share-seq trials coming back (bioanalyzer), looks promising but low
-% 	\item august 28 2020: new share-seq result, with rnase inhibitors, sai ma responds to email
-% 	\item august 31 2020: sai ma responds to new share-seq results
-% 	\item september 4 2020: first pure hydrop barnyards from lower concentration primer in beads, tsnes look great too --> super important to add. suresh also did exo I. this is i believe hydrop-rna
-% 	\item september 8 2020: miseq run on share-seq, mapped low, barcode issues, umis, atac better than rna
-% 	\item november 17 2020: valerie share-seq on mm line mixes
-% 	\item november 24 2020: valerie shows finished share-seq libraries
-% \end{enumerate}
-
-soft lithography paper \sjcitep[]{xiaSoftLithography1998}
-
+soft lithography paper 
 
 \section{Conclusion}
