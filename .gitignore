@@ -309,3 +309,4 @@ pdfs/*
 sim/pubmed_queries.txt
 sim/pubmed_results.csv
 *.gz
+*runinfo.csv
