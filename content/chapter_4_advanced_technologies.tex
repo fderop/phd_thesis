@@ -67,17 +67,28 @@ One weakness of droplet methods: difficult to automate.
 Droplet-based assays require large amounts of labour and skill to implement. Automating flow-focusing-based droplet microfluidics is generally challenging. The 10x Chromium Connect, a modified Hamilton Nimbus liquid handler with an on-deck Chromium, offers fully automated droplet generation and library prep, but is serial in nature: one batch of up to 8 samples is processed at a time. This approach does thus does not offer increased sample throughput. Droplet generation itself is also a confounding process that affects the entire sample. If the process fails (by the hand of dust, cell or DNA aggregates, air bubbles, chip imperfections, pump controller or gasket failures, ...), the entire sample can be compromised, or will at least suffer a delay. Manual droplet generation on an Onyx or Chromium followed by partial automation of the library prep only is also not very practical for many (96+) samples due to time spent on ice before/after droplet generation for the first/last samples. Native plate-based methods deal with this problem more elegantly, for example by pre-sorting cells into plates using FACS, freezing the plates, and thawing the plates for processing on demand - a workflow which can be automated end to end. Moreover, the most recent SMART-seq assays have scaled down reagent cost through the use of acoustic nanoliter dispensing and 1536 well-plate formats, and combinatorial indexing methods have come closer to 10x Chromium in terms of sensitivity. Does this mean that droplet-based assays have no practical application for the large scale of data generation required to feed the beast?
 
 One development I find very interesting is PIP-seq\sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023} Here, droplet partitioning is achieved by vortexing aqueous and lipid phases until an emulsion is achieved, which can be performed in 96-well plates. It is thus conceivable that the entire workflow can be automated end to end. The original Clark article only shows scRNA-seq through this method. scATAC-seq poses a challenge: recall from our HyDrop work that droplet PCR does not go well with solid or hydrogel beads - the beads must dissolve. HyDrop and 10x achieve this by disulfide bonds which are cleaved when they are reduced by contact with the cell and enzyme mix. PIP-seq requires cell and reagent mix to be mixed and vortexed together, so the disulfide approach would not work. However, inDrop has previously used ortho-nitrobenzyl-mediated UV cleavage to release primers, an idea which could potentially be translated to for PIP-ATAC-seq.
+
 OAK\sjcitep[]{wuOverloadingAndUnpacking2024}OAK-seq
 
 tackling multimodality: not a great strength
 historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
+
 \begin{itemize}[noitemsep]
     \item reap-seq, cite-seq, eccite-seq
-    \item 10x multiome
-    \item TEA-seq
-    \item some plate based bullshit
+    \item 10x multiome\sjcitep[]{schwendinger2020chromium} \% TEA-seq\sjcitep[]{swanson2021simultaneous}
+    \item SHARE-seq\sjcitep[]{ma2020chromatin}
+    \item perturb-seq
+    \item PERTURB-ATAC
+    \item ASAP-seq\sjcitep[.]{mimitou2021scalable}
+    \item OAKseq
+    \item scifi-seq
+    \item snubar
+    \item scale preindexing
 \end{itemize}
 a
+
+more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
+digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
 
 this will lead to circular automation that self-learns. 10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab} maybe better ai? better hardware? scaling laws? bitter pill? maybe say something about the nvidia collabs?
 

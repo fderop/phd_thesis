@@ -251,17 +251,8 @@ iRegulon\sjcitep[]{janky2014iregulon} provides a computational alternative for i
 For example, the application of RNA-seq, FAIRE-seq and H3K27Ac/H3K27Me3 ChIP-seq directly led understanding the gene regulatory programs underlying melanoma switching from proliferative to invasive states\sjcitep[.]{verfaillie2015decoding} Differential gene analysis between patient biopsies from these two melanoma states showed high MITF, SOX10, and PAX3 in proliferative, and High ZEB1, SOX9 in invasive states. Similarly, FAIRE-seq showed open chromatin regions near MITF and SOX10 target genes in proliferative, and SOX9 targets in invasive states, and ChIP-seq showed high H3K27 acetylation at AP-1/TEAD target enhancers in invasive cells. Repression of TEAD in invasive cells via siRNA showed decreased cell invasion in matrigel assays and reduction in SOX9 expression, confirming TEAD as a master regulator in invasive melanoma. The availability of single-cell sequencing technologies further nuanced the findings above. Application of 10x Chromium scRNA-seq on 9 patient-derived melanoma cultures identified an intermediate states within the cultures which showed gene expression and chromatin accessibility (from ATAC-seq) signatures of both proliferative and invasive melanoma states\sjcitep[.]{wouters2020robust}. In the intermediate state, SOX10 and MITF expression are retained, but also mesenchymal factors such as SOX6 and EGR3 are expressed. Moreover, trajectory inference showed gradual transitions in gene expression rather than, discrete abrupt witches between proliferative and invasive states. This gradual change was further confirmed by and observed in SOX10 knockdown with scRNA-seq and (bulk) ATAC-seq at 4 timepoints over 72 hours. Further chromatin accessibility profiling of 26 melanoma samples across 6 species led to further understanding of melanoma states \textit{and} cemented chromatin accessibility as a highly predictive tool. Here, melanocytic (previously "proliferative", less accurate) enhancers were highly enriched for SOX10, MITF, and TFAP2A motifs whereas mesenchymal (prev. "invasive") showed AP-1 and TEAD motifs in their enhancers, corroborating earlier findings\sjcitep[.]{minnoye2020cross} These motif/enhancer relationships were also conserved across pig, horse, zebrafish and especially dog melanoma models. Moreover, DeepMEL, a CNN trained on the ATAC-seq peaks derived from the human melanoma lines, was able to predict new/synthetic enhancer activity (accessibility) in MES/MEL states based on just sequence. 
 
 \section{Tn5}
-This enzyme was first used by Adey and Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing")\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{adeyRapidLowInputLowbias2010} Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. (This is important for single-cell later.)
 
-Wiegand first mutants (E110K \& E345K)\sjcitep[.]{wiegand1992characterization}
-
-literally describes the mutants here\sjcitep[.]{weinreich1994evidence}
-{goryshinTn5VitroTransposition1998} Innovation in Mutant Transposase: performed random mutagenesis and discovered a hyperactive transposase triple mutant (E54K/M56A/L372P\sjcitep[.]{weinreich1994evidence}). This achieved efficient in vitro transposition, overcoming the low activity of wild-type Tn5 transposase. This version of Tn5 was still highly specific, recognizing a specific 19-base pair "outside end" (OE) sequence.
-why tn5 is more simple than <than what?>: Tn5 relies on only three core components (transposase, OE sequences, and target DNA) and eliminates the need for host proteins or other cis-acting sequences, simplifying transposition studies.
-
-Tn5 transposition requires no host proteins or additional DNA sequences beyond the 19-bp OE.
-
-think that their tool can be used for integrating synthetic dna constructs into specific dna sites.
+A number of transposase protein mutants have been known since the 90s\sjcitep[.]{wiegand1992characterization, weinreich1994evidence, } with the triple mutant E54K/M56A/L372P exhibiting the highest activity known to date \sjcitep[.]{goryshintn5vitrotransposition1998} This version of Tn5 was still highly specific, recognizing a specific 19-base pair "outside end" (OE) sequence.
 
 Tn5 transposition involves both sequence-specific recognition of the OEs and a random component when selecting target DNA.
 
@@ -282,6 +273,13 @@ The primary defect in OE-mediated transposition lies in its impaired ability to 
 
 % further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
 % toadd: salmen et al, spindrop --> pico injectil
+
+why tn5 is more simple than <than what?>: Tn5 relies on only three core components (transposase, OE sequences, and target DNA) and eliminates the need for host proteins or other cis-acting sequences, simplifying transposition studies.
+
+This enzyme was first used by Adey and Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing")\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{adeyRapidLowInputLowbias2010} Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. (This is important for single-cell later.)
+
+Tn5 transposition requires no host proteins or additional DNA sequences beyond the 19-bp OE.
+
 \sjcitep[.]{minnoyeChromatinAccessibilityProfiling2021}
 
 \section{Single-cell sequencing technologies}
@@ -607,13 +605,3 @@ CNNs have been successfully used in earlier enhancer prediction models, such as 
 
 
 
-\section{Multiomics}
-\begin{itemize}[noitemsep]
-	\item{share-seq}
-	\item{TEA-seq}
-	\item{10x multiomics}
-	\item{sci-car}
-\end{itemize}
-
-more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
-digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
