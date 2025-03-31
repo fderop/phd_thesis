@@ -1,4 +1,4 @@
-\chapter{The path ahead}
+\chapter{Advanced, multimodal technologies}
 In this work, we have established a droplet microfluidic platform for single-cell RNA- and ATAC sequencing, and laid a benchmarking framework and pipeline for scATAC-seq specifically. We have also shown that data generated through this and adjacent omics techniques can be used to feed model training campaigns. 
 
 \begin{itemize}[noitemsep]
@@ -35,7 +35,6 @@ Perturbation screens have also been coupled with scATAC-seq readouts. In the ear
 
 Spear-ATAC\sjcitep[]{pierce2021high} is able to overcome Perturb-ATAC's throughput limitations by using droplet encapsulation (10x Chromium). After pooled lentiviral transduction, cells undergo the regular 10x scATAC-seq workflow, but with an additional primer added to the droplet encapsulation step. This primer anneals to the integrated lentiviral cassette, amplifying its barcode. By using droplet-based methods, 414 sgRNA knockdowns could be profiled across 105k cells (sampled between 3 and 21 days post transduction). Analyzing the resulting time series revealed time-dependent effects of the knockdowns. For example, GATA1 knockdown was found to first upregulate STAT5 motif accessibility, but later RUNX motifs. As expected, these GRNs were also observed to be cell-type specific between K562, MCF-7 and GM12878 cells.
 
-
 One disadvantage of the screening methods above is that most of the vectors described do not contain Cas9, limiting the studies to transgenic and immortal cell lines. Most perturbation studies so far also deal with CRISPRa/i, CRISPR knockouts, but not yet with synthetic gene expression knock-ins. Such studies are considerably more difficult to implement in a pooled manner, since transcript length has an effect on transfection, packaging and transduction efficiency, which bias MOI. These effects call for the titration of viral concentrations and arrayed screening, which is expensive and laborious.
 
 \begin{itemize}[noitemsep]
@@ -53,10 +52,14 @@ Sample multiplexing for droplet microfluidics has also been achieved through oth
 % dsciatac, scifi-seq paper: also uses crop-seq, same lab
 Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
 
+Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
+
 A number of ATAC-seq specific multiplexing techniques depending on the straightforward "indexability" of Tn5 have also been published.
 
+
+SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode (SBO) during tagmentation\sjcitep[.]{wang2021simple} This SBO contains an 18 bp sample barcode and hybridises to Tn5 transposomes through a universal adapter sequence. During tagmentation these Tn5-SBO complexes remain stable as Tn5 integrates itself into accessible regions. Nuclei are then washed, removing unbound Tn5 and excess SBOs, and samples are pooled. After droplet encapsulation, the SBO is released from Tn5 and captured by the cell barcode during PCR amplification, linking cell barcodes with sample barcodes.
+
 \begin{itemize}[noitemsep]
-    \item snubar
     \item indexed tn5 multiplexing for atac-seq (cut\&tag for atac)/scale-bio
     \item genetic demultiplexing
     \item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
@@ -64,11 +67,11 @@ A number of ATAC-seq specific multiplexing techniques depending on the straightf
 \end{itemize}
 
 One weakness of droplet methods: difficult to automate.
+
 Droplet-based assays require large amounts of labour and skill to implement. Automating flow-focusing-based droplet microfluidics is generally challenging. The 10x Chromium Connect, a modified Hamilton Nimbus liquid handler with an on-deck Chromium, offers fully automated droplet generation and library prep, but is serial in nature: one batch of up to 8 samples is processed at a time. This approach does thus does not offer increased sample throughput. Droplet generation itself is also a confounding process that affects the entire sample. If the process fails (by the hand of dust, cell or DNA aggregates, air bubbles, chip imperfections, pump controller or gasket failures, ...), the entire sample can be compromised, or will at least suffer a delay. Manual droplet generation on an Onyx or Chromium followed by partial automation of the library prep only is also not very practical for many (96+) samples due to time spent on ice before/after droplet generation for the first/last samples. Native plate-based methods deal with this problem more elegantly, for example by pre-sorting cells into plates using FACS, freezing the plates, and thawing the plates for processing on demand - a workflow which can be automated end to end. Moreover, the most recent SMART-seq assays have scaled down reagent cost through the use of acoustic nanoliter dispensing and 1536 well-plate formats, and combinatorial indexing methods have come closer to 10x Chromium in terms of sensitivity. Does this mean that droplet-based assays have no practical application for the large scale of data generation required to feed the beast?
 
 One development I find very interesting is PIP-seq\sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023} Here, droplet partitioning is achieved by vortexing aqueous and lipid phases until an emulsion is achieved, which can be performed in 96-well plates. It is thus conceivable that the entire workflow can be automated end to end. The original Clark article only shows scRNA-seq through this method. scATAC-seq poses a challenge: recall from our HyDrop work that droplet PCR does not go well with solid or hydrogel beads - the beads must dissolve. HyDrop and 10x achieve this by disulfide bonds which are cleaved when they are reduced by contact with the cell and enzyme mix. PIP-seq requires cell and reagent mix to be mixed and vortexed together, so the disulfide approach would not work. However, inDrop has previously used ortho-nitrobenzyl-mediated UV cleavage to release primers, an idea which could potentially be translated to for PIP-ATAC-seq.
 
-OAK\sjcitep[]{wuOverloadingAndUnpacking2024}OAK-seq
 
 tackling multimodality: not a great strength
 historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
@@ -80,12 +83,8 @@ historically, most multiomics methods have relied on plates. this makes sense, b
     \item perturb-seq
     \item PERTURB-ATAC
     \item ASAP-seq\sjcitep[.]{mimitou2021scalable}
-    \item OAKseq
-    \item scifi-seq
-    \item snubar
     \item scale preindexing
 \end{itemize}
-a
 
 more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
 digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
@@ -104,4 +103,3 @@ mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022dec
 
 \sjcitep[.]{janssens2022decoding} by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain. identified key TFs for each cell type using cisTarget (ref). [deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!) mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs. out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.
 
-\sjcitep[.]{wierenga2023pylabrobot}
