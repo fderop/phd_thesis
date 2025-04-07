@@ -1,0 +1,74 @@
+\chapter{Conclusion and future perspectives}
+\section{Automation/multiplexing}
+One weakness of droplet methods: difficult to automate.
+
+\sjcitep[.]{wierenga2023pylabrobot}
+Droplet-based assays require large amounts of labour and skill to implement. Automating flow-focusing-based droplet microfluidics is generally challenging. The 10x Chromium Connect, a modified Hamilton Nimbus liquid handler with an on-deck Chromium, offers fully automated droplet generation and library prep, but is serial in nature: one batch of up to 8 samples is processed at a time. This approach does thus does not offer increased sample throughput. Droplet generation itself is also a confounding process that affects the entire sample. If the process fails (by the hand of dust, cell or DNA aggregates, air bubbles, chip imperfections, pump controller or gasket failures, ...), the entire sample can be compromised, or will at least suffer a delay. Manual droplet generation on an Onyx or Chromium followed by partial automation of the library prep only is also not very practical for many (96+) samples due to time spent on ice before/after droplet generation for the first/last samples. Native plate-based methods deal with this problem more elegantly, for example by pre-sorting cells into plates using FACS, freezing the plates, and thawing the plates for processing on demand - a workflow which can be automated end to end. Moreover, the most recent SMART-seq assays have scaled down reagent cost through the use of acoustic nanoliter dispensing and 1536 well-plate formats, and combinatorial indexing methods have come closer to 10x Chromium in terms of sensitivity. Does this mean that droplet-based assays have no practical application for the large scale of data generation required to feed the beast?
+
+One development I find very interesting is PIP-seq\sjcitep[.]{clarkMicrofluidicsFreeSingleCell2023} Here, droplet partitioning is achieved by vortexing aqueous and lipid phases until an emulsion is achieved, which can be performed in 96-well plates. It is thus conceivable that the entire workflow can be automated end to end. The original Clark article only shows scRNA-seq through this method. scATAC-seq poses a challenge: recall from our HyDrop work that droplet PCR does not go well with solid or hydrogel beads - the beads must dissolve. HyDrop and 10x achieve this by disulfide bonds which are cleaved when they are reduced by contact with the cell and enzyme mix. PIP-seq requires cell and reagent mix to be mixed and vortexed together, so the disulfide approach would not work. However, inDrop has previously used ortho-nitrobenzyl-mediated UV cleavage to release primers, an idea which could potentially be translated to for PIP-ATAC-seq.
+
+
+this will lead to circular automation that self-learns. 10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab} maybe better ai? better hardware? scaling laws? bitter pill? maybe say something about the nvidia collabs?
+
+\chapter{Conclusion and Future Perspectives}
+\begin{itemize}[noitemsep]
+    \item better fidelity/less noise
+    \item more structure - more conditions --> multi arrayed screens
+    \item better automation capabilities --> just larger scale
+    \item simply more/stronger data -- atlases, just like the general databases we have now. mention scope perhaps?
+    \item synthetic data? better curation of existing data (geo)?
+    \item novel model architecture? or will the bitter pill hold? deepseek r1
+    \item more more arrayed dat --> well based assays! number of conditions will scale exponentially because we will also want to be looking at interaction terms as occur in real humans! diseases polygenic vs monogenic --> one region vs many regions that play a role
+    \item better integration with adjacent non omics tech? spatial?
+    \item Historical Successes: Outline how databases like GEO and tools like BLAST revolutionized earlier omics studies. Tools like AlphaFold have transformed structural biology. Drawing parallels to similar breakthroughs in single-cell omics (e.g., CellTypist, scVI) will illustrate the trajectory.
+    \item diagnosis? linked to automation too. population wide for marker discovery?
+    \item future: cell engineering, cell therapies
+    \item Self-Optimizing Experiments: AI-driven platforms could autonomously design and run experiments, iteratively refining hypotheses in real time. closed loop scientist = the end game
+\end{itemize}
+
+In this work, we have built a droplet microfluidic platform for single-cell RNA- and ATAC sequencing, and a benchmarking framework for scATAC-seq data. We have also shown that data generated through this and adjacent omics techniques can be used to feed model training campaigns. 
+
+The availability of cheap predictive tools helps advance science in a number of ways. First and foremost, good models save costs by narrowing down the number of hypotheses. Synthetic enhancer candidates, for example, can be evaluated in-silico, and only the most promising ones are kept in the reporter cohort. The resulting higher iteration speed and reduced capital cost also reduce the barrier to entry, allowing us to utilise human resources more efficiently. Finally, since ML models value negative and control data, their use incentivizes data sharing and transparency, and potentially the repurposing of existing databases.
+\begin{itemize}[noitemsep]
+    \item Cell response to drugs
+    \item Differentiate cells into what we want, transhumanism
+    \item protein binding
+\end{itemize}
+There are three main areas: the first, and the most logical continuations on this work specifically, is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
+
+Consolidating this knowledge into deterministic understanding will ultimately lead to advanced cell- and gene therapies. CAR-T, the re-engineering of autologous T cells to target cancer [be more specific], has been a resounding success.
+
+
+so number of eras
+\begin{itemize}[noitemsep]
+    \item Early era of biology: observations
+    \item Early molecular era: interventions
+    \item Commodified sequencing: first for genomes, then high-dimensional measurements (assays)
+    \item Dawn of AI: low-level predictions, elucidating or bypassing fuzziness/stochasticity
+    \item Future: massive data foundries (cite that paper that shows data still scales super well, maybe bitter pill as well), data really feeds ai, we will understand how scaling works, complexity of predictions grow with data size (high-level predictions)
+\end{itemize}
+
+this phd is really about data generation at large scale
+hypothesis: ai has provided an incentive to generate massive datasets in the private sector, because they can now be monetized without direct access! distribution of data
+
+\sjcitep[.]{pampari2025}
+
+% closing statements
+
+AI/ML in bioinformatics, specifically single-cell, is not new.
+the "level" of predictions is going higher and higher
+first order: low level predictions
+second order: feature predictions in individual datasets
+now: genome-wide predictions (?)
+future: higher level, cross-modal predictions (drug response?)
+
+what do you need for that: scale, fidelity and multiple arrayed conditions
+
+how do you achieve that?
+automation, arrayed screens, - liquid handlers (droplets are not good at handling arrayed conditions, except if you can multiplex)
+more robust sample prep (remove humans out of the loop)
+
+why is the time right now?
+ai can actually use this data
+sequencing becoming cheap enough?
+vc appetite for these things?
