@@ -503,8 +503,6 @@ Monocle\sjcitep[]{trapnellDynamicsRegulatorsFate2014} Advent of single-cell RNA-
 
 found: different branches along the differentiation path, including one branch of non-differentiating mesenchymal cells lacking myogenic markers which did not arrive from myoblasts but from mesenchymal progenitors (CD13+ mesenchymal cells which may coexist with myoblasts and help them differentiate by secreting signaling factors Joe et al nat cell bio 2013). \num{1061} genes were dynamically regulated during differentiation. earliest genes were cell-cycle associated, then finally the sarcomere components and structural proteins. Bulk rna-seq alone could not resolve this. ENCODE myotube DNase I sites were motif-analysed, yielded 175 candidates for myo regulators, 
 
-
-
 Directly visualising correlations or variance between many RNA-seq or microarray samples is difficult due to the high-dimensionality of this data. Traditionally, this was done by first reducing the dimensionality of the data using PCA, and then visualising the first 2 principal components in a 2D space. Alternatively, heatmaps with dendrograms were used to order correlated samples. The more fine-grained nature of cell states in single-cell data further introduces non-linearity, since gradients of expression in the population are no longer averaged out [I think this is important]. This non-linearity precluded the use of PCA. This problem was partially solved by the introduction of t-SNE, a technique first designed to visualise the MNIST dataset of handwritten digits\sjcitep[.]{maatenVisualizingHighDimensionalData2008} The earliest implementations of t-SNE were used for single-cell mass cytometry data\sjcitep[]{amirViSNEEnablesVisualization2013} (45 protein levels per cell), then single-cell qPCR\sjcitep[]{saadatpourCharacterizingHeterogeneityLeukemic2014} (175 genes) and later single-cell whole transcriptomics\sjcitep[]{macoskohighlyparallelgenomewide2015} (\textasciitilde{\num{20000}}genes). t-SNE preserves local structure (close neighborhood of cells) at the cost of some concessions to global structure. Clusters of single cells can appear closer in the t-SNE embedding than they are in high-dimensional gene space. UMAP is a slightly newer dimensionality reduction algorithm which aims to better preserve global structure\sjcitep[.]{bechtDimensionalityReductionVisualizing2018} Some common criticisms of both t-SNE and UMAP is that they still distort global topologies\sjcitep[.]{chariSpeciousArtSinglecell2023} In addition, both methods are sensitive to hyperparameters (perplexity, number of neighbours) and stochasticity (e.g. initialisation). These tools are thus best used for exploration and visualisation rather than quantitative biological analysis.
 
 By 2019, several single-cell sequencing technologies had emerged. Each had their own strengths and weaknesses, sometimes leading to technical artifacts in datasets even when assessing the same biological sample. Even the same technology used on different days could lead to batch effects due to sample degradation or other technical artifacts between experiments. This translates to cells clustering by dataset batch rather than biological state. In order to remedy this, Satija lab released an analysis package called \verb|Seurat|, which aimed to facilitate integration of multiple single-cell datasets across different technologies and conditions\sjcitep[.]{stuartcomprehensiveintegrationsinglecell2019} [Seurat v1 focused on correlating single-cell gene expression with in situ hybridisation (ISH) data] Seurat uses Canonical Correlation Analysis (CCA\sjcitep{hotellingRelationsTwoSets1936}) to calculate linear combinations of genes (canonical correlation vectors, in this case "metagenes") that capture common information between two datasets. Cells are then co-projected in this shared metagene space to create a new "joint embedding" where clustering and differential expression analysis can be performed. The canonical vectors can be used to re-transform differential metagenes back to the original gene set used. Seurat's CCA implementation could also be used for label transfer: if one dataset is labeled or annotated, proximity in the joint embedding space can be used to transfer labels from one dataset to another.
@@ -663,7 +661,6 @@ with the total loss:
 \mathcal{L} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{j=1}^{C} \mathcal{L}_{ij}
 \]
 
-
 CNNs have been successfully used in earlier enhancer prediction models, such as DeepBind and DeepSEA, validating their use in genomics.
 % deeptopic
 % fly brain paper
@@ -673,9 +670,6 @@ CNNs have been successfully used in earlier enhancer prediction models, such as 
 % Filters correspond to biologically meaningful motifs, making CNNs interpretable for genomics.
 
 % Briefly, an atlas of fly brain scATAC-seq data was pre-processed and annotated. Cell-type labeled peak sets were then
-
-
-
 
 \section{Predictive tools}
 examples of predictive tools
