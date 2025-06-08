@@ -304,7 +304,7 @@ TSWLatexianTemp*
 
 .DS_store
 
-pdfs/*
+papers/*
 
 ipynb/resources/runinfo.csv
 *.venv*

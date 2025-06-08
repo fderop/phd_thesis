@@ -106,7 +106,6 @@ While the function of chromatin's DNA component as the primary store of informat
 
 By the early 1970s, biochemists had chemically identified five different histone proteins (H1, H2A, H2B, H3, H4), present at ratios of 0.5:1:1:1:1. Histones H2A and H2B were found to be rich in lysine, and H3 in arginine, positively charged amino acids known to bind DNA through electrostatic attraction\sjcitep[.]{delange1972} X-ray diffraction research suggested a DNA "super-helix" structure stabilized by histone proteins\sjcitep[,]{pardon1972} while others found "thin fibrils" and "nodular elements"\sjcitep[.]{slayter1972} It was however known that staphylococcal nuclease would cleave rat liver DNA into fragments of multiples of 200 base pairs in length, heavily hinting that DNA and histone proteins were organised in discrete units\sjcitep[.]{hewish1973} This hypothesis was strengthened by early electron microscopy, which directly visualised chromatin fibers as linear arrays of particles \textasciitilde{\SI{70}{ansgtrom}} in diameter resembling "beads on a string"\sjcitep[.]{olins1974spheroid}
 
-
 Finally, in 1974, Kornberg and Thomas showed that histone proteins H2A and H2B form dimers, and H3 and H4 formed stable tetramers\sjcitep[.]{kornbergChromatinStructureOligomers1974} When mixed with DNA, these dimers and tetramers returned X-ray diffraction spectra identical to native chromatin. Later research with enhanced resolution X-ray diffraction clearly showed a repeating pattern with with a periodicity of \textasciitilde{\SI{100}{ansgtrom}}\sjcitep[.]{kornbergchromatinstructurerepeating1974a} Kornberg remarked that \textit{"the occurrence of multiples rather than just 200 base pair pieces is presumably due to some cleavage sites being blocked by nonhistone proteins"} - a prescient vision of transcription factors. Histone protein H1 was later identified as a stabilizer, binding to 20-80 bp long DNA links between histone octamers, leading to supercoiling and further chromatin compaction\sjcitep[.]{finch1976} This new "nucleosome" model of chromatin compacts DNA \textasciitilde{7-fold} at the nucleosome level, and further supercoiling explains how mitotic chromosomes achieve a 10 000-fold compaction.
 
 % Put an image of the nucleosome model here
@@ -139,6 +138,21 @@ Parallel research in Roeder's lab led to the discovery of a protein which induce
 
 Many (Muller, Morgan, Sanger, Gilbert, Kornberg, Brenner) researchers cited here were recipients of the Nobel prize for their work, illustrating the importance of these subjects. [starting to understand genomes, canonical knowledge (was disputed), we are starting to understand that transcription factors interact with the genome, but how will we deciper this? we need a human genome.]
 
+link the previous section to the next: why the HGP?
+1977: PhiX/sanger, 5386 bases
+
+cystic fibrosis, the most common lethal autosomal recessive disease among Caucasians. thought to be monogenic based on its Mendelian inheritance pattern
+1985: linkage analysis with restriction fragment length polymorphisms\sjcitep[]{botstein1980} to narrowed down the location of the gene responsible for cystic fibrosis gene to \textit{about 1 percent of the human genome (about 30 million base pairs)}\sjcitep[.]{tsui1985} This work took thousands of clones and Southern blots.
+1989: after years, cftr gene was cloned and sequenced using chromosome walking in 1989\sjcitep[]{riordan1989,rommens1989} - exact mutation deltaF508 was most common cause, done BEFORE the protein was known! pure genomics
++ DMD and huntington's have the same story --> even “simple” Mendelian diseases required enormous effort to identify causative genes
+
+1995: craig venter: haemophilus influenzae sequenced. lessons: a. possible to use shotgun sequencing b. trove of information in the H. influenzae genome: all genes, operons, 1740 genes - 1/3rd new, evolution/conservation --> first systems biology
+1996: S. cerevisiae 12m bp, 6000 genes, homologs with other eukaryotes (including human), intron exon, systematic deletion studies -> elucidate function
+1997: C. elegans 100m bp, 19000 genes, conservation betw yeast human c elegans, much more non coding dna than h influenzae and s cerevisiae
+
+
+
+\section{Good section title}
 The human genome project started in 1985 as a joint academic effort between the US National Institutes of Health. Surprisingly, the US Department of Energy also played a major role, with Lawrence Livermore, Los Alamos and Lawrence Berkeley labs providing extensive support in computational analysis and data storage. The ties between DNA, cancer, radiation damage and the immune system were also known already. The project was first expected to take 15 years and cost ~\$3 billion dollars. Early efforts focused on a hierarchical approach: the genome was broken into fragments (~200kbp) and cloned into bacterial artificial chromosomes (BACs). These BACs were then linked into large contigs using a variety of techniques (mainly sequence tagging sites PCR and restriction enzyme fingerprinting), which were in turn mapped to entire chromosomes. Individual BAC clones were then further fragmeted into smaller pieces (1000bp) which could be sequenced via the Sanger method. A number of problems made this approach a slow process: repetitive DNA regions and coverage gaps and made the assembly of contigs difficult, and Sanger's dideoxy method was incredibly labour intensive. Luckily, automation soon followed. One company played a particularly important role: ABI, first with the ABI Prism 373 and 377 automated slab gel electrophoresis analyzers, then with the ABI Prism 310 capillary gel electrophoresis, and finally the ABI 3700 96-plex capillary gel electrophoresis analyzer (1998), which became the workhorse of the human genome project. This machine could sequence \textit{thousands} of base pairs per day.
 
 \renewcommand\arraystretch{1.4}
@@ -159,7 +173,6 @@ The human genome project started in 1985 as a joint academic effort between the 
 
 [draft] In 1995, craig venter founded celera. at celera, 300 ABI 3700s were working 24/7 with the explicit intent to sequence the human genome faster than the human genome project. Their trick was to bypass the contig assembly altogether: instead, they used a whole genome shotgun approach, fragmenting the genome into shorter fragments that could be run directly on the ABI 3700. This approach was first considered infeasible to resolve computationally, but development of better computers and algorithms during the 90s, and use of the HGP's partial reference genome allowed Celera to publish a draft in 2001. in 2000: drosophila, first complex genome done by celera using whole genome shotgun approach. <refer to previous text with drosophila ofc> Validated the viability of whole-genome shotgun sequencing for eukaryotes, which was controversial at the time! The race was on. draft of hgp: 90\% complete, some gaps of uncertainty
 
-\section{Next generation sequencing}
 Sequencing by synthesis (SBS) was developed by Balasubramanian and Klenerman at Cambridge in 1998. The technology works by hybridizing millions of DNA templates to an oligo "lawn" on a glass flow cell, where each individual template is amplified to generate a cluster of clones. Each cluster is then sequenced by sequentially adding fluorescently labeled nucleotides and recording where they are incorporated.
 
 [maybe link this part better with the previous section] The completion of the human genome project in 2003 allowed researchers to shift focus from recording the genome to annotating it, and finally deciphering its logic. The new fields of transcriptomics, epigenomics, metagenomics, population genetics, ... now required sequencing not just one genome, but thousands of genomes and other nucleic acid samples across many species, individuals and tissues. This demand could not be met by the Sanger sequencing method, spurring the development of a variety of new sequencing technologies. While initially several participants competed in the , one victor emerged to take a monopoly: Illumina. Illumina had acquired Solexa in 2007. Solexa itself was founded in 1998
@@ -229,7 +242,9 @@ The newly available human genome enabled the development of new bioinformatics t
 	\label{fig:sequencing_assays}
 \end{figure}
 
-By the mid 2000s, the availability of the human genome as a public resource and the falling cost of NGS led to the development of a new class of quantitative assays: specific fractions of nucleic acids extracted from tissues could now be sequenced, aligned to the reference genome, and counted. One of the first such assays was histone methylation ChIP-seq in 2007\sjcitep[.]{barskiHighresolutionProfilingHistone2007} By sequencing immunoprecipitated DNA directly, methylation could now be assessed genome-wide and with fewer quantitative biases. Performing this technique for a spectrum of 20 different lys/arg histone methylation ChIP-seq variants on CD4\textsuperscript{+} T cells, and correlating the annotations with GNF SymAtlas gene expression microarray data allowed genome-wide classification and discovery of various classes of functional elements. The distribution of methylation signatures could now be systematically correlated to phenotypes, helping understand disease and developmtn. For exapmle, a comparison of histone methylation in mouse embryonic stem cells and embryonic fibroblasts revealed transitory methylation changes in the de-differentiation of ES\sjcitep[.]{mikkelsen2007genome} In parallel, ChIP-seq was being applied to study individual transcription factors at a genomic resolution of around 50 base pairs, a welcome improvement compared to microarrays. An early application of ChIP-seq on neuron-restrictive silencer factor (NRSF) in Jurkat T-cells showed that this factor can also bind "weakly" to altered, non-canonical motifs dependent on local chromatin state (methylation, accessibility) and co-factor motif context\sjcitep[.]{johnsongenomewidemappingvivo2007} These findings contradicted earlier ideas of stringent binding to only canonical motifs, confirmed by SELEX and microarray studies, a rejection made possible only through the broadness of NGS. NGS also improved dynamic range compared to microarrays, showing for example that STAT1 motif enrichment was strongly correlated to absolute ChIP-seq peak height\sjcitep[.]{robertsonGenomewideProfilesSTAT12007}
+By the mid 2000s, the availability of the human genome as a public resource and the falling cost of NGS led to the development of a new class of quantitative assays: specific fractions of nucleic acids extracted from tissues could now be sequenced, aligned to the reference genome, and counted. One of the first such assays was histone methylation ChIP-seq, first published in 2007\sjcitep[.]{barskiHighresolutionProfilingHistone2007} By sequencing immunoprecipitated DNA directly rather than using microarrays, methylation could now be assessed genome-wide and with fewer quantitative biases. Performing this technique for a spectrum of 20 different lys/arg histone methylation ChIP-seq variants on CD4\textsuperscript{+} T cells, and correlating the annotations with GNF SymAtlas gene expression microarray data allowed genome-wide classification and discovery of various classes of functional elements. The distribution of methylation signatures could now be systematically correlated to phenotypes, helping understand disease and developmtn. For example, a comparison of histone methylation in mouse embryonic stem cells and embryonic fibroblasts revealed transitory methylation changes in the de-differentiation of ES\sjcitep[.]{mikkelsen2007genome}
+
+In parallel research, ChIP-seq was also applied to individual transcription factors at a genomic resolution of around 50 base pairs, a welcome improvement compared to microarrays. For example, application of ChIP-seq on neuron-restrictive silencer factor (NRSF) in Jurkat T-cells showed that this factor can also bind "weakly" to altered, non-canonical motifs dependent on local chromatin state (methylation, accessibility) and co-factor motif context\sjcitep[.]{johnsongenomewidemappingvivo2007} These findings contradicted earlier ideas of stringent binding to only canonical motifs, confirmed by SELEX and microarray studies, a rejection made possible only through the broadness of NGS. NGS also improved dynamic range compared to microarrays, showing for example that STAT1 motif enrichment was strongly correlated to absolute ChIP-seq peak height\sjcitep[.]{robertsonGenomewideProfilesSTAT12007}
 
 The increased genomic resolution of ChIP-seq was rapidly refining models of gene regulation, but the technique still required a strong antibody and prior knowledge of the protein or histone modification of interest. In contrast, DNase I hypersensitivity (DHS) assays survey chromatin accessibility genome-wide. The technique had already been applied for genome-wide accessibility studies, first by southern blot\sjcitep[,]{wu1980heat} then capillary Sanger sequencing\sjcitep[,]{crawford2004identifying} and later microarrays\sjcitep[.]{crawford2006dnase}. Like ChIP, the technique was soon translated to NGS\sjcitep[,]{hesselberth2009global}, rapidly contributing to even higher resolution (1 basepair) understanding of gene gene regulation. For example, matched DNase-seq and glucocorticoid receptor (GR) ChIP-seq revealed that out of \num{8236} active GR binding sites in murine mammary adenocarcinoma, 95\% were already accessible \textit{prior to} receptor activation\sjcitep[.]{john2011chromatin} These findings rejected prior ideas that GR might act as a pioneer factor, remodeling inaccessible chromatin and exposing its preferred motif after receptor activation. Moreover, pituitary gland cells shared only 11.4\% of the binding sites accessible in adenocarcinoma, suggesting that differential chromatin context underlies differential responses to the same transcription factor. Unsurprisingly, ENCODE's second draft included DNAse-seq data from 125 tissues, along with H3K4me3 and TF ChIP-seq and bisulfite sequencing\sjcitep[.]{thurman2012accessible,encode2012} In total, 2.9 million DNase I hypersensitivity sites were identified and annotated genome-wide, covering almost all previously known regulatory element candidates: 94.4\% of previously known TF ChIP-seq regions were found to overlap with these DNase I sites, and only \num{3692} such sites were found in all cell types assessed, confirming that chromatin accessibility and downstream gene regulation are highly tissue and cell-type specific processes. Combination of these new regulatory readouts with GWAS further confirmed that many disease-related SNPs are located in regulatory regions, accelerating therapeutic target discovery.
 
@@ -245,6 +260,9 @@ By 2008 development of NGS-driven RNA-seq, and subsequent displacement of microa
 
 In addition, quantification of phage lambda RNA spike-ins remained linear (R\textsuperscript{2} = 0.99) over 5 orders of magnitude, and correlation between technical  replicates was high (R\textsuperscript{2} = 0.96). A technical comparison of RNA-seq with microarray transcriptomics showed that RNA-seq was technically superior in every aspect\sjcitep[.]{marioni2008rna} RNA-seq identified 30\% more differentially expressed genes than microarrays at the same false discovery rate, and the sequencing approach was better at detecting low-abundance genes. qPCR validation also confirmed more RNA-seq-specific findings than microarray-specific findings. Finally,\textasciitilde{\num{200000}} RNA-seq reads mapped to possible exon-exon junctions, revealing novel splicing patterns. Each RNA extract was sequenced 7 times, unsurprisingly with a Spearman correlation of 0.96 across lanes, but extraction itself was not replicated. \sjcitep[.]{wang2009rna} Several major findings emerged from RNA-seq. Eukaryotic transcriptomes turned out to be more heterogeneic than anticipated. Individual papers revealed large numbers of novel transcribed regions, widespread antisense transcription, and extensive variation in 3' ends\sjcitep[.]{wang2008alternative} 
 
+\section{Novel computational tools}
+Idea: wealth of information leads to explosion in tools available
+
 The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
 
 iRegulon\sjcitep[]{janky2014iregulon} provides a computational alternative for identifying master regulators when experimental TF binding data is unavailable. First, a genome-wide assessment of motif enrichment near TSSs is generated by scoring occurrence of \num{10000} motif PWMs aggregated from various databases using ClusterBuster\sjcitep[]{frith2003cluster}, generating for each PWM a ranking of the genes it may regulate. A set of genes, derived from e.g. differential gene expression or co-expression data, can then be checked for overrepresentation in these PWM-gene rankings using an area under the rank curve approach. This returns a set of motifs that may regulate the gene set, which can then be mapped to TFs using ortholjk/ogy or similarity if annotation is absent. Applying this approach to validated gene sets from 115 ENCODE ChIP-seq datasets returned 94 correct TF hits, and was able to identify 307 direct p53 target genes using ENCODE ChIP-seq data.
@@ -255,7 +273,6 @@ iRegulon\sjcitep[]{janky2014iregulon} provides a computational alternative for i
 For example, the application of RNA-seq, FAIRE-seq and H3K27Ac/H3K27Me3 ChIP-seq directly led understanding the gene regulatory programs underlying melanoma switching from proliferative to invasive states\sjcitep[.]{verfaillie2015decoding} Differential gene analysis between patient biopsies from these two melanoma states showed high MITF, SOX10, and PAX3 in proliferative, and High ZEB1, SOX9 in invasive states. Similarly, FAIRE-seq showed open chromatin regions near MITF and SOX10 target genes in proliferative, and SOX9 targets in invasive states, and ChIP-seq showed high H3K27 acetylation at AP-1/TEAD target enhancers in invasive cells. Repression of TEAD in invasive cells via siRNA showed decreased cell invasion in matrigel assays and reduction in SOX9 expression, confirming TEAD as a master regulator in invasive melanoma. The availability of single-cell sequencing technologies further nuanced the findings above. Application of 10x Chromium scRNA-seq on 9 patient-derived melanoma cultures identified an intermediate states within the cultures which showed gene expression and chromatin accessibility (from ATAC-seq) signatures of both proliferative and invasive melanoma states\sjcitep[.]{wouters2020robust}. In the intermediate state, SOX10 and MITF expression are retained, but also mesenchymal factors such as SOX6 and EGR3 are expressed. Moreover, trajectory inference showed gradual transitions in gene expression rather than, discrete abrupt witches between proliferative and invasive states. This gradual change was further confirmed by and observed in SOX10 knockdown with scRNA-seq and (bulk) ATAC-seq at 4 timepoints over 72 hours. Further chromatin accessibility profiling of 26 melanoma samples across 6 species led to further understanding of melanoma states \textit{and} cemented chromatin accessibility as a highly predictive tool. Here, melanocytic (previously "proliferative", less accurate) enhancers were highly enriched for SOX10, MITF, and TFAP2A motifs whereas mesenchymal (prev. "invasive") showed AP-1 and TEAD motifs in their enhancers, corroborating earlier findings\sjcitep[.]{minnoye2020cross} These motif/enhancer relationships were also conserved across pig, horse, zebrafish and especially dog melanoma models. Moreover, DeepMEL, a CNN trained on the ATAC-seq peaks derived from the human melanoma lines, was able to predict new/synthetic enhancer activity (accessibility) in MES/MEL states based on just sequence. 
 
 \section{Tn5}
-
 A number of transposase protein mutants have been known since the 90s\sjcitep[.]{wiegand1992characterization, weinreich1994evidence, } with the triple mutant E54K/M56A/L372P exhibiting the highest activity known to date \sjcitep[.]{goryshintn5vitrotransposition1998} This version of Tn5 was still highly specific, recognizing a specific 19-base pair "outside end" (OE) sequence.
 
 Tn5 transposition involves both sequence-specific recognition of the OEs and a random component when selecting target DNA.
@@ -371,77 +388,6 @@ first 10x paper\sjcitep[.]{zhengMassivelyParallelDigital2017} 10x's Chromium dre
 The release of the 10x Chromium scRNA-seq kit marked a milestone in single-cell sequencing research. The kit was user friendly enough, and a good balance between cell throughput and single-cell quality was seemingly struck. Several atlasing projects were performed using this technology including human\sjcitep[,]{regev2017human} mouse\sjcitep[,]{tabulamuris2018} and fly\sjcitep[.]{davie2018single} In the latter, \num{56902} high-quality single-cell transcriptomes (\num{157000} total) from 26 sequencing runs on \textit{D. melanogaster} sampled at 8 timepoints between 0 and 50 days old were aggregated and analysed. CEL-seq2 and SMART-seq2 supplemented the medium-depth 10x Chromium cells with high-quality "anchors" of higher sequencing depth. Gene regulatory networks were inferred from cell-specific (olfactory projection neurons, glia) gene expression sets using SCENIC, and participant TFs were validated for motif enrichment in these cell types using FACS-assisted ATAC-seq. Globally, RNA levels declined as aging progressed, specifically oxidative phosphorylation-associated genes.
 
 By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
-
-\chapter{Advanced, multimodal technologies}
-\section{Multimodality}
-tackling multimodality: not a great strength
-historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
-
-\begin{itemize}[noitemsep]
-    \item reap-seq, cite-seq, eccite-seq
-    \item 10x multiome\sjcitep[]{schwendinger2020chromium} \% TEA-seq\sjcitep[]{swanson2021simultaneous}
-    \item SHARE-seq\sjcitep[]{ma2020chromatin}
-    \item perturb-seq
-    \item PERTURB-ATAC
-    \item ASAP-seq\sjcitep[.]{mimitou2021scalable}
-    \item scale preindexing
-\end{itemize}
-
-more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
-digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
-
-\section{Screening}
-Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with multiplexed shRNA vector libraries and survivors are sequenced. When CRISPR was developed as a molecular tool for rapid and accurate gene editing in 2013\sjcitep[,]{ran2013genome} full genetic knockouts became widely available, producing a pooled genome-wide screen involving 64000 sgRNA's for 18000 gene knockouts just a year later\sjcitep[.]{shalem2014genome, behan2019prioritization, pacini2021integrated} In addition to genetic knockouts, specific genes can also be up- or downregulated using catalytically dead Cas9 fused to transcription activators such as VP64 or p65, or repressors such as KRAB. Both arrayed and pooled CRISPR/RNAi screens have drawbacks: arrayed screens require vast amounts of labour and reagents, and pooled CRISPR-screens are limited to very simple readouts such as cell survival or marker expression.
-
-Around 2015, researchers at the Broad institute devised that perturbations could be pooled but read out at the single-cell level, coupling pooled screens with RNA-seq readings\sjcitep[.]{dixit2016perturbseq} In their method, named Perturb-seq, each vector is designed to express two transcripts after integrating in the host genome: a first transcript containing the sgRNA, driven by U6, and a second transcript containing a puromycin selection cassette, BFP and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). The \{sgRNA:GBC\} dictionary can then be used to identify the genetic edit present in each captured cell \sjcitep[.]{dixit2016perturbseq} This pooled approach allows rapid parallelisation of perturbation screens with limited labour. Using this system, researchers observed that even within the same perturbation, individual cells can exhibit different responses. In particular, knockdown of the key ER chaperone BiP (HSPA5) caused two possible responses: some cells preferentially activated PERK, while others activated IRE1\textalpha.
-
-% \begin{figure}[h]
-% 	\centering
-% 	\includegraphics[width=0.75\textwidth]{perturbation_vectors_cropped.png}
-% 	\captionsetup{width=0.85\linewidth}
-% 	\caption[Common single-cell perturbation vector designs]{Common single-cell perturbation vector designs. Adapted from \notefullcite{xie2018frequent}.}
-% 	\label{fig:perturbation_vectors}
-% \end{figure}
-
-Instead of guide barcodes expressed on the selection cassette, a poly-adenylated gRNA which is directly captured by 3' scRNA-seq can also be used\sjcitep[.]{datlinger2017pooled}. In this approach's debut, Drop-seq was also used instead of 10x, showing that the open-source method has sufficient sensitivity to detect the gRNA transcripts. Perturb-seq's costs can be further scaled down by multiplexing perturbations or cells: if gene regulatory networks are assumed sparse in number of participants, then the differential expression of a cell responding to multiple perturbations (high MOI), or a droplet containing multiple single-perturbation cells, can be considered a linear combination of the effect of its components. Pooling cells or perturbations in this manner and demultiplexing the individual terms using PCA and LASSO [double check] can reduce cost ten-fold and quantify interaction terms between different perturbations\sjcitep[.]{yao2024scalable}
-
-Perturbation screens have also been coupled with scATAC-seq readouts. In the earliest protocol, Perturb-ATAC\sjcitep[,]{rubin2019coupled} cells were transduced in pools with Perturb-seq-like vectors. Single cells were then captured and tagmented on the Fluidigm C1, limiting the size of the study to \~4300 cells total. Here, the GBCs are reverse-transcribed, allowing them to be amplified and captured through the Fluidigm scATAC-seq protocol, generating perturbation-coupled scATAC-seq profiles. Dual knockdown of EBF1 and EZH2 (in B lympholbasts), and KLF4 and ZNF750 (in keratinocytes), showed stronger repression than individual perturbations, and this relationship is cell-type specific.
-
-Spear-ATAC\sjcitep[]{pierce2021high} is able to overcome Perturb-ATAC's throughput limitations by using droplet encapsulation (10x Chromium). After pooled lentiviral transduction, cells undergo the regular 10x scATAC-seq workflow, but with an additional primer added to the droplet encapsulation step. This primer anneals to the integrated lentiviral cassette, amplifying its barcode. By using droplet-based methods, 414 sgRNA knockdowns could be profiled across 105k cells (sampled between 3 and 21 days post transduction). Analyzing the resulting time series revealed time-dependent effects of the knockdowns. For example, GATA1 knockdown was found to first upregulate STAT5 motif accessibility, but later RUNX motifs. As expected, these GRNs were also observed to be cell-type specific between K562, MCF-7 and GM12878 cells.
-
-One disadvantage of the screening methods above is that most of the vectors described do not contain Cas9, limiting the studies to transgenic and immortal cell lines. Most perturbation studies so far also deal with CRISPRa/i, CRISPR knockouts, but not yet with synthetic gene expression knock-ins. Such studies are considerably more difficult to implement in a pooled manner, since transcript length has an effect on transfection, packaging and transduction efficiency, which bias MOI. These effects call for the titration of viral concentrations and arrayed screening, which is expensive and laborious.
-
-
-\begin{itemize}[noitemsep]
-    \item crop-seq
-    \item TAP-seq
-    \item MIX-seq
-    \item drug or molecule screens
-    \item DRUG-seq -> also interplay with automation
-\end{itemize}
-
-
-\section{Multiplexing}
-Sample multiplexing for droplet microfluidics has also been achieved through other means. The main strategy is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkaComparativeAnalysisAntibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
-
-[draft idea: layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
-
-% dsciatac, scifi-seq paper: also uses crop-seq, same lab
-Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
-
-Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
-
-A number of ATAC-seq specific multiplexing techniques depending on the straightforward "indexability" of Tn5 have also been published.
-
-SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode (SBO) during tagmentation\sjcitep[.]{wang2021simple} This SBO contains an 18 bp sample barcode and hybridises to Tn5 transposomes through a universal adapter sequence. During tagmentation these Tn5-SBO complexes remain stable as Tn5 integrates itself into accessible regions. Nuclei are then washed, removing unbound Tn5 and excess SBOs, and samples are pooled. After droplet encapsulation, the SBO is released from Tn5 and captured by the cell barcode during PCR amplification, linking cell barcodes with sample barcodes.
-
-\begin{itemize}[noitemsep]
-    \item indexed tn5 multiplexing for atac-seq (cut\&tag for atac)/scale-bio
-    \item genetic demultiplexing
-    \item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
-    \item !!!!!!!!!!!!! parse bio and that massive dataset
-\end{itemize}
-
 
 
 \section{Pre-processing single-cell sequencing data}
@@ -600,6 +546,76 @@ cisTopic's LDA approach was benchmarked against other popular tools such as chro
 
 Cicero[probably good to look at to]\sjcitep[.]{plinerCiceroPredicts2018}
 
+\section{Multimodality}
+tackling multimodality: not a great strength
+historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
+
+\begin{itemize}[noitemsep]
+    \item reap-seq, cite-seq, eccite-seq
+    \item 10x multiome\sjcitep[]{schwendinger2020chromium} \% TEA-seq\sjcitep[]{swanson2021simultaneous}
+    \item SHARE-seq\sjcitep[]{ma2020chromatin}
+    \item perturb-seq
+    \item PERTURB-ATAC
+    \item ASAP-seq\sjcitep[.]{mimitou2021scalable}
+    \item scale preindexing
+\end{itemize}
+
+more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
+digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
+
+\section{Screening}
+Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with multiplexed shRNA vector libraries and survivors are sequenced. When CRISPR was developed as a molecular tool for rapid and accurate gene editing in 2013\sjcitep[,]{ran2013genome} full genetic knockouts became widely available, producing a pooled genome-wide screen involving 64000 sgRNA's for 18000 gene knockouts just a year later\sjcitep[.]{shalem2014genome, behan2019prioritization, pacini2021integrated} In addition to genetic knockouts, specific genes can also be up- or downregulated using catalytically dead Cas9 fused to transcription activators such as VP64 or p65, or repressors such as KRAB. Both arrayed and pooled CRISPR/RNAi screens have drawbacks: arrayed screens require vast amounts of labour and reagents, and pooled CRISPR-screens are limited to very simple readouts such as cell survival or marker expression.
+
+Around 2015, researchers at the Broad institute devised that perturbations could be pooled but read out at the single-cell level, coupling pooled screens with RNA-seq readings\sjcitep[.]{dixit2016perturbseq} In their method, named Perturb-seq, each vector is designed to express two transcripts after integrating in the host genome: a first transcript containing the sgRNA, driven by U6, and a second transcript containing a puromycin selection cassette, BFP and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). The \{sgRNA:GBC\} dictionary can then be used to identify the genetic edit present in each captured cell \sjcitep[.]{dixit2016perturbseq} This pooled approach allows rapid parallelisation of perturbation screens with limited labour. Using this system, researchers observed that even within the same perturbation, individual cells can exhibit different responses. In particular, knockdown of the key ER chaperone BiP (HSPA5) caused two possible responses: some cells preferentially activated PERK, while others activated IRE1\textalpha.
+
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=0.75\textwidth]{perturbation_vectors_cropped.png}
+% 	\captionsetup{width=0.85\linewidth}
+% 	\caption[Common single-cell perturbation vector designs]{Common single-cell perturbation vector designs. Adapted from \notefullcite{xie2018frequent}.}
+% 	\label{fig:perturbation_vectors}
+% \end{figure}
+
+Instead of guide barcodes expressed on the selection cassette, a poly-adenylated gRNA which is directly captured by 3' scRNA-seq can also be used\sjcitep[.]{datlinger2017pooled}. In this approach's debut, Drop-seq was also used instead of 10x, showing that the open-source method has sufficient sensitivity to detect the gRNA transcripts. Perturb-seq's costs can be further scaled down by multiplexing perturbations or cells: if gene regulatory networks are assumed sparse in number of participants, then the differential expression of a cell responding to multiple perturbations (high MOI), or a droplet containing multiple single-perturbation cells, can be considered a linear combination of the effect of its components. Pooling cells or perturbations in this manner and demultiplexing the individual terms using PCA and LASSO [double check] can reduce cost ten-fold and quantify interaction terms between different perturbations\sjcitep[.]{yao2024scalable}
+
+Perturbation screens have also been coupled with scATAC-seq readouts. In the earliest protocol, Perturb-ATAC\sjcitep[,]{rubin2019coupled} cells were transduced in pools with Perturb-seq-like vectors. Single cells were then captured and tagmented on the Fluidigm C1, limiting the size of the study to \~4300 cells total. Here, the GBCs are reverse-transcribed, allowing them to be amplified and captured through the Fluidigm scATAC-seq protocol, generating perturbation-coupled scATAC-seq profiles. Dual knockdown of EBF1 and EZH2 (in B lympholbasts), and KLF4 and ZNF750 (in keratinocytes), showed stronger repression than individual perturbations, and this relationship is cell-type specific.
+
+Spear-ATAC\sjcitep[]{pierce2021high} is able to overcome Perturb-ATAC's throughput limitations by using droplet encapsulation (10x Chromium). After pooled lentiviral transduction, cells undergo the regular 10x scATAC-seq workflow, but with an additional primer added to the droplet encapsulation step. This primer anneals to the integrated lentiviral cassette, amplifying its barcode. By using droplet-based methods, 414 sgRNA knockdowns could be profiled across 105k cells (sampled between 3 and 21 days post transduction). Analyzing the resulting time series revealed time-dependent effects of the knockdowns. For example, GATA1 knockdown was found to first upregulate STAT5 motif accessibility, but later RUNX motifs. As expected, these GRNs were also observed to be cell-type specific between K562, MCF-7 and GM12878 cells.
+
+One disadvantage of the screening methods above is that most of the vectors described do not contain Cas9, limiting the studies to transgenic and immortal cell lines. Most perturbation studies so far also deal with CRISPRa/i, CRISPR knockouts, but not yet with synthetic gene expression knock-ins. Such studies are considerably more difficult to implement in a pooled manner, since transcript length has an effect on transfection, packaging and transduction efficiency, which bias MOI. These effects call for the titration of viral concentrations and arrayed screening, which is expensive and laborious.
+
+
+\begin{itemize}[noitemsep]
+    \item crop-seq
+    \item TAP-seq
+    \item MIX-seq
+    \item drug or molecule screens
+    \item DRUG-seq -> also interplay with automation
+\end{itemize}
+
+
+\section{Multiplexing}
+Sample multiplexing for droplet microfluidics has also been achieved through other means. The main strategy is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkaComparativeAnalysisAntibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
+
+[draft idea: layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
+
+% dsciatac, scifi-seq paper: also uses crop-seq, same lab
+Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerUltraHighThroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
+
+Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
+
+A number of ATAC-seq specific multiplexing techniques depending on the straightforward "indexability" of Tn5 have also been published.
+
+SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode (SBO) during tagmentation\sjcitep[.]{wang2021simple} This SBO contains an 18 bp sample barcode and hybridises to Tn5 transposomes through a universal adapter sequence. During tagmentation these Tn5-SBO complexes remain stable as Tn5 integrates itself into accessible regions. Nuclei are then washed, removing unbound Tn5 and excess SBOs, and samples are pooled. After droplet encapsulation, the SBO is released from Tn5 and captured by the cell barcode during PCR amplification, linking cell barcodes with sample barcodes.
+
+\begin{itemize}[noitemsep]
+    \item indexed tn5 multiplexing for atac-seq (cut\&tag for atac)/scale-bio
+    \item genetic demultiplexing
+    \item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
+    \item !!!!!!!!!!!!! parse bio and that massive dataset
+\end{itemize}
+
+
 
 \section{Artificial learning}
 
@@ -676,7 +692,6 @@ CNNs have been successfully used in earlier enhancer prediction models, such as 
 
 % Briefly, an atlas of fly brain scATAC-seq data was pre-processed and annotated. Cell-type labeled peak sets were then
 
-\section{Predictive tools}
 examples of predictive tools
 % DeepSEA: used chip-seq data from ENCODE and Roadmap Epigenomics, is a CNN , saturation mutagenesis (effect of every possible single-nucleotide mutation in the sequence), 1 kb window around a location of interest is one-hot encoded, various types of chromatin features (chip-seq tf binding from encode of 690 tfs, dnase i hypersensitivity 125 datasets, 104x histone marks (h3k27ac, h3k4me3),) - and this is binarized (if 200 bp window is in a peak of the modality or not), then a CNN is trained with an NLL loss function to predict the modalities, output is a vector of size 919 (sum of all datasets, which are different by tf or by cell type), matches allelic imbalance measurements! predicts whether a given segment of DNA is likely to be bound by regulatory proteins, effects of mutations on that binding. able to de novo predict known eQTLs from negative control SNPs (from 1000 genomes project). better than simpler models such as CADD (logistic regression), GWAVA (random forest classifier).
 
