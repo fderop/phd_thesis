@@ -61,7 +61,7 @@ However, the link between embryonic development and the "new" insights in geneti
 
 It must be noted that the genes Morgan and Waddington addressed were still somewhat vaguely-defined, as their exact physical nature beyond the chromosome was still unknown.\footnotetextwithoutmarker{\superfullcite{watsonMolecularStructureNucleic1953}J. D. Watson and F. H. C. Crick. Nature, \textbf{171}: 737 - 738, 1953}\hspace{-1pt} % this stupid footnote is here because this reference is first cited in the X ray crystallography wrapfigure environment. As a result, it gets a citation number that predates the second Watson & Crick 1953 paper by a few citations. This is a problem that I think cannot be avoided. What is more worrying is that as this reference is first cited in the wrapfigure environment, and not on the page environment,  it does not show up in the footnotes of this page, but goes missing completely. The best solution I could come up with was to reconstruct the reference in the footnotes manually.
 In fact, the storage of genetic information was attributed to proteins at the time, as they made up a much larger portion of the chromosomal dry mass than nucleic acids (DNA, RNA), and were known to be more complex in composition. Phoebus Levene, who had identified adenine, guanine, thymine, cytosine, deoxyribose-phosphate backbone as the basic components of DNA\sjcitep[,]{levene1919structure} 
-Nucleic acids were thought to be only of structural importance to chromosomes, akin to the highly repetitive polymers found in cell walls and plant fibers. This notion was overturned in 1944, when Avery, MacLeod and McCarty demonstrated that it was transfer of acids, and not proteins, purified from a non-virulent strain of bacteria that could "transform" a virulent  strain to the non-virulent strain\sjcitep[.]{griffithSignificancePneumococcalTypes1928,averyStudiesChemicalNature1944} The next major breakthrough came when Watson, Crick and Franklin resolved DNA's double-helix structure using X-ray crystallography (\autoref{fig:watsoncrickfranklin})\sjcitep[,]{watsonMolecularStructureNucleic1953} and for the first time suggested that \textit{"the precise sequence of the bases is the code which carries the genetical information"}\sjcitep[.]{,watsonGeneticalImplicationsStructure1953} It had thus become clear that life stores information in the nucleotide sequence of DNA, and the scientific community began to prepare experiments that would leverage this concept.
+Nucleic acids were thought to be only of structural importance to chromosomes, akin to the highly repetitive polymers found in cell walls and plant fibers. This notion was overturned in 1944, when Avery, MacLeod and McCarty demonstrated that it was transfer of acids, and not proteins, purified from a non-virulent strain of bacteria that could "transform" a virulent  strain to the non-virulent strain\sjcitep[.]{griffithSignificancePneumococcalTypes1928,averyStudiesChemicalNature1944} The next major breakthrough came when Watson, Crick and Franklin resolved DNA's double-helix structure using X-ray crystallography\sjcitep[,]{watsonMolecularStructureNucleic1953} and for the first time suggested that \textit{"the precise sequence of the bases is the code which carries the genetical information"}\sjcitep[.]{,watsonGeneticalImplicationsStructure1953} It had thus become clear that life stores information in the nucleotide sequence of DNA, and the scientific community began to prepare experiments that would leverage this concept.
 
 \section{The early molecular era}
 Although Morgan and Waddington's visions of genes as decision makers for a cell's behaviour were largely theoretical, they were soon substantiated. Jacques Monod, also a former student of Thomas Hunt Morgan, observed that bacteria grown in a medium containing both glucose and lactose would preferentially feed on glucose, and would only begin feeding on lactose once the other had run out. Further research together with François Jacob showed that the production of \textbeta-galactosidase, the enzyme responsible for this metabolic switch, was under the control of a "repressor", which was inactivated by the presence of lactose. Together, the pair published these findings in 1961\sjcitep[,]{jacobGeneticRegulatoryMechanisms1961} in an article which features the first diagram of a \textit{gene regulatory network} (\autoref{fig:lac_repressor}). The Jacob-Monod diagram also explicitly showed the repressor as a protein originating from a gene. Genes thus (indirectly) controlled other genes, and therefore the behaviour of the cell - exactly how Conrad Waddington had prophesised twenty years prior.
@@ -144,7 +144,7 @@ link the previous section to the next: why the HGP?
 cystic fibrosis, the most common lethal autosomal recessive disease among Caucasians. thought to be monogenic based on its Mendelian inheritance pattern
 1985: linkage analysis with restriction fragment length polymorphisms\sjcitep[]{botstein1980} to narrowed down the location of the gene responsible for cystic fibrosis gene to \textit{about 1 percent of the human genome (about 30 million base pairs)}\sjcitep[.]{tsui1985} This work took thousands of clones and Southern blots.
 1989: after years, cftr gene was cloned and sequenced using chromosome walking in 1989\sjcitep[]{riordan1989,rommens1989} - exact mutation deltaF508 was most common cause, done BEFORE the protein was known! pure genomics
-+ DMD and huntington's have the same story --> even “simple” Mendelian diseases required enormous effort to identify causative genes
++ DMD and huntington's have the same story --> even "simple" Mendelian diseases required enormous effort to identify causative genes
 
 francis collins, heavily involved in the CF gene hunt, became a leading advocate for the human genome project, which was launched directly as a response to "gene hunters"\sjcitep[.]{collins1999} broad consensus: a complet reference sequence of the human genome would be a transformative resource. 
 
@@ -266,19 +266,7 @@ By 2008 development of NGS-driven RNA-seq, and subsequent displacement of microa
 
 In addition, quantification of phage lambda RNA spike-ins remained linear (R\textsuperscript{2} = 0.99) over 5 orders of magnitude, and correlation between technical  replicates was high (R\textsuperscript{2} = 0.96). A technical comparison of RNA-seq with microarray transcriptomics showed that RNA-seq was technically superior in every aspect\sjcitep[.]{marioni2008rna} RNA-seq identified 30\% more differentially expressed genes than microarrays at the same false discovery rate, and the sequencing approach was better at detecting low-abundance genes. qPCR validation also confirmed more RNA-seq-specific findings than microarray-specific findings. Finally,\textasciitilde{\num{200000}} RNA-seq reads mapped to possible exon-exon junctions, revealing novel splicing patterns. Each RNA extract was sequenced 7 times, unsurprisingly with a Spearman correlation of 0.96 across lanes, but extraction itself was not replicated. \sjcitep[.]{wang2009rna} Several major findings emerged from RNA-seq. Eukaryotic transcriptomes turned out to be more heterogeneic than anticipated. Individual papers revealed large numbers of novel transcribed regions, widespread antisense transcription, and extensive variation in 3' ends\sjcitep[.]{wang2008alternative} 
 
-\section{Novel computational tools}
-Idea: wealth of information leads to explosion in tools available
-
-The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
-
-iRegulon\sjcitep[]{janky2014iregulon} provides a computational alternative for identifying master regulators when experimental TF binding data is unavailable. First, a genome-wide assessment of motif enrichment near TSSs is generated by scoring occurrence of \num{10000} motif PWMs aggregated from various databases using ClusterBuster\sjcitep[]{frith2003cluster}, generating for each PWM a ranking of the genes it may regulate. A set of genes, derived from e.g. differential gene expression or co-expression data, can then be checked for overrepresentation in these PWM-gene rankings using an area under the rank curve approach. This returns a set of motifs that may regulate the gene set, which can then be mapped to TFs using ortholjk/ogy or similarity if annotation is absent. Applying this approach to validated gene sets from 115 ENCODE ChIP-seq datasets returned 94 correct TF hits, and was able to identify 307 direct p53 target genes using ENCODE ChIP-seq data.
-
-[draft: All three of these papers used the Solexa 1G, released in 2006 and rebranded in 2007 to the Illumina Genome Analyzer I after its acquisition, to sequence the DNA libraries generated. allowing focus to shift towards determining, and eventually modeling, how the genome functioned and self-organized.] 
-% % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
-
-For example, the application of RNA-seq, FAIRE-seq and H3K27Ac/H3K27Me3 ChIP-seq directly led understanding the gene regulatory programs underlying melanoma switching from proliferative to invasive states\sjcitep[.]{verfaillie2015decoding} Differential gene analysis between patient biopsies from these two melanoma states showed high MITF, SOX10, and PAX3 in proliferative, and High ZEB1, SOX9 in invasive states. Similarly, FAIRE-seq showed open chromatin regions near MITF and SOX10 target genes in proliferative, and SOX9 targets in invasive states, and ChIP-seq showed high H3K27 acetylation at AP-1/TEAD target enhancers in invasive cells. Repression of TEAD in invasive cells via siRNA showed decreased cell invasion in matrigel assays and reduction in SOX9 expression, confirming TEAD as a master regulator in invasive melanoma. The availability of single-cell sequencing technologies further nuanced the findings above. Application of 10x Chromium scRNA-seq on 9 patient-derived melanoma cultures identified an intermediate states within the cultures which showed gene expression and chromatin accessibility (from ATAC-seq) signatures of both proliferative and invasive melanoma states\sjcitep[.]{wouters2020robust}. In the intermediate state, SOX10 and MITF expression are retained, but also mesenchymal factors such as SOX6 and EGR3 are expressed. Moreover, trajectory inference showed gradual transitions in gene expression rather than, discrete abrupt witches between proliferative and invasive states. This gradual change was further confirmed by and observed in SOX10 knockdown with scRNA-seq and (bulk) ATAC-seq at 4 timepoints over 72 hours. Further chromatin accessibility profiling of 26 melanoma samples across 6 species led to further understanding of melanoma states \textit{and} cemented chromatin accessibility as a highly predictive tool. Here, melanocytic (previously "proliferative", less accurate) enhancers were highly enriched for SOX10, MITF, and TFAP2A motifs whereas mesenchymal (prev. "invasive") showed AP-1 and TEAD motifs in their enhancers, corroborating earlier findings\sjcitep[.]{minnoye2020cross} These motif/enhancer relationships were also conserved across pig, horse, zebrafish and especially dog melanoma models. Moreover, DeepMEL, a CNN trained on the ATAC-seq peaks derived from the human melanoma lines, was able to predict new/synthetic enhancer activity (accessibility) in MES/MEL states based on just sequence. 
-
-\section{Tn5}
+\section{Tn5 ATAC-seq}
 A number of transposase protein mutants have been known since the 90s\sjcitep[.]{wiegand1992characterization, weinreich1994evidence, } with the triple mutant E54K/M56A/L372P exhibiting the highest activity known to date \sjcitep[.]{goryshintn5vitrotransposition1998} This version of Tn5 was still highly specific, recognizing a specific 19-base pair "outside end" (OE) sequence.
 
 Tn5 transposition involves both sequence-specific recognition of the OEs and a random component when selecting target DNA.
@@ -308,6 +296,18 @@ This enzyme was first used by Adey and Shendure to construct next generation seq
 Tn5 transposition requires no host proteins or additional DNA sequences beyond the 19-bp OE.
 
 \sjcitep[.]{minnoyeChromatinAccessibilityProfiling2021}
+
+\section{Novel computational tools}
+Idea: wealth of information leads to explosion in tools available
+
+The new wealth of RNA-seq data posed a number of challenges. Whereas ChIP-seq data can be directly aligned to the genome, mRNA transcripts overlap discontinuously with the genome due to splicing, and are thus more challenging to align. Aligning short-read mRNA-seq data to the genome required splice site annotations, which required Expressed Sequence Tags (ESTs) or full-length cDNA sequencing to generate. TopHat disrupted the need for this process by introducing computational splice site identification\sjcitep[.]{trapnell2009tophat} The algorithm identifies exons by looking for splice site motifs near the flanks of the reads that only partially map ("initially unmapped") to the reference genome with \verb|bowtie|. Multiple reads are then aggregated to statistically validate a splice site. The resulting read alignments can then be passed to Cufflinks\sjcitep[,]{trapnellTranscriptAssemblyQuantification2010} which assembles them into possible transcript isoforms and can provide a statistical estimate of their relative quantities without long-read cDNA sequencing data.
+
+iRegulon\sjcitep[]{janky2014iregulon} provides a computational alternative for identifying master regulators when experimental TF binding data is unavailable. First, a genome-wide assessment of motif enrichment near TSSs is generated by scoring occurrence of \num{10000} motif PWMs aggregated from various databases using ClusterBuster\sjcitep[]{frith2003cluster}, generating for each PWM a ranking of the genes it may regulate. A set of genes, derived from e.g. differential gene expression or co-expression data, can then be checked for overrepresentation in these PWM-gene rankings using an area under the rank curve approach. This returns a set of motifs that may regulate the gene set, which can then be mapped to TFs using ortholjk/ogy or similarity if annotation is absent. Applying this approach to validated gene sets from 115 ENCODE ChIP-seq datasets returned 94 correct TF hits, and was able to identify 307 direct p53 target genes using ENCODE ChIP-seq data.
+
+[draft: All three of these papers used the Solexa 1G, released in 2006 and rebranded in 2007 to the Illumina Genome Analyzer I after its acquisition, to sequence the DNA libraries generated. allowing focus to shift towards determining, and eventually modeling, how the genome functioned and self-organized.] 
+% % !!! SUPER IMPORTANT PAPER !!! https://academic.oup.com/nar/article-abstract/5/9/3157/2380868?redirectedFrom=fulltext&login=true
+
+For example, the application of RNA-seq, FAIRE-seq and H3K27Ac/H3K27Me3 ChIP-seq directly led understanding the gene regulatory programs underlying melanoma switching from proliferative to invasive states\sjcitep[.]{verfaillie2015decoding} Differential gene analysis between patient biopsies from these two melanoma states showed high MITF, SOX10, and PAX3 in proliferative, and High ZEB1, SOX9 in invasive states. Similarly, FAIRE-seq showed open chromatin regions near MITF and SOX10 target genes in proliferative, and SOX9 targets in invasive states, and ChIP-seq showed high H3K27 acetylation at AP-1/TEAD target enhancers in invasive cells. Repression of TEAD in invasive cells via siRNA showed decreased cell invasion in matrigel assays and reduction in SOX9 expression, confirming TEAD as a master regulator in invasive melanoma. The availability of single-cell sequencing technologies further nuanced the findings above. Application of 10x Chromium scRNA-seq on 9 patient-derived melanoma cultures identified an intermediate states within the cultures which showed gene expression and chromatin accessibility (from ATAC-seq) signatures of both proliferative and invasive melanoma states\sjcitep[.]{wouters2020robust}. In the intermediate state, SOX10 and MITF expression are retained, but also mesenchymal factors such as SOX6 and EGR3 are expressed. Moreover, trajectory inference showed gradual transitions in gene expression rather than, discrete abrupt witches between proliferative and invasive states. This gradual change was further confirmed by and observed in SOX10 knockdown with scRNA-seq and (bulk) ATAC-seq at 4 timepoints over 72 hours. Further chromatin accessibility profiling of 26 melanoma samples across 6 species led to further understanding of melanoma states \textit{and} cemented chromatin accessibility as a highly predictive tool. Here, melanocytic (previously "proliferative", less accurate) enhancers were highly enriched for SOX10, MITF, and TFAP2A motifs whereas mesenchymal (prev. "invasive") showed AP-1 and TEAD motifs in their enhancers, corroborating earlier findings\sjcitep[.]{minnoye2020cross} These motif/enhancer relationships were also conserved across pig, horse, zebrafish and especially dog melanoma models. Moreover, DeepMEL, a CNN trained on the ATAC-seq peaks derived from the human melanoma lines, was able to predict new/synthetic enhancer activity (accessibility) in MES/MEL states based on just sequence. 
 
 \section{Single-cell sequencing technologies}
 \label{sect:single_cell_sequencing_tech}
@@ -396,183 +396,29 @@ The release of the 10x Chromium scRNA-seq kit marked a milestone in single-cell 
 By isolating, sorting and sequencing the genome of 52 cells from a primary breast tumour and 48 cells from its associated liver metastasis, Navin et al. showed that a single cell from the primary tumor mass seeded the metastatic tumour\sjcitep[.]{navinTumourEvolutionInferred2011}
 
 
-\section{Pre-processing single-cell sequencing data}
-[draft Say something about SCREEN regions and genome blacklist? actually this should be done when i'm explaining vectorization/region counting]
-After alignment, the next step is to vectorize the data, which unlocks linear algebra. This approach has been standard practice since the earliest microarray experiments\sjcitep[,]{eisenClusterAnalysisDisplay1998} where gene expression measurements across different conditions in yeast were visualised using simple hierarchical clustering. This work showed the first combination of a dendrogram and a heatmap in bioinformatics, introducing wholistic analysis of full gene expression data. For example, whereas the functions of novel genes were previously investigated through deep control experiments, they could could now be inferred through co-expression ("guilt by association").
-
-After alignment, all single-cell sequencing data is converted into a count matrix for downstream analyses.
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{lcccc}
-\hline
- & \textbf{barcode\_1} & \textbf{barcode\_2} & $\cdots$ & \textbf{barcode\_N} \\ \hline
-\textbf{feature\_1} & 3 & 2 & $\cdots$ & 13 \\
-\textbf{feature\_2} & 2 & 3 & $\cdots$ & 1 \\
-\textbf{feature\_3} & 1 & 14 & $\cdots$ & 18 \\
-$\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
-\textbf{feature\_M} & 25 & 0 & $\cdots$ & 0 \\ \hline
-\end{tabular}
-\caption{Example feature count matrix across different cells.}
-\label{tab:feature_count_matrix}
-\end{table}
-
-
-Counting requires a genome annotation. scRNA-seq, for example, uses a gene-annotation. For ATAC-seq, several strategies exist. [screen regions, peak calling on bulk, annotated regions from other sources]
-
-ENCODE SCREEN regions: \num{926535} (human) and \num{339815} (mouse) candidate cis-regulatory elements (cCREs) identified based on ATAC-seq, DNase hypersensitivity, CHiP-seq, histone modifications (H3K4me3, H3K27ac), and CTCF binding. These regions represent potential enhancers, promoters, and insulators. Over 9000 experiments. These datasets were unified by identifying regions with strong chromatin accessibility and enhancer or promoter marks, followed by clustering and annotation based on biochemical signatures. Some of these regions (100s) were validated using transgenic mouse enhancer-reporter assays, where 44\% of tested cCREs showed tissue-specific activity, and massively parallel reporter assays (MPRAs) and SuRE assays, which confirmed activity in cell lines with success rates ranging from 28\% to 73\%, depending on biochemical signals and cCRE type. ENCODE data demonstrate that noncoding variants associated with diseases often [how often?] map to cCREs, suggesting regulatory disruptions as mechanisms underlying genetic disorders.
-
-For single-cell RNA-seq data, a gene count matrix is generated.
-
-[Decide whether you want to use reads or counts for this kneeplot --> has an effect on where this paragraph goes, before or after seurat etc]
-
-The barcode-rank plot (also referred to as "knee or elbow plot") visualises the distribution of reads across all sequenced barcodes in the sequencing dataset. It is obtained by counting the number of reads per barcode, and ranking each barcode in a log-log figure - similarly in concept to a Zipf or Lorenz curve. If the dataset is sequenced to near-saturation, the total number of barcodes will exceed the whitelist, as sequencing/PCR/synthesis errors introduce non-whitelisted species. In the "ideal signal" case, all reads are evenly distributed across a small number of barcodes that matches the number of input cells (e.g. \num{10000} in the figure). This means that there are no quality differences between real cells, and there are no barcodes with low read counts. The opposite scenario ("ideal noise") has an even distribution of all reads across \textit{all} barcodes, and we cannot distinguish cells from noise. Real datasets fall between these two extremes. A high quality dataset exhibits a clear cut-off, where the number of reads per barcode sharply drops off in the transition between real cells and background noise. A dataset of lower quality will exhibit a more gradual transition between real cells and background noise. This can be caused by a variety of mechanisms, notably ambient RNA or non-pure cell barcodes on the beads.
-
-	\begin{figure}[h]
-		\centering
-		\resizebox{0.8\textwidth}{!}{\input{ipynb/figs/ch2_kneeplot.pgf}}
-		\captionsetup{width=0.85\linewidth}
-		\caption[Barcode rank simulation]{The barcode rank plot. Two idealised cases (pure noise and pure signal) compared to two simulated  scenarios (high and low signal-to-noise ratio datasets).}
-		\label{fig:kneeplot}
-	\end{figure}
-
-In this simulation, \num{10000} cells are sequenced to a total depth of 200 million reads, and the whitelist is \num{800000} barcodes in length. The ceiling for mean number of reads per barcode is thus 200M reads/10k cell = 20k reads/cell (perfect signal), with a floor of 200M reads/800k barcodes = 250 reads/barcode (perfect noise).
-
-Note that high-quality "true cell" barcodes also contain noise. For example, a barcoded bead could contain 1\% random barcodes which capture some of the cell's material but do not aggregate it into a single barcode. This 
-
-Based on this simple plot, we can estimate at a glance the rough quality characteristics of any single-cell dataset:
-
-\begin{itemize}[noitemsep]
-	\item The number of cells captured in the dataset is given by the barcode rank where true cells are separated from background noise ("knee").
-	\item The approximate number of reads associated with each true cell can be estimated from the y-axis.
-	\item Overall data quality can be estimated by comparing the area under real cells and area under noise, or simply the "sharpness" of the cutoff.
-	\item Total noise can be inferred by looking at the number of reads present after the true cell cutoff, taking into account that an equal fraction of noise is also present in the true cells.
-\end{itemize}
-
-\section{Analysis and interpretation of single-cell sequencing data}
-[It would actually be better to structure this paragraph as such: "compared to rna-seq data, scrna-seq data has two problems: one it is more non-linear because of the added cell states and two drop-outs additionally make it more difficult to do statistical test. this is solved by...:"]
-
-Conventional bulk RNA-seq analysis tools modeled gene counts using Poissonian (edgeR\sjcitep[]{robinsonEdgeRBioconductorPackage2010}) or Negative Binomial (DESeq\sjcitep[]{andersDifferentialExpressionAnalysis2010}) distributions. Statistical tests can then be used to identify statistically significant differentially expressed genes. Compared to bulk RNA-seq and microarray data, single-cell sequencing data is highly zero-inflated: when sampling transcripts in a single cell, the probability of a given gene not being detected is high, leading to large amounts of "dropouts" (false negative gene expression), necessitating more complex approaches. SCDE\sjcitep[]{kharchenkoBayesianApproachSinglecell2014} corrects for dropouts by taking into account aggregate expression levels across all cells to calculate dropout probabilities. These dropout probabilities are then used as priors to model gene expression levels in individual cells. Dropouts are weighted based on their prior probability, and likely relative (fold-change) gene expression levels are inferred. This approach ensures that highly-expressed genes are not penalized, and low-expressed genes are not inflated. [How are differentially expressed genes identified?]
-
-Another new problem is that the number of different cell states observed in a single-cell datasets can be both larger and much more fine-grained than bulk RNA-seq datasets sampled across different conditions or timepoints. In fact, many early single-cell RNA-seq papers focused on identifying differentiation "trajectories". Monocle is an early analysis package which dealt with this issue by introducing "pseudotime", a continuous property inferring differentiation state from single-cell sequencing data sampled from differentiationg cells\sjcitep[.]{trapnellDynamicsRegulatorsFate2014} This approach worked by first reducing high-dimensional gene expression space to statistically significant dimensions, and then calculating a "minimum spanning tree" between cells in the high-dimensional gene space. The longest path within this tree was then used to calculate a "pseudotime" property. Beyond being able to order cells according to their differentiation state, genes could also be correlated with pseudotime to identify significant differentiation drivers. Specifically, Trapnell et al. found a host of new regulators in human myoblast differentiation [maybe add some more here?]
-
-Monocle\sjcitep[]{trapnellDynamicsRegulatorsFate2014} Advent of single-cell RNA-sequencing --> we can now look at gene expression dynamics (not possible in bulk rna-seq due to simpson's paradox). Differentiate human myoblasts to [skeletal muscle], sample 270 cells over 4 timepoints between 0 and 72 hours using the Fluidigm C1, 4M reads/cell, compare also with bulk rna-seq of each timepoint. Then Monocle: TopHat and CuffLinks are used to generate a count matrix, independent component analysis is used for dimreduc (why?). finally, a minimum-spanning tree (graph that connects cells with minimal total edge length, with edges representing transcriptional similarity), then monocle identifies the longest path along the MST. a starting cell (highly proliferative progenitor) is chosen and cells are ordered along the path. branch points may be detected. expression profiles are also smoothed along the trajectory using generalized additive models. now genes can be correlated to pseudotime.
-
-found: different branches along the differentiation path, including one branch of non-differentiating mesenchymal cells lacking myogenic markers which did not arrive from myoblasts but from mesenchymal progenitors (CD13+ mesenchymal cells which may coexist with myoblasts and help them differentiate by secreting signaling factors Joe et al nat cell bio 2013). \num{1061} genes were dynamically regulated during differentiation. earliest genes were cell-cycle associated, then finally the sarcomere components and structural proteins. Bulk rna-seq alone could not resolve this. ENCODE myotube DNase I sites were motif-analysed, yielded 175 candidates for myo regulators, 
-
-Directly visualising correlations or variance between many RNA-seq or microarray samples is difficult due to the high-dimensionality of this data. Traditionally, this was done by first reducing the dimensionality of the data using PCA, and then visualising the first 2 principal components in a 2D space. Alternatively, heatmaps with dendrograms were used to order correlated samples. The more fine-grained nature of cell states in single-cell data further introduces non-linearity, since gradients of expression in the population are no longer averaged out [I think this is important]. This non-linearity precluded the use of PCA. This problem was partially solved by the introduction of t-SNE, a technique first designed to visualise the MNIST dataset of handwritten digits\sjcitep[.]{maatenVisualizingHighDimensionalData2008} The earliest implementations of t-SNE were used for single-cell mass cytometry data\sjcitep[]{amirViSNEEnablesVisualization2013} (45 protein levels per cell), then single-cell qPCR\sjcitep[]{saadatpourCharacterizingHeterogeneityLeukemic2014} (175 genes) and later single-cell whole transcriptomics\sjcitep[]{macoskohighlyparallelgenomewide2015} (\textasciitilde{\num{20000}}genes). t-SNE preserves local structure (close neighborhood of cells) at the cost of some concessions to global structure. Clusters of single cells can appear closer in the t-SNE embedding than they are in high-dimensional gene space. UMAP is a slightly newer dimensionality reduction algorithm which aims to better preserve global structure\sjcitep[.]{bechtDimensionalityReductionVisualizing2018} Some common criticisms of both t-SNE and UMAP is that they still distort global topologies\sjcitep[.]{chariSpeciousArtSinglecell2023} In addition, both methods are sensitive to hyperparameters (perplexity, number of neighbours) and stochasticity (e.g. initialisation). These tools are thus best used for exploration and visualisation rather than quantitative biological analysis.
-
-By 2019, several single-cell sequencing technologies had emerged. Each had their own strengths and weaknesses, sometimes leading to technical artifacts in datasets even when assessing the same biological sample. Even the same technology used on different days could lead to batch effects due to sample degradation or other technical artifacts between experiments. This translates to cells clustering by dataset batch rather than biological state. In order to remedy this, Satija lab released an analysis package called \verb|Seurat|, which aimed to facilitate integration of multiple single-cell datasets across different technologies and conditions\sjcitep[.]{stuartcomprehensiveintegrationsinglecell2019} [Seurat v1 focused on correlating single-cell gene expression with in situ hybridisation (ISH) data] Seurat uses Canonical Correlation Analysis (CCA\sjcitep{hotellingRelationsTwoSets1936}) to calculate linear combinations of genes (canonical correlation vectors, in this case "metagenes") that capture common information between two datasets. Cells are then co-projected in this shared metagene space to create a new "joint embedding" where clustering and differential expression analysis can be performed. The canonical vectors can be used to re-transform differential metagenes back to the original gene set used. Seurat's CCA implementation could also be used for label transfer: if one dataset is labeled or annotated, proximity in the joint embedding space can be used to transfer labels from one dataset to another.
-
-Analysis of scATAC-seq poses yet more challenges: where scRNA-seq is limited to counts in \textasciitilde{\num{20000}} genes (human, mouse), the accessible genome can span hundreds of thousands of open chromatin regions - which can each be sampled a maximum of two times per cell, further exacerbating dimensionality and sparsity issues. In addition, expression of protein-coding genes can be used as a rough proxy for a measurement of protein activity, which can be linked more directly to cell phenotype. Genomic regions can serve many functions [some examples of genomic classes] dependent on cell state. the relationship between open chromatin and cell phenotypes is even less clearly defined, potentially less linear than gene expression. Timescales of chromatin dynamics are also generally slower than gene expression, and thus more difficult to capture. A number of analysis tools have attempted to address these issues, using broadly two attempts:
-
-A scRNA-seq like approach where cells are first clustered, and differential chromatin accessibility is calculated between clusters. Latent semantic indexing (LSI), an approach borrowed from text analysis, can be used to perform this dimensionality reduction\sjcitep[.]{cusanovichsinglecellatlasvivo2018} Briefly, single-cell accessibility is first counted in annotated regions (usually accessibility peaks) or 5 kb genome bins, binarized, and scaled according to inverse document frequency (peaks that are not commonly accessible are weighted higher). Singular value decomposition (SVD), is then used to decompose the resulting weighted cell-accessibility matrix into latent features across cells:
-
-\[
-M = U\Sigma V^T = 
-\underset{(m \times n)}{\begin{bmatrix}
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
-=
-\underset{(m \times r)}{\begin{bmatrix}
-\cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
-\underset{(r \times r)}{\begin{bmatrix}
-\sigma_1 & 0 & \cdots & 0 \\
-0 & \sigma_2 & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \sigma_r
-\end{bmatrix}}
-\underset{(r \times n)}{\begin{bmatrix}
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
-\]
-
-Here, $m$ is the number of peaks, $n$ is the number of cells, and $r = \min(m,n)$ is the rank of the decomposition. U represents the peak-composition of the latent features, $\Sigma$ is diagonal and scales each latent feature, and V\textsuperscript{T} represents the contribution of each latent feature to each cell. Based on $\Sigma$, we can select the top n most important features and cluster cells in this reduced space using t-SNE. Differentially accessible regions (DARs) between clusters can then be calculated on the raw binary accessibility matrix using logistic regression, which is suited to model the odds of a binary event like chromatin accessibility.
-
-Or, chromVAR, which works in a fundamentally different way\sjcitep[.]{schepchromVAR2017} Instead of using hundreds of thousands of accessible peak regions, chromVAR first groups these peaks into cistromes based on common TF motifs or pre-set functional annotations (such as known enhancer peak sets). This approach tackles sparsity and dimensionality. Accessibility within each cistrome is normalized and converted to z-scores, which are then used for t-SNE and clustering. Instead of known TF motifs, k-mers can also be used to identify novel motifs important in a given biological process.
-
-In this work, cisTopic was used instead [instead of what?]\sjcitep[.]{bravogonzalezblascistopic2019} Peaks are first called on the aggregate accessibility data [or screen? actually, it wouldn't hurt to explain MACS somewhere], and a sparse count matrix is generated using these peaks as regions [this sentence can be skipped, we can also use the SCREEN regions]. Like chromVAR, cisTopic uses a probabilistic approach to model chromatin accessibility, but unlike chromVAR, cisTopic uses LDA\sjcitep[]{bleiLatentDirichletAllocation2003}, which 
-
-LDA calculates two sets of distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell) which should approximate the original data when multiplied.
-
-\[
-\underset{m \times n}{
-\begin{bmatrix}
-x_{11} & x_{12} & \cdots & x_{1n} \\
-x_{21} & x_{22} & \cdots & x_{2n} \\
-\vdots & \vdots & \ddots & \vdots \\
-x_{m1} & x_{m2} & \cdots & x_{mn}
-\end{bmatrix}}
-\approx
-N \cdot
-\underset{m \times k}{
-\begin{bmatrix}
-p_{r_1t_1} & p_{r_1t_2} & \cdots & p_{r_1t_k} \\
-p_{r_2t_1} & p_{r_2t_2} & \cdots & p_{r_2t_k} \\
-\vdots & \vdots & \ddots & \vdots \\
-p_{r_mt_1} & p_{r_mt_2} & \cdots & p_{r_mt_k}
-\end{bmatrix}_{}}
-\cdot
-\underset{k \times n}{
-\begin{bmatrix}
-p_{t_1c_1} & p_{t_1c_2} & \cdots & p_{t_1c_n} \\
-p_{t_2c_1} & p_{t_2c_2} & \cdots & p_{t_2c_n} \\
-\vdots & \vdots & \ddots & \vdots \\
-p_{t_kc_1} & p_{t_kc_2} & \cdots & p_{t_kc_n}
-\end{bmatrix}}
-\]
-
-LDA parameters (probabilities) are estimated using a Markov chain monte carlo approach: regions are initially randomly assigned to topics, and topic-region assignment is then updated iteratively in each cell based on two factors: (1) the topic's occurrence in the cell and (2) the region's occurrence in each topic across all other cells. Instead of sampling in the entire [], sampling is only performed in [] (collapsed Gibbs sampling), which reduces total computational complexity compared to sampling in both region-topic and topic-cell distribution. This approach is more efficient than other Bayesian approaches (e.g. variational inference) due to the extreme sparsity of the data. tSNE or UMAP can then be used to visualise the resulting (normalized) topic-cell distributions.
-
-Another advantage of LDA over LSI is that LDA's topics are interpretable, whereas LSI's latent features can be abstract\sjcitep[.]{steyversProbabilisticTopicModels2007} This property is exploited in cisTopic, for example by extracting transcription factor binding motifs from the cis-regulatory topics found by LDA. The motif enrichment analysis itself is performed using cisTarget [ref]. Regions and combinations of regions can also be annotated using nearest genes (ChIPseeker)
-
-cisTopic also introduces a region score which rewards regions that are more specific to a topic, and penalises regions that are ubiquitous across topics:
-
-\[
-\text{Region score} = \beta_{r,t} \left( \log \beta_{r,t} - \frac{1}{T} \sum_{t=1}^{T} \log \beta_{r,t} \right)
-\]
-
-Consider Shannon entropy $H(X) = -\sum_{i} p(x_i) \log p(x_i)$, then the term \(\beta_{r,t} \log \beta_{r,t}\) can be considered the local information content of the region in topic context, while the term \(\frac{\beta_{r,t}}{T} \sum_{t=1}^{T} \log \beta_{r,t}\) is the average log-probability of the region acrosss all topics [double check this, is beta a probability?]. The region score is thus an average-normalized measure of a given region's information content, indicating how specific it is to each topic. Topics can then be scored for TF motif enrichment by counting TF motif occurrence in the score-ranked regions and calculating the area under this rank curve (AUCell\sjcitep[]{aibarscenicsinglecell2017}).
-
-cisTopic's LDA approach was benchmarked against other popular tools such as chromVAR, scABC, BROCKMAN, SCRAT, Cicero, and LSI, using both simulated single-cell ATAC-seq datasets and real data from FAC-sorted hematopoietic cells. cisTopic typically yielded higher adjusted Rand index (ARI) scores for cell-type clustering, especially in low-coverage scenarios, confirming that the method can more robustly capture biologically meaningful patterns in sparse single-cell ATAC-seq data.
-
-[There was something about how cistopic reduces dimensionality for both cells and regions somewhere, in the part where they compare previous analysis methods. highlight that.]
-
-Cicero[probably good to look at to]\sjcitep[.]{plinerCiceroPredicts2018}
-
 \section{Multimodality}
-tackling multimodality: not a great strength
+tackling multimodality: not a great strength of droplet microfluidics
 historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps
 
 \begin{itemize}[noitemsep]
     \item reap-seq, cite-seq, eccite-seq
-    \item 10x multiome\sjcitep[]{schwendinger2020chromium} \% TEA-seq\sjcitep[]{swanson2021simultaneous}
+    \item 10x multiome\sjcitep[]{schwendinger2020chromium}
+	\item TEA-seq\sjcitep[]{swanson2021simultaneous}
     \item SHARE-seq\sjcitep[]{ma2020chromatin}
-    \item perturb-seq
-    \item PERTURB-ATAC
-    \item ASAP-seq\sjcitep[.]{mimitou2021scalable}
-    \item scale preindexing
+    \item ASAP-seq\sjcitep[]{mimitou2021scalable}
 \end{itemize}
 
 more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023} 
 digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020} 
 
 \section{Screening}
-Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with multiplexed shRNA vector libraries and survivors are sequenced. When CRISPR was developed as a molecular tool for rapid and accurate gene editing in 2013\sjcitep[,]{ran2013genome} full genetic knockouts became widely available, producing a pooled genome-wide screen involving 64000 sgRNA's for 18000 gene knockouts just a year later\sjcitep[.]{shalem2014genome, behan2019prioritization, pacini2021integrated} In addition to genetic knockouts, specific genes can also be up- or downregulated using catalytically dead Cas9 fused to transcription activators such as VP64 or p65, or repressors such as KRAB. Both arrayed and pooled CRISPR/RNAi screens have drawbacks: arrayed screens require vast amounts of labour and reagents, and pooled CRISPR-screens are limited to very simple readouts such as cell survival or marker expression.
+Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with pooled shRNA vector libraries at a given MOI, and survivors are sequenced.
 
-Around 2015, researchers at the Broad institute devised that perturbations could be pooled but read out at the single-cell level, coupling pooled screens with RNA-seq readings\sjcitep[.]{dixit2016perturbseq} In their method, named Perturb-seq, each vector is designed to express two transcripts after integrating in the host genome: a first transcript containing the sgRNA, driven by U6, and a second transcript containing a puromycin selection cassette, BFP and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). The \{sgRNA:GBC\} dictionary can then be used to identify the genetic edit present in each captured cell \sjcitep[.]{dixit2016perturbseq} This pooled approach allows rapid parallelisation of perturbation screens with limited labour. Using this system, researchers observed that even within the same perturbation, individual cells can exhibit different responses. In particular, knockdown of the key ER chaperone BiP (HSPA5) caused two possible responses: some cells preferentially activated PERK, while others activated IRE1\textalpha.
+% TODO: check this last line, how were these pooled screens done?
+
+When CRISPR was developed as a molecular tool for rapid and accurate gene editing in 2013\sjcitep[,]{ran2013genome} full genetic knockouts became widely available, producing a pooled genome-wide screen involving 64000 sgRNAs for 18000 gene knockouts just a year later\sjcitep[.]{shalem2014genome, behan2019prioritization, pacini2021integrated} In addition to genetic knockouts, specific genes can also be up- or downregulated using catalytically dead Cas9 fused to transcription activators such as VP64 or p65, or repressors such as KRAB. Both arrayed and pooled CRISPR/RNAi screens have drawbacks: arrayed screens require vast amounts of labour and reagents, and pooled CRISPR-screens are limited to very simple readouts such as cell survival or marker expression.
+
+Around 2015, researchers at the Broad institute devised that perturbations could be pooled and read out at the single-cell level, coupling pooled screens with scRNA-seq readings\sjcitep[.]{dixit2016perturbseq} In their method, named Perturb-seq, each vector is designed to express two transcripts after integrating in the host genome: a first transcript containing the sgRNA, driven by U6, and a second transcript containing a puromycin selection cassette, BFP and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). The \{sgRNA:GBC\} dictionary can then be used to identify the genetic edit present in each captured cell \sjcitep[.]{dixit2016perturbseq} This pooled approach allows rapid parallelisation of perturbation screens with limited labour. Using this system, researchers observed that even within the same perturbation, individual cells can exhibit different responses. In particular, knockdown of the key ER chaperone BiP (HSPA5) caused two possible responses: some cells preferentially activated PERK, while others activated IRE1\textalpha.
 
 % \begin{figure}[h]
 % 	\centering
@@ -597,6 +443,8 @@ One disadvantage of the screening methods above is that most of the vectors desc
     \item MIX-seq
     \item drug or molecule screens
     \item DRUG-seq -> also interplay with automation
+    \item perturb-seq
+    \item PERTURB-ATAC
 \end{itemize}
 
 
@@ -620,93 +468,3 @@ SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode
     \item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
     \item !!!!!!!!!!!!! parse bio and that massive dataset
 \end{itemize}
-
-
-
-\section{Artificial learning}
-
-% enformer/transformer paper?
-
-% [rewrite] In their groundbreaking study, "Cell-type-directed design of synthetic enhancers," Taskiran et al. (2024) leverage deep learning to decode the genetic rules governing transcriptional enhancers—short DNA sequences that regulate gene expression by binding transcription factors. Using convolutional neural networks trained on enhancer activity data, the authors demonstrate how random DNA sequences can be evolved through iterative nucleotide mutations to create synthetic enhancers that are highly specific to particular cell types, such as Kenyon cells and glial cells in Drosophila brains, as well as melanoma cells in humans. This computational approach reveals the fundamental role of activator and repressor motifs, showing that enhancer function depends on the precise arrangement, spacing, and strength of these motifs. The study not only uncovers the principles underlying enhancer function but also introduces the concept of minimal enhancers—compact sequences as short as 50 base pairs capable of retaining full regulatory activity. Furthermore, the authors engineer dual-code enhancers that target multiple cell types, showcasing the flexibility of this design process. Experimental validation through transgenic animal models and reporter assays confirms the activity of these synthetic enhancers, underscoring their potential applications in gene therapy, synthetic biology, and disease modeling. By combining computational modeling with experimental biology, this work provides a transformative framework for understanding and designing gene regulatory elements with unprecedented precision and scalability.
-
-Hubel and Wiesel showed that specific neurons in a cat's visual cortex respond to common spatial patterns (e.g. edges, corners, orientations) in specific locations within the cat's visual field. These patterns can overlap when layers of neurons pass information onwards, forming broader structures which ultimately allow the cat to recognise complex objects. This idea was borrowed by Fukishima and later LeCun to implement convolutional neural networks (CNNs) for handwritten digit recognition. Rasterized (vectorized) images are scanned by a "filter", converting the original data into a new representation. This new representation is then passed on to the next layer, where it is again scanned by a new filter, and so on until the final layer. CNNs are thus well suited for detecting spatial patterns, and integrating these patterns into larger, more global structures. The same logic is applied in [ref], where a CNN is trained to detect local patterns in DNA (cell-type specific peaks). In order to train a CNN on DNA sequences (peaks), DNA sequences were one-hot encoded (each position is encoded by a binary vector of length 4, and the sequence is represented as a matrix of these vectors of size $N \times L \times 4$). where $N$ is the number of sequences, $L$ is the sequence length (500 bp), and the nucleotides are one-hot encoded as binary vectors.
-
-\[
-\mathbf{X} \in \{0, 1\}^{N \times L \times 4}, \text{ e.g. }
-\begin{bmatrix}
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 \\
-1 & 0 & 0 & 0
-\end{bmatrix}
-,
-\begin{bmatrix}
-0 & 1 & 0 & 0 \\
-1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 1 & 0 & 0
-\end{bmatrix}
-\end{bmatrix}
-\text{ encodes for [ACGTA, CAGTC].}
-\]
-
-The output labels are represented by a given by:
-\[
-\mathbf{Y} \in [0, 1]^{N \times C}
-\]
-where $C$ denotes the number of cell types (e.g., $C = 81$). Each $Y_{ij}$ represents the probability that sequence $i$ is an enhancer for cell type $j$. For example:
-\[
-\begin{bmatrix}
-0.9 & 0.1 & 0.0 & \cdots & 0.2 \\
-0.1 & 0.8 & 0.1 & \cdots & 0.0 \\
-0.0 & 0.1 & 0.9 & \cdots & 0.1
-\end{bmatrix}
-\]
-indicates that sequence 1 is likely an enhancer for cell type 1 (0.9), sequence 2 for cell type 2 (0.8), and sequence 3 for cell type 3 (0.9).
-
-The convolution operation for filter $k$ is:
-\[
-z_{i,k} = f \left( \sum_{j=1}^{h} \sum_{m=1}^{4} X_{i+j-1, m} W_{j, m}^{(k)} + b_k \right)
-\]
-where $f(x) = \max(0, x)$ is the ReLU activation function.
-
-After pooling, the flattened feature map $\mathbf{P}$ is mapped to outputs as:
-\[
-\mathbf{\hat{Y}} = \sigma \left( \mathbf{P} \mathbf{V} + \mathbf{b} \right)
-\]
-where $\sigma$ is the sigmoid function.
-
-The binary cross-entropy loss is computed as:
-\[
-\mathcal{L}_{ij} = - \left[ Y_{ij} \log(\hat{Y}_{ij}) + (1 - Y_{ij}) \log(1 - \hat{Y}_{ij}) \right]
-\]
-with the total loss:
-\[
-\mathcal{L} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{j=1}^{C} \mathcal{L}_{ij}
-\]
-
-CNNs have been successfully used in earlier enhancer prediction models, such as DeepBind and DeepSEA, validating their use in genomics.
-% deeptopic
-% fly brain paper
-
-% mcmc: converges --> now loss functions are converging, we observed an evolution/transition of early machine learning models to machine learning and deep learning [explain the distinction between the two]
-
-% Filters correspond to biologically meaningful motifs, making CNNs interpretable for genomics.
-
-% Briefly, an atlas of fly brain scATAC-seq data was pre-processed and annotated. Cell-type labeled peak sets were then
-
-examples of predictive tools
-% DeepSEA: used chip-seq data from ENCODE and Roadmap Epigenomics, is a CNN , saturation mutagenesis (effect of every possible single-nucleotide mutation in the sequence), 1 kb window around a location of interest is one-hot encoded, various types of chromatin features (chip-seq tf binding from encode of 690 tfs, dnase i hypersensitivity 125 datasets, 104x histone marks (h3k27ac, h3k4me3),) - and this is binarized (if 200 bp window is in a peak of the modality or not), then a CNN is trained with an NLL loss function to predict the modalities, output is a vector of size 919 (sum of all datasets, which are different by tf or by cell type), matches allelic imbalance measurements! predicts whether a given segment of DNA is likely to be bound by regulatory proteins, effects of mutations on that binding. able to de novo predict known eQTLs from negative control SNPs (from 1000 genomes project). better than simpler models such as CADD (logistic regression), GWAVA (random forest classifier).
-
-An early example was DeepSEA\sjcitep[,]{zhou2015predicting} a CNN trained on ENCODE and Roadmap Epigenomics data (690 TF ChIP-seq + 125 DHS + 104 H3K27Ac/H3K4Me3 datasets). This model could simultaneously predict these 919 chromatin features at 1 base resolution with higher accuracy than previous tools (CADD, GWAVA). Saturation mutagenesis analyses showed that DeepSEA could de novo predict known allelic imbalances and eQTLs (using chromatin features as a proxy).
-
-seq2PRINT (levering PRINT data)\sjcitep[.]{hu2023single}
-
-mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022decodingmechanism}. by using combination of bulk ATAC-seq and RNA-seq, in a simple study design (2 cell lines, 3 time points, 3 replicates, treatment vs control). despite measuring similar levels of 3-CeP induced DNA damage in both cancer cell lines, the outcome was different, with one cell line engaging dna repair mechanisms earlier and more efficiently, and surviving the treatment at a higher rate, than the other. IC50 concentrations were also 10-50x higher in one cell line than the other --> viability
-
-\sjcitep[.]{janssens2022decoding} by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain. identified key TFs for each cell type using cisTarget (ref). [deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!) mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs. out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.
-
-% [not very good text:] We now understand that fine-tuned gene regulation explains how one cell can give rise to many, that this program is embedded in our genomes through a "regulatory code", and that aberrant gene regulation can explain many of our age's most important diseases. Much progress has been made in unraveling the mechanics of gene regulation. We have models of gene transcription and translation, cell signaling, the roles of several classes of proteins, and so on. Now, the objective has shifted from elucidating the fundamental processes that govern gene regulation to reconstructing the specific gene regulatory networks that underly life. Full and deterministic models which can exhaustively answer our core questions remain elusive, almost unimaginable.
