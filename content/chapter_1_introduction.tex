@@ -215,37 +215,33 @@ Sequencing by synthesis (SBS) was developed by Balasubramanian and Klenerman at 
 
 [Good review \sjcitep[.]{metzkerSequencingTechnologiesNext2010}]
 
-Each incorporation cycle is imaged, generating imaging data of the oligo lawn. Image processing is used to determine the position of oligo clusters present on the lawn, and these are stored in \verb|.locs| (locations) files. The basecalling algorithm will combine these \verb|.locs| files together with the imaging data to extract fluorescence intensities for all colours used per cluster. Dominant fluorescent signals then determine the base called for each cluster for every cycle.  When no base can be called, \verb|N| is used. When a strand does not incorporate a base during a given cycle, or if it leads ahead by one base, it becomes out of phase with the other strands of that cluster for the rest of the sequencing run. This is called phasing/pre-phasing and is corrected by the basecalling algorithm. Theoretical phasing rates (approximately 0.1\% of strands in a given cluster per cycle) can be used to estimate the contribution of phasing noise and deconvolve true signal from phased noise. Each basecall is also assigned a "Phred" quality score \verb|Q| based on signal-to-noise ratio, phasing, and separation of dense clusters: \( Q = -10 \cdot \log_{10} (P) \) where \verb|P| is the probability of the basecall being correct. A Q score of 30 corresponds to a probability of error of 1 in 1000.  The result is a binary \verb|.bcl| file, which contains the basecalls for each cluster. The binary \verb|.bcl| file is then converted to the ASCII \verb|.fastq| format using \verb|bcl2fastq|.
 
-\begin{center}
-\begin{lstlisting}
-@NS2000:001:HKYYLDSXX:1:1101:10000:1000 2:N:0:ATCACG
-CGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGGA
-+
-HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
-@NS2000:001:HKYYLDSXX:1:1101:10001:1000 2:N:0:ATCACG 
-ACGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGA
-+
-HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
-\end{lstlisting}
-\end{center}
+\section{Tn5 ATAC-seq}
+In 1950, Barbara McClintock discovered how \textit{"mutable loci arise when chromatin material is inserted adjacent to genes"} in maize\sjcitep[,]{mcclintock1950,ravindran2012} the first observation of position-effect variegation and cis-regulatory chromatin influence outside of \textit{Drosophila}\sjcitep[.]{muller1930} Some 20 years later, Shapiro and colleagues observed how some disruptive mutations in \textit{E. coli}'s \textit{gal} operon are caused by insertion of foreign DNA\sjcitep[,]{shapiro1969} marking the first experimental evidence of transposable element insertion in bacteria. Later, Berg and colleagues found how entire resistance plasmids carried by \textit{E. coli} can spontaneously integrate into the genome of bacteriophage \textlambda, and how 1.5 kb long inverted sequence repeats flank the inserted kanamycin resistance gene\sjcitep[.]{berg1975} The transposable element studied by Berg and colleagues was later classified as Tn5\sjcitep[,]{bukhari1977} and by 1982, its two inverted repeats (IS50-L and IS50-R) were been fully sequenced\sjcitep[.]{reznikoff1981,reznikoff1982} This sequence map revealed a number of exciting regulatory novelties within the transposable element. First, the transposase protein itself (461 amino acids) is located on IS50-R. A truncated version of the protein (421 amino acids) is also expressed due to the presence of a second, downstream transcription start site. This truncated protein was found to inhibit the complete transposase by competitive binding, repressing total transposition activity. A conserved stop codon point mutation found in the nearly identical IS50-L repeat disrupts complete expression of the transposase there, but interestingly introduces a promotor sequence for the embedded antibiotic resistance genes! The Tn5 transposon is thus capable of transfering antibiotic resistance genes independently of the host's endogenous transfer mechanisms, and self-regulates both its transposon and resistance activities. Soon, Tn5's potential as a molecular tool was recognised. For example, in-vitro Tn5 insertions could be used to disrupt genes in bacteria, with antibiotic resistance as a positive selection marker\sjcitep[.]{ruvkun1982} A first full crystallography of Tn5 protein in complex with DNA showed that it shares mechanistic features with HIV-1 integrase and RAG1/2 V(D)J recombinases\sjcitep[.]{davies2000threedimensional}
 
-Each sequenced strand is represented by four lines in the \verb|.fastq| file. The first line is a header, which stores metadata such as sequencer and cluster coordinates. The second line is the sequence itself, followed by a separator (\verb|+|) on the third line, and the ASCII-encoded quality score on the fourth line.
+Owing to its use as a lab tool, Tn5 protein mutants and their molecular mechanisms were quickly studied\sjcitep[.]{wiegand1992characterization, weinreich1994evidence} A triple mutant, E54K (enhances OE binding) - M56A (disrupts inhibitor production) L372P (increases activity by altering dimerization), was engineered to increase catalytic activity \sjcitep[,]{goryshintn5vitrotransposition1998} ("hyperactive Tn5") and is the major variant in use to date. The transposase can bind to two sites on the ends of each IS50 sequence: the inside or outside end (IE, OE). A synthetic "mosaic end" (ME), engineered by combining elements of the IE and the OE showed enhanced binding capacity, increasing efficiency\sjcitep[.]{zhou1998molecular} through increasingly efficient dimerization and complexation of Tnp with DNA\sjcitep[.]{steinigerwhiteEvidenceUnseenTransposase2002} The transposase's exact catalytic mechanism was unknown until Bhasin and colleagues showed how the Tn5 transposase nicks at the transposon ends, forms a hairpin, releases the donor dna, and opens the hairpin and integrates at the acceptor site\sjcitep[.]{bhasin1999hairpin} A staggered cut is made at the acceptor site, and after insertion of the blunt-end transposon, the missing 9 base pairs are repaired, leading to a duplication. A classic DDE motif, known from RNAseH enzymes, in Tn5 transposase's active site coordinates magnesium ions critical for catalysis by stabilizing the DNA-protein complexs \sjcitep[.]{reznikoffTn5ModelUnderstanding2003}.
 
-Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depends on several factors. Short-read aligners such as \verb|bowtie2| are optimized for reads < \SI{200}{\bp}, while long-read aligners like \verb|minimap2| are better at handling reads > \SI{1000}{\bp}. The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more indels due to incorporation errors, which are explicitly corrected for by \verb|bwa-mem|. \verb|minimap2| is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads. When sequencing transcriptomic data, RNA-seq specific aligners like \verb|STAR| and \verb|HISAT2| are used to handle spliced reads. Like many classes of algorithms, a trade-off between memory and compute can also be made, for example \verb|STAR| requires large amounts of memory due to its use of an uncompressed genome index, but is faster, while \verb|HISAT2| is more memory-efficient, but takes longer.
+By the mid 2000s, Tn5 was in use in various ways: to tag cloned DNA with selection markers, primers, or even regulatory elements\sjcitep[.]{reznikoffTn5MolecularGenetics2004} This could be achieved without in vivo expression of the transposon by loading transposase protein onto pre-cleaved DNA, and introducing the complex into electroporated bacteria.
 
-The diversity in sequencing technologies and alignment algorithms led to the use of several independent alignment formats, each tied to specific sequencing technologies or alignment algorithms. Analyses on different datasets (e.g. variant calling, genotype analysis) required cross parsing or conversion. The introduction of the Sequence Alignment Map (\verb|SAM|) format as part of the 1000 Genomes Project in 2009\sjcitep[,]{liSequenceAlignmentMapFormat2009} provided a unified standard for storing aligned sequencing data which has since become the de facto standard. Each read is stored in a single line containing 11 mandatory fields including: read name, reference name (chromosome or contig), position, mapping quality, the actual sequence, several other alignment quality parameters as well as optional tags.
+% people are doing dnase-seq and chip-seq
+% atac-seq is invented by buenrostro
+% backstory of tn5: adey, reznikoff
+% picelli brings cheap tn5
+% plate based scatac
+% 10x scatac-seq
 
-\begin{lstlisting}
-@HD     VN:1.6  SO:coordinate
-@SQ     SN:chr1 LN:248956422
-@SQ     SN:chr2 LN:242193529
+% further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
+% toadd: salmen et al, spindrop --> pico injectil
 
-read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
-read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
-\end{lstlisting}
 
-An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
+This enzyme was first used by Adey and Shendure to construct shotgun sequencing libraries\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 transposase "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes. Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. This sensitivity increase would later allow library extraction from single-cells.
+
+adey \& wang bisulfite sequencing in 2013\sjcitep[.]{wang2013}
+picellitn5transposasetagmentation2014
+
+\sjcitep[.]{minnoyeChromatinAccessibilityProfiling2021}
+
+
 
 \section{From human genome to sequencing assays}
 Before the availability of next-generation sequencing technology, studying the genome and gene expression at scale relied heavily on microarrays. Microarrays were, and still are, used to quantify RNA transcripts\sjcitep[,]{schenaQuantitativeMonitoringGene1995} genotype samples using SNP arrays\sjcitep[,]{wang1998large} and even measure DNA-protein interactions using ChIP-on-chip\sjcitep[.]{ren2000genome} While microarrays allow for up to ~\num{50000} probes to be interrogated in a single experiment, limited dynamic range, high false-positive hybridisation and heterogeneous probe hybridisation capacities skew absolute quantification. The probe set also requires intelligent design and thus cannot discover novel sequences. Probeset size is particularly troubling for ChIP-on-Chip, since genome binning limits resolution to around 500-1000 bp - too low for novel TF motif discovery. Nonetheless, large scale, distributed application of microarray technologies culminated in a first draft of the Encyclopedia of DNA Elements (ENCODE)in 2007\sjcitep[,]{ENCODE_Project_Consortium2007-zd} a careful annotation of 30 MBs - around 1\% - of the human genome. The release of this draft was the last project of such scale that did not use next generation sequencing.
@@ -278,45 +274,6 @@ By 2008 development of NGS-driven RNA-seq, and subsequent displacement of microa
 
 In addition, quantification of phage \textlambda RNA spike-ins remained linear (R\textsuperscript{2} = 0.99) over 5 orders of magnitude, and correlation between technical  replicates was high (R\textsuperscript{2} = 0.96). A technical comparison of RNA-seq with microarray transcriptomics showed that RNA-seq was technically superior in every aspect\sjcitep[.]{marioni2008rna} RNA-seq identified 30\% more differentially expressed genes than microarrays at the same false discovery rate, and the sequencing approach was better at detecting low-abundance genes. qPCR validation also confirmed more RNA-seq-specific findings than microarray-specific findings. Finally,\textasciitilde{\num{200000}} RNA-seq reads mapped to possible exon-exon junctions, revealing novel splicing patterns. Each RNA extract was sequenced 7 times, unsurprisingly with a Spearman correlation of 0.96 across lanes, but extraction itself was not replicated. \sjcitep[.]{wang2009rna} Several major findings emerged from RNA-seq. Eukaryotic transcriptomes turned out to be more heterogeneic than anticipated. Individual papers revealed large numbers of novel transcribed regions, widespread antisense transcription, and extensive variation in 3' ends\sjcitep[.]{wang2008alternative} 
 
-\section{Tn5 ATAC-seq}
-In 1950, Barbara McClintock discovered how \textit{"mutable loci arise when chromatin material is inserted adjacent to genes"} in maize\sjcitep[,]{mcclintock1950,ravindran2012} the first observation of position-effect variegation and cis-regulatory chromatin influence outside of \textit{Drosophila}\sjcitep[.]{muller1930} Some 20 years later, Shapiro and colleagues observed how some disruptive mutations in \textit{E. coli}'s \textit{gal} operon are caused by insertion of foreign DNA\sjcitep[,]{shapiro1969} marking the first experimental evidence of transposable element insertion in bacteria. Later, Berg and colleagues found how entire resistance plasmids carried by \textit{E. coli} can spontaneously integrate into the genome of bacteriophage \textlambda, and how 1.5 kb long inverted sequence repeats flank the inserted kanamycin resistance gene\sjcitep[.]{berg1975} The transposable element studied by Berg and colleagues was later classified as Tn5\sjcitep[,]{bukhari1977} and 1982, its two inverted repeats (IS50-L and IS50-R) had been sequenced. This sequence map revealed a number of exciting regulatory novelties within the transposable element\sjcitep[.]{reznikoff1981,reznikoff1982} First, the transposase protein itself (461 amino acids) is located on IS50-R. A truncated version of the protein (421 amino acids) is also expressed due to the presence of a second, downstream transcription start site. This truncated protein was found to inhibit the complete transposase by commpetitive binding. Interestingly, a conserved stop codon point mutation in the nearly identical IS50-L disrupts expression of the transposase there, but introduces a promotor for the embedded antibiotic resistance genes! The Tn5 transposon is thus capable of transfering antibiotic resistance genes independently of the host's endogenous transfer mechanisms.
-
-Tn5 protein mutants have been studied since the early 90s\sjcitep[.]{wiegand1992characterization, weinreich1994evidence} A triple mutant, E54K/M56A/L372P, has been known to exhibit the highest catalytic activity \sjcitep[,]{goryshintn5vitrotransposition1998} and is still in use to date. This version of Tn5 was still highly specific, recognizing a specific 19-base pair "outside end" (OE) sequence.
-
-Tn5 nicks at the transposon ends, then forms a hairpin, releases the donor dna, opens the hairpin, and then integrates somewhere else\sjcitep[.]{bhasin1999hairpin} At the time it was already known that combining elements of the IE and the OE (forming a "mosaic end", ME) could enhance transposase protein's ability to bind/recognise the transposable element, increasing efficiency\sjcitep[.]{zhou1998molecular} Replacement of the OE sequence by the ME sequence leads to much more efficient formation of the "paired-end complex" (PEC), the dimer of two Tnp proteins each bound to an end sequence\sjcitep[.]{steinigerwhiteEvidenceUnseenTransposase2002}
-
-Tn5 transposition involves both sequence-specific recognition of the OEs and a random component when selecting target DNA.
-
-
-The primary defect in OE-mediated transposition lies in its impaired ability to form the paired ends complex (PEC), a crucial intermediate in the transposition process. Tnp binds OE and ME monomers similarly, but PEC formation is more efficient with the ME. (paired ends complex). The hyperactivity of the ME is primarily attributed to the base at position 4. Specifically, the C5-methyl group on the thymine base of the non-transferred strand at position 4 is critical for efficient PEC formation. Mutations at positions 17 and 18 do not significantly affect PEC formation.
-
-reznikoff 2003: review, Key residues (DDE motif) in Tnp's active site coordinate magnesium ions critical for catalysis. confirms that no transposition occurs in the absence of magnesum ions, highlighting its importance for the catalytic activity of the transposase and possibly for stabilizing the DNA-protein complex - DDE motif, known in RNAseH family of enzymes.\sjcitep[.]{reznikoffTn5ModelUnderstanding2003}. already shown as a molecular tool in genetics\sjcitep[]{reznikoffTn5MolecularGenetics2004}
-
-% people are doing dnase-seq and chip-seq
-% atac-seq is invented by buenrostro
-% backstory of tn5: adey, reznikoff
-% picelli brings cheap tn5
-% plate based scatac
-% 10x scatac-seq
-
-% further structure: include picelli \& adey tn5, buenrostro atac, then single-cell sequencing
-% toadd: salmen et al, spindrop --> pico injectil
-
-
-This enzyme was first used by Adey and Shendure to construct next generation sequencing libraries (at the time still referred to as "shotgun sequencing")\sjcitep[.]{adeyRapidLowInputLowbias2010} Previously, researchers needed to fragment DNA using sonication or restriction enzymes, followed by end repair and ligation, a process that spanned 6 to 10 hours. With Tn5 "tagmentation", these pre-PCR steps were reduced to only 15 to 20 minutes.\sjcitep[.]{adeyRapidLowInputLowbias2010} Moreover, the Adey/Shendure protocol could use inputs as low as \SI{10}{\pico\gram} as opposed to the \SI{1}{\micro\gram} required by the ligation methods. (This is important for single-cell later.)
-
-
-
-why tn5 is more simple than <than what?>: Tn5 relies on only three core components (transposase, OE sequences, and target DNA) and eliminates the need for host proteins or other cis-acting sequences, simplifying transposition studies.
-
-Tn5 transposition requires no host proteins or additional DNA sequences beyond the 19-bp OE.
-
-adey2010
-adey \& wang bisulfite sequencing in 2013\sjcitep[.]{wang2013}
-picellitn5transposasetagmentation2014
-
-\sjcitep[.]{minnoyeChromatinAccessibilityProfiling2021}
-
 \section{Novel computational tools}
 Idea: wealth of information leads to explosion in tools available
 
@@ -346,7 +303,6 @@ Need for single-cell assays:
 \sjcitep[.]{shapiro2013single}
 
 Tumor heterogeneity was already known to underlie treatment resistance\sjcitep[.]{park2010cellular} Bulk DNA sequencing and comparative genomic hybridization assays cannot identify heterogenity in mutation or copy number variation profile. Navin et al. FAC sorted 200 single cells from triple-negative breast cancer tumors, and performed whole genome amplification and sequencing on individual cells\sjcitep[.]{navin2011tumour} Due to low per-cell coverage (\textasciitilde{6\%}), copy number variations was the focus of this study. Lineage analysis identified several "bursts" of CNV shared across main subpopulations, challenging previous ideas of slow, gradual accumulation of mutations underlying cancer. Metastases were strongly enriched for aneuploid populations that represent minorities in the primary tumor, indicating that chromosomal duplication helps establish rapidly expanding metastatic clones.
-
 
 Eberwine and colleagues injected a an oligo-dT T7 primer and T7 reverse transcriptase directly into single rat hippocampal neurons to reverse transcribe their mRNA in situ. The resulting cDNA was then amplified linearly using in vitro transcription. Radio-labeling southern blot was then used to quantify the relative expression levels of 10 known neuronal genes (mostly ion channels). Even among \textit{morphologically similar neurons}, significant differences in gene expression were observed, recording for the first time transcriptomic heterogeneity within the same tissue. Radiolabeled aRNAs were also hybridised to a cDNA library extracted from NG108, a hybrid neuroblastoma-glioma cell line known to express a wide variety of neuron-associated genes. Hybridising clones were isolated and sequenced, leading to the discovery of three novel genes that did not match existing gene databases.
 

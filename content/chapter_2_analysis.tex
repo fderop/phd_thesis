@@ -1,6 +1,40 @@
 \chapter{Analysis}
 \section{Pre-processing single-cell sequencing data}
 [draft Say something about SCREEN regions and genome blacklist? actually this should be done when i'm explaining vectorization/region counting]
+
+Each incorporation cycle is imaged, generating imaging data of the oligo lawn. Image processing is used to determine the position of oligo clusters present on the lawn, and these are stored in \verb|.locs| (locations) files. The basecalling algorithm will combine these \verb|.locs| files together with the imaging data to extract fluorescence intensities for all colours used per cluster. Dominant fluorescent signals then determine the base called for each cluster for every cycle.  When no base can be called, \verb|N| is used. When a strand does not incorporate a base during a given cycle, or if it leads ahead by one base, it becomes out of phase with the other strands of that cluster for the rest of the sequencing run. This is called phasing/pre-phasing and is corrected by the basecalling algorithm. Theoretical phasing rates (approximately 0.1\% of strands in a given cluster per cycle) can be used to estimate the contribution of phasing noise and deconvolve true signal from phased noise. Each basecall is also assigned a "Phred" quality score \verb|Q| based on signal-to-noise ratio, phasing, and separation of dense clusters: \( Q = -10 \cdot \log_{10} (P) \) where \verb|P| is the probability of the basecall being correct. A Q score of 30 corresponds to a probability of error of 1 in 1000.  The result is a binary \verb|.bcl| file, which contains the basecalls for each cluster. The binary \verb|.bcl| file is then converted to the ASCII \verb|.fastq| format using \verb|bcl2fastq|.
+
+\begin{center}
+\begin{lstlisting}
+@NS2000:001:HKYYLDSXX:1:1101:10000:1000 2:N:0:ATCACG
+CGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGGA
++
+HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
+@NS2000:001:HKYYLDSXX:1:1101:10001:1000 2:N:0:ATCACG 
+ACGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGA
++
+HHHHGGGFFFFEEEEDDDCCCCBBBBAAAAAAAA@@@@@@@
+\end{lstlisting}
+\end{center}
+
+Each sequenced strand is represented by four lines in the \verb|.fastq| file. The first line is a header, which stores metadata such as sequencer and cluster coordinates. The second line is the sequence itself, followed by a separator (\verb|+|) on the third line, and the ASCII-encoded quality score on the fourth line.
+
+Once data is sequenced, and raw \verb|.fastq| data is available, the first step in data analysis is alignment to a reference genome. A number of algorithms exist for this task, and the optimal choice depends on several factors. Short-read aligners such as \verb|bowtie2| are optimized for reads < \SI{200}{\bp}, while long-read aligners like \verb|minimap2| are better at handling reads > \SI{1000}{\bp}. The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more indels due to incorporation errors, which are explicitly corrected for by \verb|bwa-mem|. \verb|minimap2| is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads. When sequencing transcriptomic data, RNA-seq specific aligners like \verb|STAR| and \verb|HISAT2| are used to handle spliced reads. Like many classes of algorithms, a trade-off between memory and compute can also be made, for example \verb|STAR| requires large amounts of memory due to its use of an uncompressed genome index, but is faster, while \verb|HISAT2| is more memory-efficient, but takes longer.
+
+The diversity in sequencing technologies and alignment algorithms led to the use of several independent alignment formats, each tied to specific sequencing technologies or alignment algorithms. Analyses on different datasets (e.g. variant calling, genotype analysis) required cross parsing or conversion. The introduction of the Sequence Alignment Map (\verb|SAM|) format as part of the 1000 Genomes Project in 2009\sjcitep[,]{liSequenceAlignmentMapFormat2009} provided a unified standard for storing aligned sequencing data which has since become the de facto standard. Each read is stored in a single line containing 11 mandatory fields including: read name, reference name (chromosome or contig), position, mapping quality, the actual sequence, several other alignment quality parameters as well as optional tags.
+
+\begin{lstlisting}
+@HD     VN:1.6  SO:coordinate
+@SQ     SN:chr1 LN:248956422
+@SQ     SN:chr2 LN:242193529
+
+read001  99  chr1  1000  60  50M  =  1150  200  ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+read001  147 chr1  1150 60  50M  =  1000 -200 ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACG  IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  NM:i:0  MD:Z:50
+\end{lstlisting}
+
+An indexed binary format (\verb|BAM|) can also generated to save storage space and speed up searching and processing with random access. This also allows users to quickly inspect desired genomic regions using visualisation tools like \verb|igv|\sjcitep[.]{thorvaldsdottirIntegrativeGenomicsViewer2013}. Alignment quality itself is also a useful metric for assessing an experiment. Low genomic or transcriptomic alignment rates are indicative of low quality. When this occurs independently of per-base sequencing quality (i.e. sequencing run issues), either sample quality (degradation, viability) or library preparation (e.g. low input DNA, low reverse transcription efficiency, over-amplification or over-fragmentation) are usually at fault. Additionally, metrics such as reads mapped to the mitochondrial genome can indicate sample damage. These cases require optimization searches of better extraction and library prep parameters, which has become almost a field of its own [add some papers where this is done].
+
+
 After alignment, the next step is to vectorize the data, which unlocks linear algebra. This approach has been standard practice since the earliest microarray experiments\sjcitep[,]{eisenClusterAnalysisDisplay1998} where gene expression measurements across different conditions in yeast were visualised using simple hierarchical clustering. This work showed the first combination of a dendrogram and a heatmap in bioinformatics, introducing wholistic analysis of full gene expression data. For example, whereas the functions of novel genes were previously investigated through deep control experiments, they could could now be inferred through co-expression ("guilt by association").
 
 After alignment, all single-cell sequencing data is converted into a count matrix for downstream analyses.
