@@ -65,7 +65,7 @@
     \put(0.60075391,0.02708328){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Q\textsubscript{oil}\end{tabular}}}}%
     \put(0.3254076,0.09527202){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Q\textsubscript{mono}\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{indrop_model.pdf}}%
-    \put(0.8803343,0.20296803){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\sigma \end{tabular}}}}%
+    \put(0.8803343,0.20296803){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\sigma$ \end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{indrop_model.pdf}}%
     \put(0.93015048,0.0307397){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Q\textsubscript{oil}\end{tabular}}}}%
     \put(0.66403263,0.09462134){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Q\textsubscript{mono}\end{tabular}}}}%
@@ -74,7 +74,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=8]{indrop_model.pdf}}%
     \put(0.00275591,0.25043506){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Gather data\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=9]{indrop_model.pdf}}%
-    \put(0.84353352,0.16111215){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Minimise \sigma \end{tabular}}}}%
+    \put(0.84353352,0.16111215){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Minimise $\sigma$ \end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=10]{indrop_model.pdf}}%
   \end{picture}%
 \endgroup%
