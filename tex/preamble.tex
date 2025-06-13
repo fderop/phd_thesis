@@ -109,7 +109,7 @@
 
 % \SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
 % {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
-	% 6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
+% 6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
 
 % \SetExtraKerning[unit=space] % for main text (bch font)
 % {encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
@@ -130,10 +130,10 @@
 \setlist[enumerate]{itemsep=0pt}
 
 \newenvironment{tight_enumerate}{
-\begin{enumerate}
-  \setlength{\itemsep}{0pt}
-  \setlength{\parskip}{0pt}
-}{\end{enumerate}}
+	\begin{enumerate}
+		\setlength{\itemsep}{0pt}
+		\setlength{\parskip}{0pt}
+		}{\end{enumerate}}
 
 \usepackage[round-mode=places,round-precision=2,group-separator={\ },output-decimal-marker={.},round-pad=false]{siunitx}
 \usepackage[super]{nth}
@@ -191,9 +191,9 @@
 
 \newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\tiny\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
 \newcommand{\bfoo}{\raisebox{2.1ex}[0pt]{\makebox[\dimexpr2\tabcolsep]%
-{\color{LightSteelBlue3}\tiny\textbullet}}}
+		{\color{LightSteelBlue3}\tiny\textbullet}}}
 \newcommand{\tfoo}{\makebox[\dimexpr2\tabcolsep]%
-{\color{LightSteelBlue3}$\boldsymbol \uparrow $}}
+	{\color{LightSteelBlue3}$\boldsymbol \uparrow $}}
 
 %--- citations
 \usepackage{hyperref}
@@ -253,7 +253,7 @@
 	\renewcommand\thefootnote{}\footnote{#1}%
 	\addtocounter{footnote}{-1}%
 	\endgroup
-  }
+}
 
 
 % Double columns for footnotes
@@ -267,26 +267,26 @@
 
 % insert a blank page
 \newcommand{\blankpage}{
-    \null
-    \thispagestyle{empty}
-    \newpage
+	\null
+	\thispagestyle{empty}
+	\newpage
 }
 
 \usepackage{listings}
 \lstset{
-    basicstyle=\ttfamily, % Use teletype font
-    frame=single,         % Adds a frame around the block
-    breaklines=true,      % Automatically breaks long lines
-    captionpos=b,         % Caption position (bottom)
+	basicstyle=\ttfamily, % Use teletype font
+	frame=single,         % Adds a frame around the block
+	breaklines=true,      % Automatically breaks long lines
+	captionpos=b,         % Caption position (bottom)
 }
 
 % Add this with your other biblatex settings
 \DeclareFieldFormat{title}{%
-  \ifnum\value{listcount}=1
-    \mkbibemph{#1}%
-  \else
-    #1%
-  \fi}
+	\ifnum\value{listcount}=1
+		\mkbibemph{#1}%
+	\else
+		#1%
+	\fi}
 
 % Add this with your other biblatex settings
 \DeclareFieldFormat{journaltitle:short}{\mkbibemph{#1}}
@@ -302,8 +302,8 @@
 \def\mathdefault#1{#1}
 \everymath=\expandafter{\the\everymath\displaystyle}
 \IfFileExists{scrextend.sty}{
-  \usepackage[fontsize=10.000000pt]{scrextend}
+	\usepackage[fontsize=10.000000pt]{scrextend}
 }{
-  \renewcommand{\normalsize}{\fontsize{10.000000}{12.000000}\selectfont}
-  \normalsize
+	\renewcommand{\normalsize}{\fontsize{10.000000}{12.000000}\selectfont}
+	\normalsize
 }

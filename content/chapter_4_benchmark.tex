@@ -1,8 +1,8 @@
 \clearpage
 \checkoddpage
 \ifodd\thepage
-    \null
-    \newpage % Ensures we are now on an even (left) page
+	\null
+	\newpage % Ensures we are now on an even (left) page
 \fi
 
 \setcounter{chapter}{4} % Set chapter counter to 3
@@ -12,26 +12,26 @@
 
 % Minipage on left-hand page (even-numbered)
 \begin{minipage}{\textwidth}
-    \vspace{2.25cm}
-    {%
-        \centering
-        \includegraphics[width=\textwidth]{im/2023_nbt_fixed.pdf}
-        \captionsetup{width=0.80\linewidth}
-        \vspace{0.5cm}
-        \captionof{figure}[Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"]{Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols", \autoref{app:benchmark}}
-        \label{fig:article_title_benchmark}
-    }%
+	\vspace{2.25cm}
+	{%
+		\centering
+		\includegraphics[width=\textwidth]{im/2023_nbt_fixed.pdf}
+		\captionsetup{width=0.80\linewidth}
+		\vspace{0.5cm}
+		\captionof{figure}[Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols"]{Article title page of "Systematic benchmarking of single-cell ATAC sequencing protocols", \autoref{app:benchmark}}
+		\label{fig:article_title_benchmark}
+	}%
 \end{minipage}
 
 \clearpage  % Move to next page
 
 % Force chapter to start on right (odd) page
 \ifodd\thepage
-    % If already on an odd page, do nothing
+	% If already on an odd page, do nothing
 \else
-    % If on an even page, insert blank page
-    \null
-    \newpage
+	% If on an even page, insert blank page
+	\null
+	\newpage
 \fi
 
 \setcounter{chapter}{3} % Reset chapter counter to 3
@@ -73,7 +73,7 @@ Data originating from the 8 different techniques strongly differed in sequencing
 \section{Key results and conclusion}
 We found wide variability in "sequencing efficiency", the fraction of reads "used" compared to the total number of reads sequenced, between methods. During pre-processing, sequenced reads are filtered out of the dataset for various reasons: no valid barcode associated or bad genomic alignment (10-20\% of total), not within a peak region (5-15\%) etc, but the most significant losses are incurred when true cells are filtered from noise (7-60\%[[see also introd]]). FAC sorting live cells before nuclei extraction reduced this noise from 32\% to 7\% in mtscATAC-seq experiments, suggesting that much of it is caused by contaminating DNA from damaged cells. For all techniques, the number of "useful" sequencing reads was only a small fraction of the total number of reads sequenced, ranging between \num{28}\% for 10x v2 to below \num{4}\% for s3-ATAC and HyDrop v1. This fraction directly impacted overall sensitivity (absolute median number of fragments in peaks detected per cell) of these methods at a given sequencing depth (fig. 2a). In addition, the depth at which the number of unique fragments detected with respect to total number of reads sequenced begins to saturate varied greatly across methods (extended data fig. 10). These sensitivity differences directly affected all downstream analyises: doublet detection, genotype demultiplication, cell type annotation and significance of DARs all positively depend on median number of unique fragments detected per cell (fig. 2f-j), and these effects become more pronounced when investigating subtle differences (fig. 3j-k).
 
-Fragment specificity was also distinct between methods in a number of ways. Immediately, fragment TSS enrichment and raw FRIP values differed strongly (fig. 1h). For example, Bio-Rad ddSEQ fragments were significantly more TSS-proximal than 10x fragments, which is reflected in the TSS-proximity of ddSEQ-derived DARs (fig. 2j) and subsequent motif analyses (fig. 3g). In general, high-signal DARs were easily recovered by all techniques, but weak DARs were strongly technique-dependent (fig. 3e-f), implying technique-specific fragment capture bias. This bias was also evident in the difficulty at which samples integrated across technologies, even with computational batch-effect correction (\verb|harmony|\sjcitep[,]{korsunsky2019fast} fig. 4c-d). These technique-specific biases could be attributed to differences in Tn5 sources, concentrations, buffers, and tagmentation and amplification protocols across technologies. 
+Fragment specificity was also distinct between methods in a number of ways. Immediately, fragment TSS enrichment and raw FRIP values differed strongly (fig. 1h). For example, Bio-Rad ddSEQ fragments were significantly more TSS-proximal than 10x fragments, which is reflected in the TSS-proximity of ddSEQ-derived DARs (fig. 2j) and subsequent motif analyses (fig. 3g). In general, high-signal DARs were easily recovered by all techniques, but weak DARs were strongly technique-dependent (fig. 3e-f), implying technique-specific fragment capture bias. This bias was also evident in the difficulty at which samples integrated across technologies, even with computational batch-effect correction (\verb|harmony|\sjcitep[,]{korsunsky2019fast} fig. 4c-d). These technique-specific biases could be attributed to differences in Tn5 sources, concentrations, buffers, and tagmentation and amplification protocols across technologies.
 
 \section{Conclusions}
 Awareness of these sensitivity and specificity biases is especially important in scATAC-seq studies since, as opposed to in (sc)RNA-seq, the count region vector is not portable between samples but rather a property of interest of the samples themselves. Therefore, high-specificity methods should be prioritised when determining an accurate reference region set if public references (e.g. ENCODE ChIP-seq or DNase-seq region sets) are not available a priori. Cost-efficient but lower sensitive/specificity open-source methods can then be used for data generation at scale. Sequencing efficiency of these open-source methods can be improved by sequencing less deeply, since fewer reads will then be lost to duplicates. This will lead to lower per-cell sensitivity, but increasing the total number of cells may be able to partially compensate. For example, both cell type annotation quality (\verb|seurat| label transfer scores) and significance of differentially accessible regions increased with higher cell counts, though this effect had diminishing returns (fig. 3a). However, it is likely that this strategy has diminishing returns dependent on baseline per-cell sensitivity\sjcitep[.]{chiousinglecellmultiomic2023} In the limit, global optima for the trade-offs between cell counts, per-cell depth, and total experimental cost with respect to maximum predictive value remain an open problem. This benchmark provides a strong indication of current model performances, and a baseline evaluation framework for future datasets.

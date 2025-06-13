@@ -59,19 +59,19 @@ We also wanted to replace inDrop's photocleavable oligonucleotide linker by a di
 \begin{enumerate}[noitemsep]
 	\item We designed and manufactured a microfluidic chip for the generation of the stable acrylamide monomer emulsions needed to produce polyacrylamide hydrogel beads using soft lithography\sjcitep[.]{xiaSoftLithography1998} We characterised the relationship between oil and water flow rates on this chip, and predicted flow rates that would generate \SI{50}{\micro\metre} diameter droplets with minimal size variance using iterative linear model optimisation (\autoref{fig:bead_diameter_optimisation}). The resulting beads were indeed of a stable \SI{53}{\micro\metre} diameter with a standard deviation of \SI{5}{\micro\metre}.
 
-		\svgfigure{im/indrop_model.pdf_tex}
-				{Bead diameter optimisation}
-				{Bead diameter optimisation strategy. From \notefullcite{deropOptimisationInDropScRNAseq2019}.}
-				{fig:bead_diameter_optimisation}
+	      \svgfigure{im/indrop_model.pdf_tex}
+	      {Bead diameter optimisation}
+	      {Bead diameter optimisation strategy. From \notefullcite{deropOptimisationInDropScRNAseq2019}.}
+	      {fig:bead_diameter_optimisation}
 
 	\item We barcoded the resulting \SI{53}{\micro\metre} polyacrylamide hydrogel beads using inDrop's split-pool protocol, producing 96 \texttimes 96 \texttimes 96 possible cell barcodes across all beads (\autoref{fig:preliminary_barcoding_split_pool_design}). Importantly, the photocleavable linker was replaced by a disulfide bond as mentioned previously.
 
 	\item We designed a new cell encapsulation microfluidic chip which included several layers of passive filters due to prior experiences with flow-obstructing dust particles. Using this updated design, we were able to reliably encapsulate single cells with reagent mixes across several experiments.
 
-		\svgfigure{im/indrop_chip_zoom.pdf_tex}
-				{Droplet encapsulation chip design}
-				{Droplet encapsulation chip design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
-				{fig:indrop_chip_zoom}
+	      \svgfigure{im/indrop_chip_zoom.pdf_tex}
+	      {Droplet encapsulation chip design}
+	      {Droplet encapsulation chip design. Reproduced from \notefullcite{deropOptimisationInDropScRNAseq2019}.}
+	      {fig:indrop_chip_zoom}
 
 	\item To implement scRNA-seq on our now functional droplet platform, we tested several different cDNA generation and subsequent sequencing library preparation strategies. We ultimately settled on a protocol that was based on in-droplet Maxima H Minus reverse transcription, PCR amplification of cDNA by KAPA polymerase, and NEB Next Ultra II FS DNA sequencing library preparation. This protocol was different from both inDrop, which uses a more involved reverse transcription \textrightarrow second-strand synthesis \textrightarrow in-vitro transcription \textrightarrow random hexamer reverse transcription \textrightarrow PCR workflow, and Drop-seq, which relies on Tn5-based sequencing library prep from cDNA.
 \end{enumerate}
@@ -96,7 +96,7 @@ We were now able to sequence cell barcodes, align them to a whitelist, align the
 
 This idea was strongly supported by evidence in Sanger sequencing, where we observe that the first sub-barcode locus is very pure, but the middle sub-barcode locus is not, and the third sub-barcode locus is pure again. This could be explained by [[x]].
 
-\textbf{Solution:} One of the first things we changed was introducing extra primer purifications after emulsion breaking. We had noticed that at this stage, even after a magnetic bead purification, our libraries still had extreme enrichment of barcode primers. 
+\textbf{Solution:} One of the first things we changed was introducing extra primer purifications after emulsion breaking. We had noticed that at this stage, even after a magnetic bead purification, our libraries still had extreme enrichment of barcode primers.
 
 This mechanism of contamination could explain both observations that convinced us that our method was not single-cell: the vague separation between true cells and background noise barcodes on the kneeplot could be caused by all unused barcodes associating with transcripts/fragments post-emulsion breaking, and the lack of cell types could be explained by the dilution of each single-cell profile with random transcripts/fragments due to barcode promiscuity
 
@@ -110,6 +110,6 @@ At this point, we were certain we had functional scRNA-seq and scATAC-seq workin
 
 In addition, we tested a number of optimisations for HyDrop-RNA. Exonuclease I (Exo I) has been used in single-cell RNA-seq workflows to remove excess primers and barcodes that could lead to non-specific priming\sjcitep[.]{macoskohighlyparallelgenomewide2015} Addition or exclusion of Exo I did not appear to make a difference in sensitivity. Introduction of two riboguanosines in the template-switching oligo, which improve thermal annealing stability to 3' \verb|CCC| motif of the untemplated cDNA, also did not appear to increase sensitivity[.]{picellifulllengthrnaseqsingle2014} Second-strand synthesis through Bst2.0 or Klenow fragment\sjcitep[]{stickels2020highly} showed improvements, but the best cDNA amplification strategy was PCR thermocycling supplemented with GTP\sjcitep[.]{hagemannjensensinglecellrnacounting2020}
 
-soft lithography paper 
+soft lithography paper
 
 \section{Conclusion}

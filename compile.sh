@@ -3,6 +3,8 @@
 
 THESIS_FILE="phd_thesis"
 
+find . -name "*.tex" -exec latexindent -w {} \;
+
 latexmk -xelatex -bibtex -f -shell-escape "$THESIS_FILE.tex"
 
 if [ $? -eq 0 ]; then

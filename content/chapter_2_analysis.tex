@@ -1,11 +1,11 @@
 \chapter{Analysis}
 \section{Pre-processing single-cell sequencing data}
-[draft Say something about SCREEN regions and genome blacklist? actually this should be done when i'm explaining vectorization/region counting]
+ [draft Say something about SCREEN regions and genome blacklist? actually this should be done when i'm explaining vectorization/region counting]
 
 Each incorporation cycle is imaged, generating imaging data of the oligo lawn. Image processing is used to determine the position of oligo clusters present on the lawn, and these are stored in \verb|.locs| (locations) files. The basecalling algorithm will combine these \verb|.locs| files together with the imaging data to extract fluorescence intensities for all colours used per cluster. Dominant fluorescent signals then determine the base called for each cluster for every cycle.  When no base can be called, \verb|N| is used. When a strand does not incorporate a base during a given cycle, or if it leads ahead by one base, it becomes out of phase with the other strands of that cluster for the rest of the sequencing run. This is called phasing/pre-phasing and is corrected by the basecalling algorithm. Theoretical phasing rates (approximately 0.1\% of strands in a given cluster per cycle) can be used to estimate the contribution of phasing noise and deconvolve true signal from phased noise. Each basecall is also assigned a "Phred" quality score \verb|Q| based on signal-to-noise ratio, phasing, and separation of dense clusters: \( Q = -10 \cdot \log_{10} (P) \) where \verb|P| is the probability of the basecall being correct. A Q score of 30 corresponds to a probability of error of 1 in 1000.  The result is a binary \verb|.bcl| file, which contains the basecalls for each cluster. The binary \verb|.bcl| file is then converted to the ASCII \verb|.fastq| format using \verb|bcl2fastq|.
 
 \begin{center}
-\begin{lstlisting}
+	\begin{lstlisting}
 @NS2000:001:HKYYLDSXX:1:1101:10000:1000 2:N:0:ATCACG
 CGTACGATCGTAGCTAGCTGATCGTAGGTTGCTAGCTAGGA
 +
@@ -40,18 +40,18 @@ After alignment, the next step is to vectorize the data, which unlocks linear al
 After alignment, all single-cell sequencing data is converted into a count matrix for downstream analyses.
 
 \begin{table}[ht]
-\centering
-\begin{tabular}{lcccc}
-\hline
- & \textbf{barcode\_1} & \textbf{barcode\_2} & $\cdots$ & \textbf{barcode\_N} \\ \hline
-\textbf{feature\_1} & 3 & 2 & $\cdots$ & 13 \\
-\textbf{feature\_2} & 2 & 3 & $\cdots$ & 1 \\
-\textbf{feature\_3} & 1 & 14 & $\cdots$ & 18 \\
-$\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
-\textbf{feature\_M} & 25 & 0 & $\cdots$ & 0 \\ \hline
-\end{tabular}
-\caption{Example feature count matrix across different cells.}
-\label{tab:feature_count_matrix}
+	\centering
+	\begin{tabular}{lcccc}
+		\hline
+		                    & \textbf{barcode\_1} & \textbf{barcode\_2} & $\cdots$ & \textbf{barcode\_N} \\ \hline
+		\textbf{feature\_1} & 3                   & 2                   & $\cdots$ & 13                  \\
+		\textbf{feature\_2} & 2                   & 3                   & $\cdots$ & 1                   \\
+		\textbf{feature\_3} & 1                   & 14                  & $\cdots$ & 18                  \\
+		$\vdots$            & $\vdots$            & $\vdots$            & $\ddots$ & $\vdots$            \\
+		\textbf{feature\_M} & 25                  & 0                   & $\cdots$ & 0                   \\ \hline
+	\end{tabular}
+	\caption{Example feature count matrix across different cells.}
+	\label{tab:feature_count_matrix}
 \end{table}
 
 
@@ -61,21 +61,21 @@ ENCODE SCREEN regions: \num{926535} (human) and \num{339815} (mouse) candidate c
 
 For single-cell RNA-seq data, a gene count matrix is generated.
 
-[Decide whether you want to use reads or counts for this kneeplot --> has an effect on where this paragraph goes, before or after seurat etc]
+	[Decide whether you want to use reads or counts for this kneeplot --> has an effect on where this paragraph goes, before or after seurat etc]
 
 The barcode-rank plot (also referred to as "knee or elbow plot") visualises the distribution of reads across all sequenced barcodes in the sequencing dataset. It is obtained by counting the number of reads per barcode, and ranking each barcode in a log-log figure - similarly in concept to a Zipf or Lorenz curve. If the dataset is sequenced to near-saturation, the total number of barcodes will exceed the whitelist, as sequencing/PCR/synthesis errors introduce non-whitelisted species. In the "ideal signal" case, all reads are evenly distributed across a small number of barcodes that matches the number of input cells (e.g. \num{10000} in the figure). This means that there are no quality differences between real cells, and there are no barcodes with low read counts. The opposite scenario ("ideal noise") has an even distribution of all reads across \textit{all} barcodes, and we cannot distinguish cells from noise. Real datasets fall between these two extremes. A high quality dataset exhibits a clear cut-off, where the number of reads per barcode sharply drops off in the transition between real cells and background noise. A dataset of lower quality will exhibit a more gradual transition between real cells and background noise. This can be caused by a variety of mechanisms, notably ambient RNA or non-pure cell barcodes on the beads.
 
-	\begin{figure}[h]
-		\centering
-		\resizebox{0.8\textwidth}{!}{\input{ipynb/figs/ch2_kneeplot.pgf}}
-		\captionsetup{width=0.85\linewidth}
-		\caption[Barcode rank simulation]{The barcode rank plot. Two idealised cases (pure noise and pure signal) compared to two simulated  scenarios (high and low signal-to-noise ratio datasets).}
-		\label{fig:kneeplot}
-	\end{figure}
+\begin{figure}[h]
+	\centering
+	\resizebox{0.8\textwidth}{!}{\input{ipynb/figs/ch2_kneeplot.pgf}}
+	\captionsetup{width=0.85\linewidth}
+	\caption[Barcode rank simulation]{The barcode rank plot. Two idealised cases (pure noise and pure signal) compared to two simulated  scenarios (high and low signal-to-noise ratio datasets).}
+	\label{fig:kneeplot}
+\end{figure}
 
 In this simulation, \num{10000} cells are sequenced to a total depth of 200 million reads, and the whitelist is \num{800000} barcodes in length. The ceiling for mean number of reads per barcode is thus 200M reads/10k cell = 20k reads/cell (perfect signal), with a floor of 200M reads/800k barcodes = 250 reads/barcode (perfect noise).
 
-Note that high-quality "true cell" barcodes also contain noise. For example, a barcoded bead could contain 1\% random barcodes which capture some of the cell's material but do not aggregate it into a single barcode. This 
+Note that high-quality "true cell" barcodes also contain noise. For example, a barcoded bead could contain 1\% random barcodes which capture some of the cell's material but do not aggregate it into a single barcode. This
 
 Based on this simple plot, we can estimate at a glance the rough quality characteristics of any single-cell dataset:
 
@@ -87,7 +87,7 @@ Based on this simple plot, we can estimate at a glance the rough quality charact
 \end{itemize}
 
 \section{Analysis and interpretation of single-cell sequencing data}
-[It would actually be better to structure this paragraph as such: "compared to rna-seq data, scrna-seq data has two problems: one it is more non-linear because of the added cell states and two drop-outs additionally make it more difficult to do statistical test. this is solved by...:"]
+ [It would actually be better to structure this paragraph as such: "compared to rna-seq data, scrna-seq data has two problems: one it is more non-linear because of the added cell states and two drop-outs additionally make it more difficult to do statistical test. this is solved by...:"]
 
 Conventional bulk RNA-seq analysis tools modeled gene counts using Poissonian (edgeR\sjcitep[]{robinsonEdgeRBioconductorPackage2010}) or Negative Binomial (DESeq\sjcitep[]{andersDifferentialExpressionAnalysis2010}) distributions. Statistical tests can then be used to identify statistically significant differentially expressed genes. Compared to bulk RNA-seq and microarray data, single-cell sequencing data is highly zero-inflated: when sampling transcripts in a single cell, the probability of a given gene not being detected is high, leading to large amounts of "dropouts" (false negative gene expression), necessitating more complex approaches. SCDE\sjcitep[]{kharchenkoBayesianApproachSinglecell2014} corrects for dropouts by taking into account aggregate expression levels across all cells to calculate dropout probabilities. These dropout probabilities are then used as priors to model gene expression levels in individual cells. Dropouts are weighted based on their prior probability, and likely relative (fold-change) gene expression levels are inferred. This approach ensures that highly-expressed genes are not penalized, and low-expressed genes are not inflated. [How are differentially expressed genes identified?]
 
@@ -95,7 +95,7 @@ Another new problem is that the number of different cell states observed in a si
 
 Monocle\sjcitep[]{trapnellDynamicsRegulatorsFate2014} Advent of single-cell RNA-sequencing --> we can now look at gene expression dynamics (not possible in bulk rna-seq due to simpson's paradox). Differentiate human myoblasts to [skeletal muscle], sample 270 cells over 4 timepoints between 0 and 72 hours using the Fluidigm C1, 4M reads/cell, compare also with bulk rna-seq of each timepoint. Then Monocle: TopHat and CuffLinks are used to generate a count matrix, independent component analysis is used for dimreduc (why?). finally, a minimum-spanning tree (graph that connects cells with minimal total edge length, with edges representing transcriptional similarity), then monocle identifies the longest path along the MST. a starting cell (highly proliferative progenitor) is chosen and cells are ordered along the path. branch points may be detected. expression profiles are also smoothed along the trajectory using generalized additive models. now genes can be correlated to pseudotime.
 
-found: different branches along the differentiation path, including one branch of non-differentiating mesenchymal cells lacking myogenic markers which did not arrive from myoblasts but from mesenchymal progenitors (CD13+ mesenchymal cells which may coexist with myoblasts and help them differentiate by secreting signaling factors Joe et al nat cell bio 2013). \num{1061} genes were dynamically regulated during differentiation. earliest genes were cell-cycle associated, then finally the sarcomere components and structural proteins. Bulk rna-seq alone could not resolve this. ENCODE myotube DNase I sites were motif-analysed, yielded 175 candidates for myo regulators, 
+found: different branches along the differentiation path, including one branch of non-differentiating mesenchymal cells lacking myogenic markers which did not arrive from myoblasts but from mesenchymal progenitors (CD13+ mesenchymal cells which may coexist with myoblasts and help them differentiate by secreting signaling factors Joe et al nat cell bio 2013). \num{1061} genes were dynamically regulated during differentiation. earliest genes were cell-cycle associated, then finally the sarcomere components and structural proteins. Bulk rna-seq alone could not resolve this. ENCODE myotube DNase I sites were motif-analysed, yielded 175 candidates for myo regulators,
 
 Directly visualising correlations or variance between many RNA-seq or microarray samples is difficult due to the high-dimensionality of this data. Traditionally, this was done by first reducing the dimensionality of the data using PCA, and then visualising the first 2 principal components in a 2D space. Alternatively, heatmaps with dendrograms were used to order correlated samples. The more fine-grained nature of cell states in single-cell data further introduces non-linearity, since gradients of expression in the population are no longer averaged out [I think this is important]. This non-linearity precluded the use of PCA. This problem was partially solved by the introduction of t-SNE, a technique first designed to visualise the MNIST dataset of handwritten digits\sjcitep[.]{maatenVisualizingHighDimensionalData2008} The earliest implementations of t-SNE were used for single-cell mass cytometry data\sjcitep[]{amirViSNEEnablesVisualization2013} (45 protein levels per cell), then single-cell qPCR\sjcitep[]{saadatpourCharacterizingHeterogeneityLeukemic2014} (175 genes) and later single-cell whole transcriptomics\sjcitep[]{macoskohighlyparallelgenomewide2015} (\textasciitilde{\num{20000}}genes). t-SNE preserves local structure (close neighborhood of cells) at the cost of some concessions to global structure. Clusters of single cells can appear closer in the t-SNE embedding than they are in high-dimensional gene space. UMAP is a slightly newer dimensionality reduction algorithm which aims to better preserve global structure\sjcitep[.]{bechtDimensionalityReductionVisualizing2018} Some common criticisms of both t-SNE and UMAP is that they still distort global topologies\sjcitep[.]{chariSpeciousArtSinglecell2023} In addition, both methods are sensitive to hyperparameters (perplexity, number of neighbours) and stochasticity (e.g. initialisation). These tools are thus best used for exploration and visualisation rather than quantitative biological analysis.
 
@@ -106,69 +106,69 @@ Analysis of scATAC-seq poses yet more challenges: where scRNA-seq is limited to 
 A scRNA-seq like approach where cells are first clustered, and differential chromatin accessibility is calculated between clusters. Latent semantic indexing (LSI), an approach borrowed from text analysis, can be used to perform this dimensionality reduction\sjcitep[.]{cusanovichsinglecellatlasvivo2018} Briefly, single-cell accessibility is first counted in annotated regions (usually accessibility peaks) or 5 kb genome bins, binarized, and scaled according to inverse document frequency (peaks that are not commonly accessible are weighted higher). Singular value decomposition (SVD), is then used to decompose the resulting weighted cell-accessibility matrix into latent features across cells:
 
 \[
-M = U\Sigma V^T = 
-\underset{(m \times n)}{\begin{bmatrix}
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
-=
-\underset{(m \times r)}{\begin{bmatrix}
-\cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
-\underset{(r \times r)}{\begin{bmatrix}
-\sigma_1 & 0 & \cdots & 0 \\
-0 & \sigma_2 & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \sigma_r
-\end{bmatrix}}
-\underset{(r \times n)}{\begin{bmatrix}
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\cdot & \cdot & \cdot & \cdots & \cdot \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-\cdot & \cdot & \cdot & \cdots & \cdot
-\end{bmatrix}}
+	M = U\Sigma V^T =
+	\underset{(m \times n)}{\begin{bmatrix}
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot  \\
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot  \\
+			\vdots & \vdots & \vdots & \ddots & \vdots \\
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot  \\
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot
+		\end{bmatrix}}
+	=
+	\underset{(m \times r)}{\begin{bmatrix}
+			\cdot  & \cdot  & \cdots & \cdot  \\
+			\cdot  & \cdot  & \cdots & \cdot  \\
+			\vdots & \vdots & \ddots & \vdots \\
+			\cdot  & \cdot  & \cdots & \cdot  \\
+			\cdot  & \cdot  & \cdots & \cdot
+		\end{bmatrix}}
+	\underset{(r \times r)}{\begin{bmatrix}
+			\sigma_1 & 0        & \cdots & 0        \\
+			0        & \sigma_2 & \cdots & 0        \\
+			\vdots   & \vdots   & \ddots & \vdots   \\
+			0        & 0        & \cdots & \sigma_r
+		\end{bmatrix}}
+	\underset{(r \times n)}{\begin{bmatrix}
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot  \\
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot  \\
+			\vdots & \vdots & \vdots & \ddots & \vdots \\
+			\cdot  & \cdot  & \cdot  & \cdots & \cdot
+		\end{bmatrix}}
 \]
 
 Here, $m$ is the number of peaks, $n$ is the number of cells, and $r = \min(m,n)$ is the rank of the decomposition. U represents the peak-composition of the latent features, $\Sigma$ is diagonal and scales each latent feature, and V\textsuperscript{T} represents the contribution of each latent feature to each cell. Based on $\Sigma$, we can select the top n most important features and cluster cells in this reduced space using t-SNE. Differentially accessible regions (DARs) between clusters can then be calculated on the raw binary accessibility matrix using logistic regression, which is suited to model the odds of a binary event like chromatin accessibility.
 
 Or, chromVAR, which works in a fundamentally different way\sjcitep[.]{schepchromVAR2017} Instead of using hundreds of thousands of accessible peak regions, chromVAR first groups these peaks into cistromes based on common TF motifs or pre-set functional annotations (such as known enhancer peak sets). This approach tackles sparsity and dimensionality. Accessibility within each cistrome is normalized and converted to z-scores, which are then used for t-SNE and clustering. Instead of known TF motifs, k-mers can also be used to identify novel motifs important in a given biological process.
 
-In this work, cisTopic was used instead [instead of what?]\sjcitep[.]{bravogonzalezblascistopic2019} Peaks are first called on the aggregate accessibility data [or screen? actually, it wouldn't hurt to explain MACS somewhere], and a sparse count matrix is generated using these peaks as regions [this sentence can be skipped, we can also use the SCREEN regions]. Like chromVAR, cisTopic uses a probabilistic approach to model chromatin accessibility, but unlike chromVAR, cisTopic uses LDA\sjcitep[]{bleiLatentDirichletAllocation2003}, which 
+In this work, cisTopic was used instead [instead of what?]\sjcitep[.]{bravogonzalezblascistopic2019} Peaks are first called on the aggregate accessibility data [or screen? actually, it wouldn't hurt to explain MACS somewhere], and a sparse count matrix is generated using these peaks as regions [this sentence can be skipped, we can also use the SCREEN regions]. Like chromVAR, cisTopic uses a probabilistic approach to model chromatin accessibility, but unlike chromVAR, cisTopic uses LDA\sjcitep[]{bleiLatentDirichletAllocation2003}, which
 
 LDA calculates two sets of distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell) which should approximate the original data when multiplied.
 
 \[
-\underset{m \times n}{
-\begin{bmatrix}
-x_{11} & x_{12} & \cdots & x_{1n} \\
-x_{21} & x_{22} & \cdots & x_{2n} \\
-\vdots & \vdots & \ddots & \vdots \\
-x_{m1} & x_{m2} & \cdots & x_{mn}
-\end{bmatrix}}
-\approx
-N \cdot
-\underset{m \times k}{
-\begin{bmatrix}
-p_{r_1t_1} & p_{r_1t_2} & \cdots & p_{r_1t_k} \\
-p_{r_2t_1} & p_{r_2t_2} & \cdots & p_{r_2t_k} \\
-\vdots & \vdots & \ddots & \vdots \\
-p_{r_mt_1} & p_{r_mt_2} & \cdots & p_{r_mt_k}
-\end{bmatrix}_{}}
-\cdot
-\underset{k \times n}{
-\begin{bmatrix}
-p_{t_1c_1} & p_{t_1c_2} & \cdots & p_{t_1c_n} \\
-p_{t_2c_1} & p_{t_2c_2} & \cdots & p_{t_2c_n} \\
-\vdots & \vdots & \ddots & \vdots \\
-p_{t_kc_1} & p_{t_kc_2} & \cdots & p_{t_kc_n}
-\end{bmatrix}}
+	\underset{m \times n}{
+		\begin{bmatrix}
+			x_{11} & x_{12} & \cdots & x_{1n} \\
+			x_{21} & x_{22} & \cdots & x_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			x_{m1} & x_{m2} & \cdots & x_{mn}
+		\end{bmatrix}}
+	\approx
+	N \cdot
+	\underset{m \times k}{
+	\begin{bmatrix}
+		p_{r_1t_1} & p_{r_1t_2} & \cdots & p_{r_1t_k} \\
+		p_{r_2t_1} & p_{r_2t_2} & \cdots & p_{r_2t_k} \\
+		\vdots     & \vdots     & \ddots & \vdots     \\
+		p_{r_mt_1} & p_{r_mt_2} & \cdots & p_{r_mt_k}
+	\end{bmatrix}_{}}
+	\cdot
+	\underset{k \times n}{
+		\begin{bmatrix}
+			p_{t_1c_1} & p_{t_1c_2} & \cdots & p_{t_1c_n} \\
+			p_{t_2c_1} & p_{t_2c_2} & \cdots & p_{t_2c_n} \\
+			\vdots     & \vdots     & \ddots & \vdots     \\
+			p_{t_kc_1} & p_{t_kc_2} & \cdots & p_{t_kc_n}
+		\end{bmatrix}}
 \]
 
 LDA parameters (probabilities) are estimated using a Markov chain monte carlo approach: regions are initially randomly assigned to topics, and topic-region assignment is then updated iteratively in each cell based on two factors: (1) the topic's occurrence in the cell and (2) the region's occurrence in each topic across all other cells. Instead of sampling in the entire [], sampling is only performed in [] (collapsed Gibbs sampling), which reduces total computational complexity compared to sampling in both region-topic and topic-cell distribution. This approach is more efficient than other Bayesian approaches (e.g. variational inference) due to the extreme sparsity of the data. tSNE or UMAP can then be used to visualise the resulting (normalized) topic-cell distributions.
@@ -178,14 +178,14 @@ Another advantage of LDA over LSI is that LDA's topics are interpretable, wherea
 cisTopic also introduces a region score which rewards regions that are more specific to a topic, and penalises regions that are ubiquitous across topics:
 
 \[
-\text{Region score} = \beta_{r,t} \left( \log \beta_{r,t} - \frac{1}{T} \sum_{t=1}^{T} \log \beta_{r,t} \right)
+	\text{Region score} = \beta_{r,t} \left( \log \beta_{r,t} - \frac{1}{T} \sum_{t=1}^{T} \log \beta_{r,t} \right)
 \]
 
 Consider Shannon entropy $H(X) = -\sum_{i} p(x_i) \log p(x_i)$, then the term \(\beta_{r,t} \log \beta_{r,t}\) can be considered the local information content of the region in topic context, while the term \(\frac{\beta_{r,t}}{T} \sum_{t=1}^{T} \log \beta_{r,t}\) is the average log-probability of the region acrosss all topics [double check this, is beta a probability?]. The region score is thus an average-normalized measure of a given region's information content, indicating how specific it is to each topic. Topics can then be scored for TF motif enrichment by counting TF motif occurrence in the score-ranked regions and calculating the area under this rank curve (AUCell\sjcitep[]{aibarscenicsinglecell2017}).
 
 cisTopic's LDA approach was benchmarked against other popular tools such as chromVAR, scABC, BROCKMAN, SCRAT, Cicero, and LSI, using both simulated single-cell ATAC-seq datasets and real data from FAC-sorted hematopoietic cells. cisTopic typically yielded higher adjusted Rand index (ARI) scores for cell-type clustering, especially in low-coverage scenarios, confirming that the method can more robustly capture biologically meaningful patterns in sparse single-cell ATAC-seq data.
 
-[There was something about how cistopic reduces dimensionality for both cells and regions somewhere, in the part where they compare previous analysis methods. highlight that.]
+	[There was something about how cistopic reduces dimensionality for both cells and regions somewhere, in the part where they compare previous analysis methods. highlight that.]
 
 Cicero[probably good to look at to]\sjcitep[.]{plinerCiceroPredicts2018}
 
@@ -199,60 +199,60 @@ Cicero[probably good to look at to]\sjcitep[.]{plinerCiceroPredicts2018}
 Hubel and Wiesel showed that specific neurons in a cat's visual cortex respond to common spatial patterns (e.g. edges, corners, orientations) in specific locations within the cat's visual field. These patterns can overlap when layers of neurons pass information onwards, forming broader structures which ultimately allow the cat to recognise complex objects. This idea was borrowed by Fukishima and later LeCun to implement convolutional neural networks (CNNs) for handwritten digit recognition. Rasterized (vectorized) images are scanned by a "filter", converting the original data into a new representation. This new representation is then passed on to the next layer, where it is again scanned by a new filter, and so on until the final layer. CNNs are thus well suited for detecting spatial patterns, and integrating these patterns into larger, more global structures. The same logic is applied in [ref], where a CNN is trained to detect local patterns in DNA (cell-type specific peaks). In order to train a CNN on DNA sequences (peaks), DNA sequences were one-hot encoded (each position is encoded by a binary vector of length 4, and the sequence is represented as a matrix of these vectors of size $N \times L \times 4$). where $N$ is the number of sequences, $L$ is the sequence length (500 bp), and the nucleotides are one-hot encoded as binary vectors.
 
 \[
-\mathbf{X} \in \{0, 1\}^{N \times L \times 4}, \text{ e.g. }
-\begin{bmatrix}
-\begin{bmatrix}
-1 & 0 & 0 & 0 \\
-0 & 1 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 \\
-1 & 0 & 0 & 0
-\end{bmatrix}
-,
-\begin{bmatrix}
-0 & 1 & 0 & 0 \\
-1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 \\
-0 & 1 & 0 & 0
-\end{bmatrix}
-\end{bmatrix}
-\text{ encodes for [ACGTA, CAGTC].}
+	\mathbf{X} \in \{0, 1\}^{N \times L \times 4}, \text{ e.g. }
+	\begin{bmatrix}
+		\begin{bmatrix}
+			1 & 0 & 0 & 0 \\
+			0 & 1 & 0 & 0 \\
+			0 & 0 & 1 & 0 \\
+			0 & 0 & 0 & 1 \\
+			1 & 0 & 0 & 0
+		\end{bmatrix}
+		,
+		\begin{bmatrix}
+			0 & 1 & 0 & 0 \\
+			1 & 0 & 0 & 0 \\
+			0 & 0 & 1 & 0 \\
+			0 & 0 & 0 & 1 \\
+			0 & 1 & 0 & 0
+		\end{bmatrix}
+	\end{bmatrix}
+	\text{ encodes for [ACGTA, CAGTC].}
 \]
 
 The output labels are represented by a given by:
 \[
-\mathbf{Y} \in [0, 1]^{N \times C}
+	\mathbf{Y} \in [0, 1]^{N \times C}
 \]
 where $C$ denotes the number of cell types (e.g., $C = 81$). Each $Y_{ij}$ represents the probability that sequence $i$ is an enhancer for cell type $j$. For example:
 \[
-\begin{bmatrix}
-0.9 & 0.1 & 0.0 & \cdots & 0.2 \\
-0.1 & 0.8 & 0.1 & \cdots & 0.0 \\
-0.0 & 0.1 & 0.9 & \cdots & 0.1
-\end{bmatrix}
+	\begin{bmatrix}
+		0.9 & 0.1 & 0.0 & \cdots & 0.2 \\
+		0.1 & 0.8 & 0.1 & \cdots & 0.0 \\
+		0.0 & 0.1 & 0.9 & \cdots & 0.1
+	\end{bmatrix}
 \]
 indicates that sequence 1 is likely an enhancer for cell type 1 (0.9), sequence 2 for cell type 2 (0.8), and sequence 3 for cell type 3 (0.9).
 
 The convolution operation for filter $k$ is:
 \[
-z_{i,k} = f \left( \sum_{j=1}^{h} \sum_{m=1}^{4} X_{i+j-1, m} W_{j, m}^{(k)} + b_k \right)
+	z_{i,k} = f \left( \sum_{j=1}^{h} \sum_{m=1}^{4} X_{i+j-1, m} W_{j, m}^{(k)} + b_k \right)
 \]
 where $f(x) = \max(0, x)$ is the ReLU activation function.
 
 After pooling, the flattened feature map $\mathbf{P}$ is mapped to outputs as:
 \[
-\mathbf{\hat{Y}} = \sigma \left( \mathbf{P} \mathbf{V} + \mathbf{b} \right)
+	\mathbf{\hat{Y}} = \sigma \left( \mathbf{P} \mathbf{V} + \mathbf{b} \right)
 \]
 where $\sigma$ is the sigmoid function.
 
 The binary cross-entropy loss is computed as:
 \[
-\mathcal{L}_{ij} = - \left[ Y_{ij} \log(\hat{Y}_{ij}) + (1 - Y_{ij}) \log(1 - \hat{Y}_{ij}) \right]
+	\mathcal{L}_{ij} = - \left[ Y_{ij} \log(\hat{Y}_{ij}) + (1 - Y_{ij}) \log(1 - \hat{Y}_{ij}) \right]
 \]
 with the total loss:
 \[
-\mathcal{L} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{j=1}^{C} \mathcal{L}_{ij}
+	\mathcal{L} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{j=1}^{C} \mathcal{L}_{ij}
 \]
 
 CNNs have been successfully used in earlier enhancer prediction models, such as DeepBind and DeepSEA, validating their use in genomics.
