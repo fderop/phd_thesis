@@ -3,7 +3,7 @@
 
 THESIS_FILE="phd_thesis"
 
-find . -name "*.tex" -exec latexindent -w {} \;
+find . -name "*.tex" -exec latexindent -w {} \; > /dev/null 2>&1
 
 latexmk -xelatex -bibtex -f -shell-escape "$THESIS_FILE.tex"
 

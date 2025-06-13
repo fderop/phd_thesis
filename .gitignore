@@ -308,4 +308,4 @@ papers/*
 
 ipynb/resources/runinfo.csv
 *.venv*
-*.bak0
+*.bak*
