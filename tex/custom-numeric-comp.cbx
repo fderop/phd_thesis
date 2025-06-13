@@ -104,6 +104,33 @@
             \printfield{year}\addperiod}}}}%
 }
 
+\DeclareCiteCommand{\ghostshortnotecite}{}% no pre-code (so prints nothing)
+  {\usebibmacro{ghostshortnotecite}}
+  {}%
+  {}
+
+\newbibmacro*{ghostshortnotecite}{%
+  \ifciteseen
+    {}
+    {%
+      \footnotetext[\thefield{labelnumber}]{%
+        \entrydata{\thefield{entrykey}}{%
+          \printnames[lastonly][1-1]{author}%
+          \addcomma\addspace%
+          \mkbibemph{\iffieldundef{shortjournal}
+            {\printfield{journaltitle}}
+            {\printfield{shortjournal}}}
+          \addcomma\addspace%
+          \printfield{year}\addperiod
+        }
+      }
+    }%
+}
+
+
+
+
+
 %==========================================================%
 \newrobustcmd{\cbx@superscript}[1]{%
   \mkbibsuperscript{#1}%
