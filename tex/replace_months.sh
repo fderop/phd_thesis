@@ -92,7 +92,7 @@ BIBFILE="$1"
 #         journal_shortname = "Nat. Comms."
 #     } else if (journal_full ~ /Nature Reviews Molecular Cell Biology/) {
 #         journal_shortname = "Nat. Rev. Mol. Cell Biol."
-#     } else if (journal_full ~ /Archiv für mikroskopische Anatomie/) {
+#     } else if (journal_full ~ /Archiv f\"{u}r mikroskopische Anatomie/) {
 #         journal_shortname = "Arch. mikrosk. Anatomie"
 #     } else if (journal_full ~ /Cold Spring Harbor Symposia on Quantitative Biology/) {
 #         journal_shortname = "CSH Symp. Quant. Biol."

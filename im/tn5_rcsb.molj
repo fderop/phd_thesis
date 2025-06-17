@@ -979,7 +979,7 @@
                       "name": "structure-query.generator.empty"
                     }
                   },
-                  "label": "[Focus] Surroundings (5 Å)"
+                  "label": "[Focus] Surroundings (5 \AA)"
                 },
                 "tags": [
                   "structure-focus-surr-sel"
