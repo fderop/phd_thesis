@@ -1,22 +1,56 @@
 \chapter{Conclusion and future perspectives}
-The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. These efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures and coordinated high-power compute.
+The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. Together, these efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures, and coordinated high-power compute. Overall, the work fits in a broader trend of large dataset generation explicitly for model training. This strategy first began to show results in games like go and chess\sjcitep[,]{sutton2019bitterlesson} but has recently manifested in more tangible applications such as self-driving cars\sjcitep[,]{waymo2025scaling} and language models\sjcitep[.]{kaplan2020scalinglawsneurallanguage} The latter case is notable, since it demonstrated that performance continues to scale with model size, dataset size and training length - although model size scales best.
 
-Overall, we gained and shared insights along this chain, leading to better open-source infrastructure for the scientific community.
+cheap compute
+cheap sequencing? data?
+cost of sequencing scales faster than moore's law since 2008 (Illumina)\sjcitep[]{wetterstrand2023}
 
+Scaling data and compute has
 
-% Since ML models value negative and control data, their use incentivizes data sharing and transparency, and potentially the repurposing of existing databases.
+Large industry players such as Google DeepMind (AlphaFold, Enformer, Genformer), Meta/CZI,
 
-\begin{itemize}[noitemsep]
-	\item Cell response to drugs
-	\item Differentiate cells into what we want, transhumanism
-	\item protein binding
-\end{itemize}
+This push from industry - hypothesis: ai has provided an incentive to generate massive datasets in the private sector, because they can now be monetized without direct access! distribution of data
 
-There are three main areas: the first, and the most logical continuations on this work specifically, is improving method sensitivity.
+protein-ligand\sjcitep[.]{skrinar2025proteinligand}
+"However, medical image-text datasets are orders of magnitude below the general images and captions from the internet."\sjcitep[]{wang2022medclipcontrastivelearningunpaired}
+diffdock\sjcitep[]{corso2023diffdockdiffusionstepstwists}
+alphamissense\sjcitep[]{cheng2023alphamissense}
+axiom bio\sjcitep[]{kasianov2025axiombio}
+chrombpnet\sjcitep[.]{pampari2025}
 
-is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
+--> why not in genomics yet, explicitly?
+search space too large relative to the data available? highly degenerate? need better timepoints? perturbations!
+is it gonna come soon?
 
-The availability of cheap predictive tools helps advance science in a number of ways. First and foremost, good models save costs by narrowing down the number of hypotheses. Synthetic enhancer candidates, for example, can be evaluated in-silico, filtering the most promising ones to evaluate in the reporter cohort. These reductions in cost also reduce the barrier to entry, distributing work more efficiently, and improving iteration speed\sjcitep[.]{lakhani2007principles}
+current trajectory: first truly huge datasets being generated
+geneformer\sjcitep[]{theodoris2023transferlearning}
+fabian theis fabian \sjcitep[.]{parse2025gigalab}
+tahoe\sjcitep[]{zhang2025tahoe} -- arc
+arc + nvidia evo2\sjcitep[]{brixi2025genome}: Multimodal modeling: Simultaneously learns from DNA, RNA, and protein data. - Cross-species generalization: Includes both eukaryotic and prokaryotic genomes., 9 trillion bp - actually feels pretty small.  Zero-shot prediction: Accurately predicts variant effects, gene essentiality, and more without task-specific training. Capable of designing genome-scale sequences and novel biological systems.
+
+GEO: as of December, 2023 the SRA contains 50.0 petabases (Pbp, 5.00 × 1016) of raw sequencing data, or approximately 20 petabytes in the binary-compressed format. \sjcitep[]{chikhi2024planetary}
+SRA: >25 PB, 27 million public SRA files and associated metadata\sjcitep[]{sayers2024database}
+GenBank: \sjcitep[]{sayers2024genbank}
+
+trained on (DNA sequences: 8.85 trillion nucleotides from 15,000+ eukaryotic genomes and 113,000+ prokaryotic genomes, RNA sequences: Transcribed regions of DNA (like mRNA), Protein sequences). self-supervised, unlabeled data. "Interpretation: If the mutated version gets a much lower probability, Evo 2 thinks it’s biologically "damaging."
+
+--> also bull sign: industry adoption
+recursion, insitro, inceptive, cradle, evolutionaryscale
+
+my personal thing to be looking out for: massive perturbation studies. is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
+-- it's going to take automation \sjcitep[.]{wierenga2023pylabrobot}
+
+what is this going to lead to?
+
+The availability of in-silico predictive tools helps advance science in a number of ways. First and foremost, accurate models save costs by narrowing down the number of hypotheses. Synthetic enhancer candidates, for example, can be evaluated in-silico, filtering the most promising ones to evaluate in the reporter cohort. These reductions in cost also reduce the barrier to entry, distributing work more efficiently, and improving iteration speed\sjcitep[.]{lakhani2007principles}
+
+not just accuracy goes up, also the "type" of predictions
+AI/ML in bioinformatics, specifically single-cell, is not new.
+the "level" of predictions is going higher and higher
+first order: low level predictions such as if a region is a gene or not
+second order: feature predictions in individual datasets
+now: genome-wide predictions (?), entire disease regulomes
+future: higher level, cross-modal predictions (drug response? morphology from omics etc)
 
 so number of eras
 \begin{itemize}[noitemsep]
@@ -27,14 +61,9 @@ so number of eras
 	\item Future: massive data foundries (cite that paper that shows data still scales super well, maybe bitter pill as well), data really feeds ai, we will understand how scaling works, complexity of predictions grow with data size (high-level predictions)
 \end{itemize}
 
-
 Overall, it is an incredibly exciting time for the field of computational biology.
 inflection point
 
-
-\sjcitep[.]{wierenga2023pylabrobot}
-
-this will lead to circular automation that self-learns. 10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab} maybe better ai? better hardware? scaling laws? bitter pill? maybe say something about the nvidia collabs?
 
 \begin{itemize}[noitemsep]
 	\item better fidelity/less noise
@@ -51,16 +80,8 @@ this will lead to circular automation that self-learns. 10 million cells, 1000s 
 	\item Self-Optimizing Experiments: AI-driven platforms could autonomously design and run experiments, iteratively refining hypotheses in real time. closed loop scientist = the end game
 \end{itemize}
 
-hypothesis: ai has provided an incentive to generate massive datasets in the private sector, because they can now be monetized without direct access! distribution of data
 
-\sjcitep[.]{pampari2025}
 
-AI/ML in bioinformatics, specifically single-cell, is not new.
-the "level" of predictions is going higher and higher
-first order: low level predictions such as if a region is a gene or not
-second order: feature predictions in individual datasets
-now: genome-wide predictions (?), entire disease regulomes
-future: higher level, cross-modal predictions (drug response? morphology from omics etc)
 
 what do you need for that: scale, fidelity and multiple arrayed conditions
 
@@ -76,5 +97,3 @@ vc appetite for these things?
 -- designing new proteins, solve disease but also generate enzymes that help in research e.g. new forms of tn5
 
 -- penetrance of large single-cell datasets into the private market (czi, axiom, tahoe)
-
-Butler, D. (2008). Translational research: Crossing the valley of death. Nature, 453(7197), 840–842. https://doi.org/10.1038/453840a
