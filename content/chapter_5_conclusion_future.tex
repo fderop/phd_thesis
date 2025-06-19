@@ -1,9 +1,10 @@
 \chapter{Conclusion and future perspectives}
-The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. These efforts touched on all low-level aspects of omics data generation: we optimized reaction physico-chemistries, engineered hardware, wrote software, and coordinated large data structures and compute resources. Overall, we gained and shared insights along this chain, leading to better open-source infrastructure for the scientific community.
+The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. These efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures and coordinated high-power compute.
 
-The availability of cheap predictive tools helps advance science in a number of ways. First and foremost, good models save costs by narrowing down the number of hypotheses. Synthetic enhancer candidates, for example, can be evaluated in-silico, filtering the most promising ones to evaluate in the reporter cohort. These reductions in cost also reduce the barrier to entry, distributing work more efficiently, and improving iteration speed\sjcitep[.]{lakhani2007principles}
+Overall, we gained and shared insights along this chain, leading to better open-source infrastructure for the scientific community.
 
-Since ML models value negative and control data, their use incentivizes data sharing and transparency, and potentially the repurposing of existing databases.
+
+% Since ML models value negative and control data, their use incentivizes data sharing and transparency, and potentially the repurposing of existing databases.
 
 \begin{itemize}[noitemsep]
 	\item Cell response to drugs
@@ -11,8 +12,11 @@ Since ML models value negative and control data, their use incentivizes data sha
 	\item protein binding
 \end{itemize}
 
-There are three main areas: the first, and the most logical continuations on this work specifically, is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
+There are three main areas: the first, and the most logical continuations on this work specifically, is improving method sensitivity.
 
+is the effect of genetic perturbations on the regulome. As shown in chapter [x], Perturbation screens have already been used as a tool for causative inference. The resulting models can be used to help understand disease ethiology from a genomic or regulomic point of view. Second is cellular response to small molecules in drug design. While medicinal chemists make use of some modeling tools, most work is still performed using brute force screens, intelligent design, and iterative campaigns. Finally, and perhaps the "holy grail" of regulomics, is deterministic modulation of cellular differentiation processes. Using predictive models, we should ultimately be able to develop differentiation processes for various cell types. This will in turn facilitate the development of advanced cell therapies, where we can autologously replace a patient's diseased or aged cells with autologous new ones. [give eaxmples]
+
+The availability of cheap predictive tools helps advance science in a number of ways. First and foremost, good models save costs by narrowing down the number of hypotheses. Synthetic enhancer candidates, for example, can be evaluated in-silico, filtering the most promising ones to evaluate in the reporter cohort. These reductions in cost also reduce the barrier to entry, distributing work more efficiently, and improving iteration speed\sjcitep[.]{lakhani2007principles}
 
 so number of eras
 \begin{itemize}[noitemsep]
@@ -26,6 +30,9 @@ so number of eras
 
 Overall, it is an incredibly exciting time for the field of computational biology.
 inflection point
+
+
+\sjcitep[.]{wierenga2023pylabrobot}
 
 this will lead to circular automation that self-learns. 10 million cells, 1000s of conditions, perturbations, fabian theis\sjcitep[.]{parse2025gigalab} maybe better ai? better hardware? scaling laws? bitter pill? maybe say something about the nvidia collabs?
 
@@ -45,22 +52,16 @@ this will lead to circular automation that self-learns. 10 million cells, 1000s 
 \end{itemize}
 
 
-Consolidating this knowledge into deterministic understanding will ultimately lead to advanced cell- and gene therapies. CAR-T, the re-engineering of autologous T cells to target cancer [be more specific], has been a resounding success.
-
-
-this phd is really about data generation at large scale
 hypothesis: ai has provided an incentive to generate massive datasets in the private sector, because they can now be monetized without direct access! distribution of data
 
 \sjcitep[.]{pampari2025}
 
-% closing statements
-
 AI/ML in bioinformatics, specifically single-cell, is not new.
 the "level" of predictions is going higher and higher
-first order: low level predictions
+first order: low level predictions such as if a region is a gene or not
 second order: feature predictions in individual datasets
-now: genome-wide predictions (?)
-future: higher level, cross-modal predictions (drug response?)
+now: genome-wide predictions (?), entire disease regulomes
+future: higher level, cross-modal predictions (drug response? morphology from omics etc)
 
 what do you need for that: scale, fidelity and multiple arrayed conditions
 
@@ -77,4 +78,6 @@ vc appetite for these things?
 
 -- penetrance of large single-cell datasets into the private market (czi, axiom, tahoe)
 
-\sjcitep[.]{wierenga2023pylabrobot}
+
+Butler, D. (2008). Translational research: Crossing the valley of death. Nature, 453(7197), 840–842. https://doi.org/10.1038/453840a
+
