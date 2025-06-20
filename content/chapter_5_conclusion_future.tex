@@ -1,5 +1,13 @@
 \chapter{Conclusion and future perspectives}
-The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. Together, these efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures, and coordinated high-power compute. Overall, the work fits in a broader trend of large dataset generation explicitly for model training. This strategy first began to show results in games like go and chess\sjcitep[,]{sutton2019bitterlesson} but has recently manifested in more tangible applications such as self-driving cars\sjcitep[,]{waymo2025scaling} and language models\sjcitep[.]{kaplan2020scalinglawsneurallanguage} The latter case is notable, since it demonstrated that performance continues to scale with model size, dataset size and training length - although model size scales best.
+The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. Together, these efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures, and coordinated high-power compute. Overall, the work fits in a broader trend of generating large datasets explicitly for model training. This strategy first began to show results in games like go and chess\sjcitep[,]{sutton2019bitterlesson} but has recently manifested in more tangible applications such as self-driving cars\sjcitep[,]{waymo2025scaling} and language models\sjcitep[.]{brown2020languagemodelsfewshotlearners} Exploring the parameter sensitivity ("scaling laws") of language model training has shown that their performance continues to scale with model size, dataset size and training length - although model size had the greatest impact for LLMs\sjcitep[.]{kaplan2020scalinglawsneurallanguage} For example, Google's BERT was trained on just \SI{16}{\giga\byte} of uncompressed text\sjcitep[,]{devlin2019bertpretrainingdeepbidirectional} whereas OpenAI's GPT-3 was trained on \textasciitilde{300B} tokens sourced from Common Crawl, Wikipedia, and nearly all books, for a total of \textasciitilde{\SI{700}{\giga\byte}} of compressed data\sjcitep[.]{brown2020languagemodelsfewshotlearners} Compute was scaled similarly, roughly \SI{1.2e17}{\flops} versus \SI{3.14e23}{\flops}. While both models are distinct in architecture and intent, performance differences are evident. It can thus be posed that GPT-3's performance jump was largely caused by a disproportionally large commitment of compute (which allowed larger data to be used). Later improvements were made with architectural novelties like mixture of experts (MoE) and reinforcement learning with human feedback (RLHF)\sjcitep[]{fedus2022switchtransformersscalingtrillion,ouyang2022traininglanguagemodelsfollow}
+
+We can assume that this the combination of the entire internet and almost all books written captures a large fraction of queryable human knowledge. In other words, the data corpora used for LLM training are large relative to the total space of written knowledge.
+
+
+language is highly redundant and compressible, and a large portion of linguistic expression is compositional or repetitive.
+
+IMPORTANT: text data is free, omics data is expensive!!!!
+
 
 cheap compute
 cheap sequencing? data?
@@ -19,6 +27,9 @@ axiom bio\sjcitep[]{kasianov2025axiombio}
 chrombpnet\sjcitep[.]{pampari2025}
 
 --> why not in genomics yet, explicitly?
+
+CONCEPT OF "DATA ARCHITECTURE" --> PERTURBATIONS
+
 search space too large relative to the data available? highly degenerate? need better timepoints? perturbations!
 is it gonna come soon?
 
@@ -31,6 +42,8 @@ arc + nvidia evo2\sjcitep[]{brixi2025genome}: Multimodal modeling: Simultaneousl
 GEO: as of December, 2023 the SRA contains 50.0 petabases (Pbp, 5.00 x 1016) of raw sequencing data, or approximately 20 petabytes in the binary-compressed format. \sjcitep[]{chikhi2024planetary}
 SRA: >25 PB, 27 million public SRA files and associated metadata\sjcitep[]{sayers2024database}
 GenBank: \sjcitep[]{sayers2024genbank}
+
+Xaira
 
 trained on (DNA sequences: 8.85 trillion nucleotides from 15,000+ eukaryotic genomes and 113,000+ prokaryotic genomes, RNA sequences: Transcribed regions of DNA (like mRNA), Protein sequences). self-supervised, unlabeled data. "Interpretation: If the mutated version gets a much lower probability, Evo 2 thinks it's biologically "damaging."
 
