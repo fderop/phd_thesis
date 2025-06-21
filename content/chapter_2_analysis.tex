@@ -1,5 +1,5 @@
-\chapter{Analysis}
-\section{Novel computational tools}
+\chapter{Computational Tools}
+\section{Title}
 The newly available human genome enabled the development of new bioinformatics tools. For example, gene-proximal (e.g. promoters) and distal (identified through comparative genomics or CpG enrichment) regulatory regions could be scanned for enrichment of known TF binding motifs sourced from databases such as TRANSFAC\sjcitep[]{wingender2000transfac, matys2006transfac}, or even parsed for de novo motif identification\sjcitep[.]{thijs2002gibbs} Significantly enriched motifs could in turn be used to reconstruct gene regulatory network candidates\sjcitep[.]{aerts2003toucan,aerts2005toucan} ready for reporter assay testing. In this new era of abundant genomic data, aggregation and statistical integration of novel tools and databases proved to be an effective strategy for investigating biological phenomena. For example, \verb|endeavour|\sjcitep[]{aertsGenePrioritization2006} aggregated data from 8 independent databases (expression data\sjcitep[,]{barrett2005ncbi} GO terms\sjcitep[,]{ashburner2000gene} regulatory elements\sjcitep[,]{matys2006transfac} ...) to rank gene associations with a training set (e.g. genes already known to be associated with a certain disease). This tool allowed researchers to prioritized gene candidates for lab validation.
 
 % Idea: wealth of information leads to explosion in tools available
@@ -289,3 +289,22 @@ mechanistically explaining drug responses Good example\sjcitep[.]{carraro2022dec
 \sjcitep[.]{janssens2022decoding} by sampling 240,919 scATAC-seq profiles over 9 developmental timepoints (scATAC-seq) in fly brain. identified key TFs for each cell type using cisTarget (ref). [deepflybrain, cite separate paper] trained a CNN on topics (cell-type specific co-accessible region sets) as input, and the accessibility of these topics as output. SHAP's DeepExplainer can then be used to to determine the contribution of each nucleotide to each topic's predicted accessibility [is this done at region or topic level?]. Individual regions can be examined by using the topic x region matrix. in silico evolution/saturation mutagenesis (canonical motifs can also be strategically "implanted" in optimal locations within the enhancers to guide this process, this can also teach us about how these motifs best work or cooperate!) mechanistic insights: for example ey and mef2 work best when close together, and enhancers can be as small as 49 bp. repressor motifs can overpower activator motifs. out of 63 enhancer candidates were cloned into transgenic reporter fly lines, 65\% showed matching cell-type specific activity.
 
 % [not very good text:] We now understand that fine-tuned gene regulation explains how one cell can give rise to many, that this program is embedded in our genomes through a "regulatory code", and that aberrant gene regulation can explain many of our age's most important diseases. Much progress has been made in unraveling the mechanics of gene regulation. We have models of gene transcription and translation, cell signaling, the roles of several classes of proteins, and so on. Now, the objective has shifted from elucidating the fundamental processes that govern gene regulation to reconstructing the specific gene regulatory networks that underly life. Full and deterministic models which can exhaustively answer our core questions remain elusive, almost unimaginable.
+
+% --> less interesting
+% --> put this in the introduction?
+class of models trained on specific queries:
+basenji2\sjcitep[.]{kelley2018sequential}
+enformer\sjcitep[.]{avsec2021effective}
+scgpt?
+scVI?
+chrombpnet\sjcitep[.]{pampari2025}
+celltypist?
+
+% --> put this in the introduction
+% --> more interesting: predictions of specific systems OR general life
+
+current trajectory: first truly huge datasets being generated
+geneformer\sjcitep[]{theodoris2023transferlearning}
+fabian theis fabian \sjcitep[.]{parse2025gigalab}
+tahoe\sjcitep[]{zhang2025tahoe} -- arc
+
