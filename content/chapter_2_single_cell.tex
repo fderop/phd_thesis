@@ -89,7 +89,6 @@ Another independent, mechanistically different, leap in cell-throughput was made
 	\label{table:millions}
 \end{table}
 
-
 ATAC-seq:
 chen protocol\sjcitep[]{chen2018rapid}
 10x\sjcitep[.]{satpathyMassivelyParallelSinglecell2019}
@@ -124,13 +123,13 @@ When CRISPR was developed as a molecular tool for rapid and accurate gene editin
 
 Around 2015, researchers at the Broad institute devised that perturbations could be pooled and read out at the single-cell level, coupling pooled screens with scRNA-seq readings\sjcitep[.]{dixit2016perturbseq} In their method, named Perturb-seq, each vector is designed to express two transcripts after integrating in the host genome: a first transcript containing the sgRNA, driven by U6, and a second transcript containing a puromycin selection cassette, BFP and a 20 nucleotide long guide barcode (GBC), driven by EF1\textalpha. The GBC transcript is polyadenylated, allowing it to be captured and counted through standard 3' scRNA-seq protocols (10x GEX in this specific case). The \{sgRNA:GBC\} dictionary can then be used to identify the genetic edit present in each captured cell \sjcitep[.]{dixit2016perturbseq} This pooled approach allows rapid parallelisation of perturbation screens with limited labour. Using this system, researchers observed that even within the same perturbation, individual cells can exhibit different responses. In particular, knockdown of the key ER chaperone BiP (HSPA5) caused two possible responses: some cells preferentially activated PERK, while others activated IRE1\textalpha.
 
-% \begin{figure}[h]
-% 	\centering
-% 	\includegraphics[width=0.75\textwidth]{perturbation_vectors_cropped.png}
-% 	\captionsetup{width=0.85\linewidth}
-% 	\caption[Common single-cell perturbation vector designs]{Common single-cell perturbation vector designs. Adapted from \notefullcite{xie2018frequent}.}
-% 	\label{fig:perturbation_vectors}
-% \end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{perturbation_vectors_cropped.png}
+	\captionsetup{width=0.85\linewidth}
+	\caption[Common single-cell perturbation vector designs]{Common single-cell perturbation vector designs. Adapted from \notefullcite{xie2018frequent}.}
+	\label{fig:perturbation_vectors}
+\end{figure}
 
 Instead of guide barcodes expressed on the selection cassette, a poly-adenylated gRNA which is directly captured by 3' scRNA-seq can also be used\sjcitep[.]{datlinger2017pooled}. In this approach's debut, Drop-seq was also used instead of 10x, showing that the open-source method has sufficient sensitivity to detect the gRNA transcripts. Perturb-seq's costs can be further scaled down by multiplexing perturbations or cells: if gene regulatory networks are assumed sparse in number of participants, then the differential expression of a cell responding to multiple perturbations (high MOI), or a droplet containing multiple single-perturbation cells, can be considered a linear combination of the effect of its components. Pooling cells or perturbations in this manner and demultiplexing the individual terms using PCA and LASSO [double check] can reduce cost ten-fold and quantify interaction terms between different perturbations\sjcitep[.]{yao2024scalable}
 
@@ -144,29 +143,21 @@ One disadvantage of the screening methods above is that most of the vectors desc
 	\item crop-seq
 	\item TAP-seq
 	\item MIX-seq
-	\item drug or molecule screens
 	\item DRUG-seq -> also interplay with automation
-	\item perturb-seq
-	\item PERTURB-ATAC
 \end{itemize}
 
 \section{Multiplexing}
 Sample multiplexing for droplet microfluidics has also been achieved through other means. The main strategy is to pre-index or "hash" multiple samples with oligonucleotide barcodes, co-process them through droplet generation together, and use the sample hash to computationally separate cells into sample bins post hoc. A number of different technical approaches to do this exist. Cells or nuclei can be tagged by attaching sample-barcoded oligonucleotides to their membranes, either by antibody-antigen binding\sjcitep[]{stoeckiusCellHashing2018} or lipid/cholesterol embedding\sjcitep[.]{mcginnisMultiSeqSample2019} Within each droplet, the membrane-bound oligonucleotides co-captured together with the associated cell's mRNA or tagmented genome. Antibodies have demonstrated slightly better accuracy, while lipid hashing can be used when high-strength antibodies are not available\sjcitep[.]{mylkacomparativeanalysisantibody2022} The increased precision of antibody-based methods could be attributed to the many successive washes involved, but which may also reduce cell viability and integrity.
 
-	[draft idea: layered approach: sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
-
-% dsciatac, scifi-seq paper: also uses crop-seq, same lab
-Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerultrahighthroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for ~10 000 cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality.
-
-Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
-
-A number of ATAC-seq specific multiplexing techniques depending on the straightforward "indexability" of Tn5 have also been published.
+Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are distributed over 96-well plates and pre-indexed by reverse transcription with a barcoded primer akin to plate-based combinatorial indexing protocols. Cells can then be pooled and run through droplet generation together\sjcitep[.]{datlingerultrahighthroughput2021} Beyond just sample multiplexing, scifi-RNA-seq offers a major advantage over lipid and antibody hashes: since each cell's nucleic acid species are pre-indexed, multiple cells can be loaded into the same droplet, which can be used to multiply the total number of cells profiled per droplet run. Whereas the 10x Chromium was designed for \textasciitilde\num{10000} cells per channel, scifi-RNA-seq increases this to up to 1.53 million cells per channel without apparent reduction in per-cell data quality. The same principle can be applied to ATAC-seq: scifi-ATAC-seq and txci-ATAC-seq use pre-indexing in 96 wells with barcoded adapter Tn5, enabling the profiling of up to \num{200000} single nuclei per 10x scATAC-seq lane\sjcitep[.]{zhang2024scifi, zhang2024txci} Sensitivity remained high, sampling between \num{21362} and \num{45622} unique fragments per cell on average across tissues assessed.
 
 SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode (SBO) during tagmentation\sjcitep[.]{wang2021simple} This SBO contains an 18 bp sample barcode and hybridises to Tn5 transposomes through a universal adapter sequence. During tagmentation these Tn5-SBO complexes remain stable as Tn5 integrates itself into accessible regions. Nuclei are then washed, removing unbound Tn5 and excess SBOs, and samples are pooled. After droplet encapsulation, the SBO is released from Tn5 and captured by the cell barcode during PCR amplification, linking cell barcodes with sample barcodes.
 
+Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
+
 \begin{itemize}[noitemsep]
-	\item indexed tn5 multiplexing for atac-seq (cut\&tag for atac)/scale-bio
 	\item genetic demultiplexing
 	\item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
-	\item !!!!!!!!!!!!! parse bio and that massive dataset
 \end{itemize}
+
+% [draft idea: layered approach (like in davie2018): sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
