@@ -83,7 +83,7 @@ Another independent, mechanistically different, leap in cell-throughput was made
 		2019\sjcitep[]{cao2019singlecell}                                            & \num{2072011}           & \makecell{E9.5 to E13.5                \\ mouse embryos} & sci-RNA-seq3 \\
 		2020\sjcitep[]{caoHumanCellAtlas2020}                                        & \num{4062980}           & Human embryos           & sci-RNA-seq3 \\
 		2023\sjcitep[]{chiousinglecellmultiomic2023}                                 & \makecell{\num{2583967}                                          \\ + \num{1587880}} & Macaque brain & \makecell{sci-RNA-seq3 \\ and snATAC-seq3} \\
-		2024\sjcitep[]{martinOptimizedSingleNucleus2023, qiuSingleCellTimeLapse2024} & $12.4 \times 10^6$      & \makecell{E8 to P0                     \\ mouse embryos} & sci-RNA-seq3 \\
+		2024\sjcitep[]{qiuSingleCellTimeLapse2024} & $12.4 \times 10^6$      & \makecell{E8 to P0                     \\ mouse embryos} & sci-RNA-seq3 \\
 		\bottomrule
 	\end{tabular}
 	\label{table:millions}
@@ -92,27 +92,28 @@ Another independent, mechanistically different, leap in cell-throughput was made
 ATAC-seq:
 chen protocol\sjcitep[]{chen2018rapid}
 10x\sjcitep[.]{satpathyMassivelyParallelSinglecell2019}
-ddSEQ\sjcitep[.]{lareaudropletbasedcombinatorialindexing2019}
+ddSEQ\sjcitep[.]{lareaudropletbasedcombinatorialindexing2019} % also has combinatorial indexing in it
 s3atac\sjcitep[.]{mulqueenhighcontentsinglecellcombinatorial2021}
 
 \section{Multimodal technologies}
-sci-car\sjcitep[.]{cao2018jointprofiling}
 
 tackling multimodality: not a great strength of droplet microfluidics
 historically, most multiomics methods have relied on plates. this makes sense, because you have to do a number of manipulations/washes on the cells in order to perform all the different omics steps. sci-car. nome-seq, voet etc.
 
 droplet methods:
 \begin{itemize}[noitemsep]
+	\item sci-car\sjcitep[.]{cao2018jointprofiling}
 	\item reap-seq, cite-seq, eccite-seq
 	\item 10x multiome\sjcitep[]{schwendinger2020chromium}
 	\item TEA-seq\sjcitep[]{swanson2021simultaneous}
+	\item dscCAT-seq
+	\item scCAT-seq
 	\item SHARE-seq\sjcitep[]{ma2020chromatin}
 	\item ASAP-seq\sjcitep[]{mimitou2021scalable}
 \end{itemize}
 
 % more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023}
 % digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020}
-
 
 \section{Perturbations}
 Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with pooled shRNA vector libraries at a given MOI, and survivors are sequenced.
@@ -153,11 +154,11 @@ Another sample multiplexing strategy is scifi-RNA-seq, where cells or nuclei are
 
 SNuBar (single-nucleotide barcoding) introduces a single oligonucleotide barcode (SBO) during tagmentation\sjcitep[.]{wang2021simple} This SBO contains an 18 bp sample barcode and hybridises to Tn5 transposomes through a universal adapter sequence. During tagmentation these Tn5-SBO complexes remain stable as Tn5 integrates itself into accessible regions. Nuclei are then washed, removing unbound Tn5 and excess SBOs, and samples are pooled. After droplet encapsulation, the SBO is released from Tn5 and captured by the cell barcode during PCR amplification, linking cell barcodes with sample barcodes.
 
-Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
+% TODO perhaps: Overloading and unpacking (OAK)\sjcitep[]{wuOverloadingAndUnpacking2024} applies a different solution to achieve the same result: cells are reverse-transcribed inside droplets on t
 
-\begin{itemize}[noitemsep]
-	\item genetic demultiplexing
-	\item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
-\end{itemize}
+% \begin{itemize}[noitemsep]
+% 	\item genetic demultiplexing
+% 	\item vector based demultiplexing https://pmc.ncbi.nlm.nih.gov/articles/PMC11073057/
+% \end{itemize}
 
 % [draft idea: layered approach (like in davie2018): sci, plate, droplet has different strengths, use their strengths and supplement each other? potentially in a decentralized academic context with many participants, in a centralized effort it's probably better to hard focus on one technique and scale it out]
