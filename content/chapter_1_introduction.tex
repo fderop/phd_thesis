@@ -331,34 +331,17 @@ A paradigmatic breakthrough came in 2015, the "annus mirabilis" for droplet-micr
 
 Both methods use droplet microfluidics to encapsulate single-cells in nanoliter volume droplets, together with a bead carrying barcoded poly(dT) primers, but their amplification and library preparation strategies differ. Drop-seq used a Smart-seq-like approach: once encapsulated, cells are lysed, and their polyA\textsuperscript(+) mRNA is captured by the beads, which carry a poly(dT) oligonucleotide primer containing a UMI and a cell barcode. The emulsion is then broken, and beads are pooled and washed in saline sodium citrate to minimize cross-bead hybridizations. The beads, still with mRNA hybridized, are resuspended in a reverse transcriptase mix, and RT proceeds on-bead to produce full-length cDNA. After RT, exonuclease I is applied to degrade any unextended primers, reducing noise from unused barcode sequences. The resulting cDNA, which is covalently linked to the bead, is then PCR-amplified. Fragmentation proceeds using Nextera XT Tn5 to generate a sequencing library. All steps involving enzymes happen in a pooled manner, saving reagent cost. Drop-seq's cell purity (absence of cell doublets) was assessed using a mixture of HEK (human) and 3T3 (mouse) cell lines, and ranged between 90.4\% to 98.8\% based on cell concentration used. The method was demonstrated on \num{44808} cells from the P14 mouse retina generated in 7 runs across 4 days, producing 39 cell clusters. PPP1R17, a new marker for the poorly-characterized nGnG (non-glycinergic/non-GABAergic) amacrine cells, was identified and validated by histochemistry. Transcript capture efficiency was estimated at \textasciitilde10.7-12.8\% using ddPCR validation. Drop-seq marked the first single-cell dataset spanning tens of thousands of cells, and reported a >100-fold reduction in cost and time compared to prior scRNA-seq methods (~6.5 cents per cell, 10,000 cells in 12 hours). Later, a microfluidics-free version of the protocol, using bead arrays rather than droplets, was developed\sjcitep[.]{gierahnseqwellportablelowcost2017}
 
-inDrop used a different approach to both cell loading and reaction chemistry: cells are encapsulated with soft, deformable hydrogels rather than solid resin beads like Drop-seq, which can be stacked in the microfluidic channel. This ordered stack of beads allows almost every droplet to receive a bead, rather than  >\textasciitilde{2}\%.\sjcitep[.]{abate2009beating} Reaction chemistry was also different,
+inDrop used a different approach to both cell loading and reaction chemistry: cells are encapsulated with soft, deformable hydrogels rather than solid resin beads like Drop-seq, which can be stacked in the microfluidic channel. This ordered stack of beads allows almost every droplet to receive a bead, rather than  >\textasciitilde{2}\% for the poissonian loading used in Drop-seq\sjcitep[.]{abate2009beating} Reaction chemistry was also different. After encapsulation, UV light releases the barcoded poly(dT) primers from the bead into the droplet, and reverse transcription happens within the droplet. Next, the CEL-seq IVT strategy is used to amplify the barcoded, single-cell transcriptomes in a pooled manner. The protocol was demonstrated on a total of \num{11209} mouse embryonic stem cells, including a time series of leukemia inhibitory factor (LIF) withdrawal-induced differentiation over 7 days. 5 distinct ES sub-populations were identified, including rare lineages marked by epiblast (Krt8/18), primitive endoderm (Col4a1/2, Lama1), and heat shock markers (Hsp90, Hspa5). Counts agreed strongly with smFISH data (R = 0.92 for mean, 0.90 for CV).
 
+Both methods boasted a significant jump in throughput over pure plate-based sorting methods, from hundreds to several thousands, potentially tens of thousands, of cells per day. Higher cell counts, traded for per-cell sensitivity, now allowed for the profiling of highly varied samples such as immune cells. However, both methods also required fabrication of complex reagents (notably, barcoded beads and microfluidic chips) and complex microfluidic operation. In 2016, the first commercial droplet-microfluidic single-cell sequencing solution was released: 10x Genomics' 3' Single Cell Gene Expession kit and accompanying Chromium microfluidic controller combined barcoded hydrogel beads, enzymes, primers and microfluidics in a relatively simple package. The method drew on concepts from both inDrop and Drop-seq, opting for deformable hydrogel beads for higher cell capture, and a SMART-seq-like, PCR + Tn5 amplification and library preparation strategy. Importantly, the Chromium could load up to 8 samples in parallel, simplifying arrayed experiments. The method was first demonstrated on \num{68000} PBMCs sampled from 8 donors, identifying all major PBMC subtypes (T, NK, B, myeloid) and minor populations (e.g. megakaryocytes). \sjcitep[.]{zhengmassivelyparalleldigital2017} Approximately \num{4500} genes and \num{27000} UMIs were detected on average per cell at a depth of 100k reads/cell, an order of magnitude higher than inDrop and Drop-seq. Mixed-species loading revealied a doublet rate of approximately 3\%.
 
-96\textsuperscript{3} possible combinations (\num{147456})
-After encapsulation, UV light releases the primers, and reverse transcription tags the mRNA within each droplet with a cell-specific barcode and a UMI (unique molecular identifier).
+The release of the 10x Chromium scRNA-seq kit marked a milestone in single-cell sequencing research. The kit was user friendly enough, and struck a good balance between cell throughput and single-cell quality. Several atlasing projects were completed using this technology, including human\sjcitep[,]{regev2017human} mouse\sjcitep[,]{tabulamuris2018} and fly\sjcitep[.]{davie2018single} In the latter, \num{157000} high-quality single-cell \textit{D. melanogaster} transcriptomes were generated in 26 runs sampled across 8 timepoints between 0 and 50 days old. CEL-seq2 and SMART-seq2 supplemented the medium-depth 10x Chromium cells with high-quality "anchors" of higher sequencing depth. New, cell-type-specific gene regulatory networks were inferred from cell-type-specific (olfactory projection neurons, glia) gene sets using SCENIC. Participant TFs were validated for motif enrichment in these cell types using FACS-assisted ATAC-seq.
 
-: cel-seq kinda (ivt) ombination with hydrogel beads
-
-935 ES cells deeply sequenced. 2,509 and 3,447 ES cells during leukemia inhibitory factor (LIF) withdrawal-induced differentiation over 7 days. 
-
-Technical validation was conducted using a 50:50 mix of human K562 and mouse ES cells to assess barcode purity.
-Strong agreement with smFISH data (R = 0.92 for mean, 0.90 for CV)
-PCA and tSNE identified five distinct ES sub-populations, including rare lineages marked by epiblast (Krt8/18), primitive endoderm (Col4a1/2, Lama1), and heat shock/stress markers (Hsp90, Hspa5).
-
-
-
-
-
-
-first 10x paper\sjcitep[.]{zhengmassivelyparalleldigital2017} 10x's Chromium drew on some technical concepts borrowed from droplet digital PCR (ddPCR), such as emulsion chemistry and microfluidic geometry. This technology had previously been developed by the company's CSO at Lawrence Livermore\sjcitep[,]{hindsonHighThroughputDropletDigital2011} and commercialized at QuantaLife\sjcitep[.]{brittain2021biorad} The release of the 10x Chromium scRNA-seq kit marked a milestone in single-cell sequencing research. The kit was user friendly enough, and a good balance between cell throughput and single-cell quality was seemingly struck. Several atlasing projects were performed using this technology including human\sjcitep[,]{regev2017human} mouse\sjcitep[,]{tabulamuris2018} and fly\sjcitep[.]{davie2018single} In the latter, \num{56902} high-quality single-cell transcriptomes (\num{157000} total) from 26 sequencing runs on \textit{D. melanogaster} sampled at 8 timepoints between 0 and 50 days old were aggregated and analysed. CEL-seq2 and SMART-seq2 supplemented the medium-depth 10x Chromium cells with high-quality "anchors" of higher sequencing depth.
-
-% davie2018single continued: Gene regulatory networks were inferred from cell-specific (olfactory projection neurons, glia) gene expression sets using SCENIC, and participant TFs were validated for motif enrichment in these cell types using FACS-assisted ATAC-seq. Globally, RNA levels declined as aging progressed, specifically oxidative phosphorylation-associated genes.
+% 10x's Chromium drew on some technical concepts borrowed from droplet digital PCR (ddPCR), such as emulsion chemistry and microfluidic geometry, which had previously been developed by the company's CSO at Lawrence Livermore\sjcitep[,]{hindsonHighThroughputDropletDigital2011} and commercialized at QuantaLife\sjcitep[.]{brittain2021biorad}
 
 % 2016: SCRB-seq\sjcitep[]{soumillonCharacterizationDirectedDifferentiation2014}
 % 2018: mcsCRB-seq\sjcitep[]{bagnoli2018sensitive}
 
-
-first single-cell atac: \sjcitep[]{chen2018rapid}
 
 2017: sci-rna (full organism)\sjcitep[]{caoComprehensiveSinglecellTranscriptional2017}
 
@@ -367,6 +350,8 @@ first single-cell atac: \sjcitep[]{chen2018rapid}
 2018: sci-atac atlas \sjcitep[]{cusanovich2018singlecell} \textit{C. elegans} L2 larvae contain 762 cells. \num{49360} \textit{C. elegans} cells, identified 27 major cell types, including rare neurons with only 1 or 2 cells per worm. Cells are first fixed or lysed to extract nuclei, and distributed in 384 well-plates, where they undergo a first indexing through barcoded reverse transcription. They are then pooled, re-distributed, and tagmented after second-strand synthesis. Sequencing adapter PCR adds a second barcoded primer. In some designs, the intermediate tagmentation is also performed with barcoded Tn5, adding another layer of barcoding. Since almost all reactions happen in pools of large numbers of cells, reagent costs are low (\USD0.03-\USD0.20 per cell)
 
 mammalian organogenesis atlas\sjcitep[.]{cao2019singlecell}
+
+first single-cell atac: \sjcitep[]{chen2018rapid}
 
 \begin{itemize}[noitemsep]
 	\item 2020: millions of human cells\sjcitep[.]{caoHumanCellAtlas2020}
@@ -393,6 +378,8 @@ droplet methods:
 
 more complex assays coming up\sjcitep[.]{deJongheSpinDrop2023}
 digital microfluidics\sjcitep[.]{lamannaDigitalMicrofluidicIsolation2020}
+
+!ddSEQ, s3atac
 
 \section{Perturbations}
 Large screens that investigate the effect of silencing specific genes using RNA interference emerged in the early 2000s\sjcitep[.]{berns2004large,boutros2006analysis} Such perturbation screens follow either an arrayed design, where perturbations are individually plated and tracked in physical space, or a pooled design, where cell lines are transduced with pooled shRNA vector libraries at a given MOI, and survivors are sequenced.
