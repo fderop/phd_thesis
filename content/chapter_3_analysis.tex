@@ -320,5 +320,40 @@ celltypist?
 current trajectory: first truly huge datasets being generated
 geneformer\sjcitep[]{theodoris2023transferlearning}
 fabian theis fabian \sjcitep[.]{parse2025gigalab}
-tahoe\sjcitep[]{zhang2025tahoe} -- arc
+tahoe\sjcitep[]{zhang2025tahoe}
 
+large consortia:
+human cell atlas
+ASAP: no article?
+hubmap: https://www.nature.com/articles/s41586-019-1629-x
+
+
+data aggregation efforts: czI: https://academic.oup.com/nar/article/53/D1/D886/7912032
+CZ CELLxGENE at 107M cells, Human Cell Atlas at 65M
+arc institute: aggregated data\sjcitep[]{Youngblut2025.02.27.640494}: "Data scope: >230 million cells from 21 organisms and 72 tissues., including 100M tahoe, All publicly available 10X Genomics datasets from the SRA (63,892 SRX entries identified; 43,587 labeled as 10X; 30,387 reprocessed with starsolo)! AI-driven discovery: SRAgent, built on LangGraph and ReAct agents ("Yao et al., arXiv 2022"), autonomously mines SRA metadata, classifies library chemistry (via 1M read test alignments), and annotates datasets.
+
+some have called for AIVC (ai virtual cell) (quake article)
+
+crested: Enhancers are characterized by degenerate codes: diverse combinations of transcription factor binding sites (TFBS) can drive similar regulatory outputs, complicating predictive modeling.
+
+deep learning models like Basenji, Enforme, Borzoi
+have advanced sequence-to-function modeling BUT! require large input contexts (kbases) for global gene regulation tasks and are not optimized for in-depth enhancer-specific analysis. (too large?)
+ChromBPNet, scPrinter -> not for synthetic enhancers
+
+crested: start from single-cell chromatin data, model cell-type-specific enhancer accessibility, provide motif-level interpretation, and design synthetic enhancers in one platform
+also validated on public datasets of enhancer activity (mouse: Dataset: 171 in vivo-validated, cell type-specific mouse enhancers), deeppbmc trained on atac-seq and validated on public chip-seq data for tf binding,
+!crested workflow on specific datasets performs better than pretrained large model borzoi (0.77 vs. 0.37 for base Borzoi)
+validated in vivo in 4 tissues zebrafish, sequences designed to be active in both showed lower expression efficiency overall.
+CREsted Workflow Pipeline
+1. Data Preprocessing
+Input: single-cell ATAC-seq (scATAC-seq) data.
+Topic modeling (via pycisTopic): Assigns peaks and cells to latent topics.
+Pseudobulk peak heights: Computes CPM-normalized accessibility per peak across cell types.
+2. Model Training
+Targets: Either peak-topic probabilities (topic modeling) or peak heights (pseudobulk).
+choice of Architectures: DeepCNN, DeepBICCN2, or transfer learning from large models like Borzoi or Enformer.
+!Pretrain on all peaks (broad enhancer grammar), Fine-tune on cell type-specific peaks (enhancer specificity).
+
+performed on: Mouse cortex: 440,993 consensus peaks, refined to 73,326 cell type-specific regions; validated on 171 in vivo enhancers (Zhou et al., Nature 2023). Human PBMC: 278,687 consensus peaks, fine-tuned to 51,644 specific regions; TFBS predictions benchmarked with ChIP-seq (GSE143822). Cancer: MES-like states in melanoma and glioblastoma; trained on ATAC-seq from cell lines and biopsies; compared enhancer codes using motif contribution and locus scoring. Zebrafish development: 793,273 consensus peaks across 639 cell type-timepoint combinations; enhancer designs tested in vivo via Tol2 transgenesis.
+data: Data modalities: scATAC-seq for accessibility + matched scRNA-seq for TF validation; ChIP-seq for TFBS confirmation; in vivo enhancer assays for functional validation.
+what it does: Design: Synthetic enhancer generation through greedy in silico evolution (ISE) and motif implantation. A novel L2 distance cost function enforces cell type specificity by matching prediction vectors.
