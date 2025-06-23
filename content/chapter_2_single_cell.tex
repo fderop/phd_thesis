@@ -5,7 +5,7 @@ The development of next-generation sequencing methods and quantitative -omics as
 
 However, bulk assays cannot distinguish signals from different populations within the input sample. Unexpected heterogeneity, rare cell states, and stochastic dynamics are masked by the aggregation of thousands to millions of cells. The combination of FAC sorting and quantitative bulk sequencing methods can help, but is costly, laborious, and requires prior knowledge. Even in combination with cell-sorting, bulk assays remained unsuitable for an umber of key open problems:\sjcitep[.]{shapiro2013single}
 
-\begin{itemize}
+\begin{itemize}[noitemsep]
 	\item Profiling of rare or transient cell-types, such as circulating tumor cells and metastatic cancer subclones, at scale
 	\item Profiling the full complexity of systems composed of potentially thousands of cell types, such as brains and the repertoire of immune cells
 	\item Reconstructing cell lineages across development, differentiation and disease progression in high temporal and potentially spatial resolution
@@ -20,7 +20,7 @@ Some of these considerations drove early exploration of gene expression at the s
 
 "True" whole transcriptome single-cell sequencing was first demonstrated in 2009 by Tang and Surani at the Gurdon Institute\sjcitep[.]{tangMRNASeqWholeTranscriptome2009} By increasing reverse transcription and PCR extension times/cycles, the group was able to amplify enough material for sequencing cDNA libraries from 6 individual mouse blastomeres. This sequencing-based approach provided a number of immediate advantages over microarray analysis:
 
-\begin{enumerate}
+\begin{enumerate}[noitemsep]
 	\item Comparison of single-blastomere mRNA-Seq data with pooled (320 cells) Affymetrix microarray data showed that \SI{94.3}{\percent} of microarray-detected genes had at least 5 transcripts in the mRNA-Seq data, but mRNA-Seq detected \num{5270} (up to 75\%) more genes in total.
 	\item Sensitivity and dynamic range (\SIrange{0.2}{12000}{RPKM}) were decidedly higher for mRNA-Seq than for analog microarrays.
 	\item Since near-whole transcripts were sequenced novel splice junctions could be determined. The group discovered \num{1753} novel isoforms, demonstrated for the first time that different isoforms of the same gene can be expressed in the same single cell.
