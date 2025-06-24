@@ -1,13 +1,25 @@
 \chapter{A Discussion on Scaling Omics}
-The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. Together, these efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures, and coordinated high-power compute.
 
-Overall, the work feeds into a broader, cross-disciplinary trend of generating large datasets explicitly for model training. This strategy first began to show results in games like go and chess\sjcitep[,]{sutton2019bitterlesson} but has recently manifested in more tangible applications such as self-driving cars\sjcitep[]{waymo2025scaling} and language models\sjcitep[.]{brown2020languagemodelsfewshotlearners} Exploring the parameter sensitivity ("scaling laws") of transformer models has shown that performance continues to scale with model size, dataset size, and training length - although model size was the largest contributor\sjcitep[.]{kaplan2020scalinglawsneurallanguage}
+so number of eras
+\begin{itemize}[noitemsep]
+	\item Early era of biology: observations
+	\item Early molecular era: interventions
+	\item Commodified sequencing: first for genomes, then high-dimensional measurements (assays)
+	\item Dawn of AI: low-level predictions, elucidating or bypassing fuzziness/stochasticity
+	\item Future: massive data foundries (cite that paper that shows data still scales super well, maybe bitter pill as well), data really feeds ai, we will understand how scaling works, complexity of predictions grow with data size (high-level predictions)
+	\item complete virtual cells, replace animal and human testing with models
+\end{itemize}
 
-Google's BERT was trained on just \SI{16}{\giga\byte} of uncompressed text\sjcitep[,]{devlin2019bertpretrainingdeepbidirectional} whereas OpenAI's GPT-3 was trained on a total of \textasciitilde{\SI{700}{\giga\byte}} of compressed data sourced from Common Crawl (\SI{340}{\giga\byte}), Wikipedia (\SI{15}{\giga\byte}), and nearly all written books (\SI{90}{\giga\byte}) just a year later\sjcitep[.]{brown2020languagemodelsfewshotlearners} Compute was scaled orders of magnitude more, roughly \SI{1.2e17}{\flops} versus \SI{3.14e23}{\flops}. The resulting performance increase coupled with post-training has allowed GPT-3 to penetrate into consumer markets, eventually becoming the most rapidly adopted technology of all time. While improvements were later made with architectural novelties like mixture of experts (MoE)\sjcitep[]{fedus2022switchtransformersscalingtrillion} and reinforcement learning with human feedback (RLHF)\sjcitep[,]{ouyang2022traininglanguagemodelsfollow} it can be posed that the first jump in performance was caused by a disproportionally large commitment of data and compute.
+
+The work described here encompasses two parts. First, we developed an open-source droplet microfluidic platform for scATAC-seq and scRNA-seq, and second, we benchmarked this assay together with other open-source and commercial protocols. Together, these efforts touched on all low-level aspects of omics data generation: we optimized reaction chemistries, engineered hardware, wrote software, managed large data structures, and coordinated high-power compute. The end result is (a) open-source droplet-microfluidic single-cell assay that is competitive with commercial solutions and (b) a benchmarking framework for high-throughput single-cell ATAC-seq datasets.
+
+Overall, this work feeds into a broader, cross-disciplinary trend of generating large datasets explicitly for model training. This strategy first began to show results in games like go and chess\sjcitep[,]{sutton2019bitterlesson} but has recently manifested in more tangible applications such as self-driving cars\sjcitep[]{waymo2025scaling} and language models\sjcitep[.]{brown2020languagemodelsfewshotlearners} Exploring the parameter sensitivity ("scaling laws") of transformer models has shown that performance continues to scale with model size, dataset size, and training length - although model size was the largest contributor\sjcitep[.]{kaplan2020scalinglawsneurallanguage}
+
+For example, Google's BERT was trained on just \SI{16}{\giga\byte} of uncompressed text\sjcitep[,]{devlin2019bertpretrainingdeepbidirectional} whereas OpenAI's GPT-3 was trained on a total of \textasciitilde{\SI{700}{\giga\byte}} of compressed data sourced from Common Crawl (\SI{570}{\giga\byte}) and Wikipedia, WebText2 and nearly all written books (\SI{120}{\giga\byte}) just a year later\sjcitep[.]{brown2020languagemodelsfewshotlearners} Compute was scaled orders of magnitude more, roughly \SI{7.8e20}{\flops} versus \SI{3.14e23}{\flops}. The resulting performance increase coupled with post-training into an instructable chat application allowed GPT-3 to penetrate into consumer markets, eventually becoming the most rapidly adopted technology of all time. While improvements were later made with architectural novelties like mixture of experts (MoE)\sjcitep[]{fedus2022switchtransformersscalingtrillion} and reinforcement learning with human feedback (RLHF)\sjcitep[,]{ouyang2022traininglanguagemodelsfollow} it can be posed that the first jump in performance was caused by a disproportionally large commitment of data and compute.
 
 % --> general bio models:
 
-A question that is much debated today is whether or not the data + compute scaling paradigm will hold for biological problems as well. Some efforts, outside of the genomics/sequencing space, seem to suggest so. One  example is Meta's Evolutionary Scale Modeling (ESM), which applies large language model architecture (specifically, BERT) to protein language to predict masked tokens in amino acid sequences. The log-likelihood of mutant sequences serves as a proxy for how disruptive the mutation is. Between 2021 and 2025, ESM grew from 650M\sjcitep[]{rives2021biological} to 15B\sjcitep[]{lin2023evolutionary} and recently 98B\sjcitep[]{hayes2025simulating} parameters. ESM-3 was trained on 711B tokens across 2.78B proteins, amended with synthetic data generated by AlphaFold, and trained over \SI{1.07e24}{\flops} of compute. The model introduced multimodal masked token modeling: joint tokenized amino-acid sequence, atomic structure, and region annotations can be passed partially masked, and the model will jointly reconstruct missing tokens. This led to the generation of esmGFP, a completely novel fluorescent protein that shares a sequence similarity of only 58\% with the nearest natural fluorescent protein. ESM-3 also performs better over low-homology sequences than its predecessors, further suggesting that amending data scarcity continues to increase performance.
+A question that is much debated today is whether or not the data + compute scaling paradigm will generalize  to biological problems. Some current efforts, outside of the genomics/sequencing space, seem to suggest so. One  example is Meta's Evolutionary Scale Modeling (ESM), which applies large language model architecture (specifically, BERT) to protein language to predict masked tokens in amino acid sequences. The log-likelihood of proposed sequences serves as an estimate for how disruptive given mutations will be, allowing researchers to triage synthetic designs. Between 2021 and 2025, ESM grew from 650M\sjcitep[]{rives2021biological} to 15B\sjcitep[]{lin2023evolutionary} and recently 98B\sjcitep[]{hayes2025simulating} parameters. ESM-3 was trained on 771B tokens across 2.78B proteins, amended with synthetic data generated by AlphaFold, and trained over \SI{1.07e24}{\flops} of compute. ESM-3 also introduced multimodal masked token modeling: joint tokenized amino-acid sequence, atomic structure, and region annotations can be passed partially masked, and the model will jointly reconstruct missing tokens. This led to the generation of esmGFP, a completely novel fluorescent protein that shares a sequence similarity of only 58\% with the nearest natural fluorescent protein. ESM-3 also performs better over low-homology sequences than its predecessors, further suggesting that amending data scarcity continues to increase performance.
 
 % data wrangling strategies?
 % Many LLMs now use synthetic data generated by earlier models to augment training, improving performance and reducing costs
@@ -64,6 +76,8 @@ in terms of targeted sequencing omics assays... will sequencing keep dropping in
 
 This push from industry - hypothesis: ai has provided an incentive to generate massive datasets in the private sector, because they can now be monetized without direct access! distribution of data
 
+"market evidence is mounting"
+
 alphamissense\sjcitep[]{cheng2023alphamissense}
 axiom bio\sjcitep[]{kasianov2025axiombio}
 Xaira
@@ -95,15 +109,6 @@ future: higher level, cross-modal predictions (drug response? morphology from om
 
 Overall, it is an incredibly exciting time for the field of computational biology.
 inflection point
-
-so number of eras
-\begin{itemize}[noitemsep]
-	\item Early era of biology: observations
-	\item Early molecular era: interventions
-	\item Commodified sequencing: first for genomes, then high-dimensional measurements (assays)
-	\item Dawn of AI: low-level predictions, elucidating or bypassing fuzziness/stochasticity
-	\item Future: massive data foundries (cite that paper that shows data still scales super well, maybe bitter pill as well), data really feeds ai, we will understand how scaling works, complexity of predictions grow with data size (high-level predictions)
-\end{itemize}
 
 
 % 170k species https://www.nature.com/articles/s42256-025-01044-4
