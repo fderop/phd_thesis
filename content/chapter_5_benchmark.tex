@@ -1,9 +1,5 @@
-\clearpage
-\checkoddpage
-\ifodd\thepage
-	\null
-	\newpage % Ensures we are now on an even (left) page
-\fi
+% \cleardoublepage             % finish previous material
+% \ifodd\value{page}\hbox{}\newpage\fi   % blank only if we are on a recto page
 
 \setcounter{chapter}{5} % Set chapter counter to 3
 \setcounter{figure}{0} % Reset figure counter
@@ -23,23 +19,14 @@
 	}%
 \end{minipage}
 
-\clearpage % Move to next page
-
-% Force chapter to start on right (odd) page
-\ifodd\thepage
-	% If already on an odd page, do nothing
-\else
-	% If on an even page, insert blank page
-	\null
-	\newpage
-\fi
+% \cleardoublepage             % guarantees next \chapter is a recto page
 
 \setcounter{chapter}{4} % Reset chapter counter to 3
 \chapter{Benchmarking single-cell chromatin accessibility sequencing methods}
 \label{ch:benchmarking}
 
 \setcounter{figure}{1} % Ensure the first figure starts with 1
-The following chapter will describe how we benchmarked several of the most prominent scATAC-seq techniques available in 2023. We performed 47 experiments across 8 different scATAC-seq methods to generate 169k single-cell chromatin accessibility profiles. Our benchmark quantified reproducible technical biases in not only the sensitivity, but also the specificity of these methods, produced a scATAC-seq pre-processing pipeline with best practices tutorials, and yielded the largest dataset of scATAC-seq in PBMCs to date. We published this work in Nature Biotechnology in 2023 (\autoref{fig:article_title_benchmark}, \autoref{app:benchmark}).
+The following chapter will describe how we benchmarked several of the most prominent scATAC-seq techniques available in 2023. We performed 47 experiments across 8 different scATAC-seq methods to generate 169k single-cell chromatin accessibility profiles. Our benchmark quantified reproducible technical biases in not only the sensitivity, but also the specificity of these methods, produced a scATAC-seq pre-processing pipeline with best practices tutorials, and yielded the largest dataset of scATAC-seq in PBMCs to date. We published this work in Nature Biotechnology in 2023 (\autoref{fig:article_title_benchmark}, \autoref{app:benchmark})\sjcitep[.]{deropsystematicbenchmarkingsinglecell2023}
 
 \section{Motivation and approach}
 Throughout the development of HyDrop-ATAC, we were often confronted with questions surrounding the method's sensitivity (the number of fragments detected per cell) and specificity (the enrichment of these fragments in enhancers and near transcription start sites, collectively forming chromatin accessibility "peaks"). Such questions arose both internally and externally, and echoed previous calls for an in-depth method performance exploration since the release of Bio-Rad\supershortnotecite{lareaudropletbasedcombinatorialindexing2019} and 10x Genomics'\supershortnotecite{satpathyMassivelyParallelSinglecell2019} scATAC-seq products in 2019. At the time, a number of open-source scATAC-seq protocols had also been published\sjcitep[,]{cusanovichsinglecellatlasvivo2018,chenRapidRobustMethod2018}, but required significant levels of expertise (e.g. automated liquid handling for scaling) or non-commercially available components (e.g. indexed Tn5). As a result, they remained in use exclusively at only a handful of labs. Both BioRad and 10x's scATAC-seq solutions were more user-friendly and handled the most technically challenging aspect, microfluidic droplet generation, on benchtop devices (10x's Chromium Controller and Bio-Rad's ddSEQ). However, the Chromium controller already enjoyed a wide presence in large research centres due to the success of 10x's scRNA-seq products, and the Fluidigm C1 had fallen out of use due to throughput and per-cell price considerations. As a result, 10x dominated the commercial scATAC-seq market from 2016 onward, leading to \textasciitilde{1000} publications compared to ddSEQ's \textasciitilde{70} by 2025.
