@@ -3,6 +3,14 @@
 This introductory chapter will attempt to build the foundation for the explorations that follow by providing a historical overview of chromatin accessibility based on historical accounts\sjcitep[,]{slackConradHalWaddington2002, olinsChromatinHistoryOur2003, cobbWhoDiscoveredMessenger2015, deichmannChromatinItsHistory2015, deichmannEpigeneticsOriginsEvolution2016, lis50YearHistory2019, roeder50YearsEukaryotic2019} and frame it within the ongoing research on decoding gene regulation. Then, we illustrate the state of the art of single-cell chromatin sequencing technologies when I began this work, and delve into the capabilities and limitations of several breakthrough techniques. This context serves to highlight the importance of the subject matter, and to motivate our subsequent discussions and findings.
 
 \section{Early research}
+
+\begin{wrapfigure}[11]{o}{0.15\textwidth}
+	\centering
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}}
+	% \includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}
+	\caption*{T. Morgan}
+\end{wrapfigure}
+
 The word "cell" was first used in 1665 by Robert Hooke to describe the hexagonal walls he observed in a thin slice of cork through a self-made microscope\sjcitep[.]{hookeMicrographia1665} It took several more centuries of research until the concept of cells as the foundational building blocks of life began to take shape. Between 1817 and 1826, Baltic-German polymath and explorer Karl Ernst von Baer, made the first accounts of egg cells, development of the blastula, the notochord and the three germ layers. Only in 1839, Theodor Schwann proposed that animals, just like plants, were composed of cells\sjcitep[,]{schwannMikroskopischeUntersuchungenUber1839} and Rudolf Virchow and Robert Remak later added that cells were the product of division of pre-existing cells\sjcitep[.]{rudolfCellularpathologieIhrerBegrundung1858} While studying this process of division in 1879, Walther Flemming first used the term "chromatin" to describe the filament-like threads between two dividing cells in 1879\sjcitep[.]{flemmingBeitrageZurKenntniss1879} Flemming's observations did not differ much from his colleague's Wilhelm Waldeyer's description of "chromosomes"\sjcitep[.]{deichmannChromatinItsHistory2015} These early findings directly stemmed from the technological refinement of microscopic lenses, which had by now become accurate enough to permit detailed studies of developing embryos. This early area of cell biology produced a number of fundamental questions that would engage the minds of biologists to this day:
 
 \begin{enumerate}[noitemsep]
@@ -11,26 +19,13 @@ The word "cell" was first used in 1665 by Robert Hooke to describe the hexagonal
 	\item How can this process go wrong, leading to disease, and can we manipulate it? \footnotetextwithoutmarker{\sjcitep[]{tagarelliHansSpemannOne2004}Tagarelli, \textit{Anat, Hist, Embr}, 2004}\hspace{-2pt} % this stupid footnote is here because this reference is first cited in the X ray crystallography wrapfigure environment. As a result, it gets a citation number that predates the second Watson & Crick 1953 paper by a few citations. This is a problem that I think cannot be avoided. What is more worrying is that as this reference is first cited in the wrapfigure environment, and not on the page environment, it does not show up in the footnotes of this page, but goes missing completely. The best solution I could come up with was to reconstruct the reference in the footnotes manually.
 \end{enumerate}
 
-\begin{wrapfigure}[9]{L}{0.15\textwidth}
-	\centering
-	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}}
-	% \includegraphics[width=0.15\textwidth]{thomas_morgan.jpg}
-	\caption*{T. Morgan}
-\end{wrapfigure}
-
 At that time, the concept of physical store and transfer of genetic information was not yet widely accepted, and the function and identity of Flemming and Waldeyer's chromosomes was still unknown. In search of answers, marine embryologist Thomas Hunt Morgan began studying inheritance in \textit{Drosophila melanogaster} (fruit fly) in 1908. After years of breeding flies, a mutant with white eyes (aptly named \textit{white}) appeared. Through careful tracking, Morgan discovered that these pigmentless eyes followed a sex-dependent inheritance pattern which could be reliably predicted across generations\sjcitep[.]{morganSexLimitedInheritance1910} More than half a century earlier, Moravian friar Gregor Mendel had demonstrated the exact same principles in \textit{Pisum sativum} (sweet pea), but his work was initially ignored and later disputed by the scientific community upon its rediscovery in 1900. By 1909 however, Danish botanist Wilhelm Johannsen had experimentally repeated much of Mendel's work, and coined the term "gene" to describe the abstract "unit of heredity" that is used to pass on traits between generations\sjcitep[.]{johannsen1909erblichkeitslehre}
 
 Morgan, together with his undergraduate student Alfred Sturtevan, discovered that co-inheritance of genes also followed reproducible patterns ("linkage analysis")\sjcitep[.]{sturtevant1913} This finding supported the idea that genes were located on a linear carrier. A second breakthrough came when Morgan demonstrated that the chromosomes observed by Flemming and Waldeyer were in fact the physical bodies responsible for the transfer of phenotypic traits\sjcitep[.]{morganRandomSegregationCoupling1911} Armed with experimental evidence gathered from thousands of generations of fruit flies, Morgan formally unified the theory of Mendelian inheritance with the physical transfer of genes on chromosomes in 1915\sjcitep[.]{morganMechanismMendelianHeredity1915}
 
-\begin{wrapfigure}[9]{r}{0.15\textwidth}
-	\centering
-	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{conrad_waddington.png}}
-	\caption*{C. Waddington}
-\end{wrapfigure}
-
 Together, Morgan's findings inaugurated the 20\textsuperscript{th} century's era of genetics, and defined the context for many of the major discoveries that ensued. Hermann Muller, for example, discovered the mutagenic effects of irradiation in \textit{Drosophila}\sjcitep[,]{Muller1927} accelerating the study of mutations\sjcitep[.]{muller1930} In fact, Muller showed that relocation of genes, inferred through Morgan and Sturtevan's linkage analysis, could alter their "variegation" (expression), a very early understanding of cis gene regulation!
 
-\begin{wrapfigure}[9]{r}{0.25\textwidth}
+\begin{wrapfigure}[11]{o}{0.25\textwidth}
 	\centering
 	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.25\textwidth]{spemannmangold.png}}
 	% \includegraphics[width=0.20\textwidth]{watsoncrickfranklin.png}
@@ -41,6 +36,12 @@ Together, Morgan's findings inaugurated the 20\textsuperscript{th} century's era
 In parallel, the field of embryology began to consolidate. Early views such as "preformationism", the idea that all parts of the body were present in miniature form in the embryo at conception, were defeated when Hans Spemann began constricting dividing \textit{Triturus} (newt) embryos. Both halves of the embryo could develop into full, though smaller, animals \textit{if} part of the dorsal part were present. Later, Spemann and his student Hilde Mangold, discovered that transplantation of the dorsal lip from one embryo to the ventral side of another embryo would induce the formation of a ventrally conjoined twin (\autoref{fig:spemannmangold})\sjcitep[.]{spemannUberInduktionEmbryonenanlagen1924} Importantly, the pair showed that the conjoined secondary embryo consisted of tissue from the \textit{host}, indicating that the transplant merely instructed its host surroundings to change developmental fate. Spemann and Mangold later named this steering tissue the "organizer field", and multiple labs attempted (unsuccessfully) to purify and characterise the compounds responsible for these processes in an "organizer gold rush"\sjcitep[.]{slackConradHalWaddington2002}
 
 % \todo{over the ages: broad hypotheses about how things work -> data gathering -> very fine predictions. it has been said before that large data mining etc will change everything, but this time it's true due to several reasons. one being developments in LLMs, which has as a downstream effect that compute will become a lot more cheap. another is technical development of data gathering techniques. this will attract talent}
+
+\begin{wrapfigure}[10]{o}{0.15\textwidth}
+	\centering
+	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{conrad_waddington.png}}
+	\caption*{C. Waddington}
+\end{wrapfigure}
 
 However, the link between embryonic development and the "new" insights in genetics was not readily made, even disputed by parts of the scientific community. This sentiment began to change after a young Conrad Waddington, who had previously been performing organizer grafting experiments in mammals and birds, visited Morgan's fly lab in 1935. Here, Waddington discovered that specific heritable genetic mutations could disrupt \textit{Drosophila} wing development at specific stages\sjcitep[.]{waddingtonGeneticControlWing1940} Based on these findings, Waddington wrote his seminal work \textit{Organisers and Genes} in 1940, and introduced the notion that embryonic development was a large decision tree under the control of genes, which he metaphorically described as a "landscape"\sjcitep[.]{waddingtonOrganisersGenes1940, waddingtonStrategyGenes1957} A ball, representing a cell's current state, metaphorically rolls down the furrows in the landscape, passing several bifurcations which ultimately determine its fate (\autoref{fig:waddington_landscape}a). Beneath the surface, a series of tension wires, symbolizing genes, forcefully pull the surface into shape (\autoref{fig:waddington_landscape}b). Disruptions in an organism's genetic context, for example by mutation, could alter the landscape and thus the cell's final state.
 
@@ -78,18 +79,18 @@ Although Morgan and Waddington's visions of genes as decision makers for a cell'
 
 Earlier that month, Jacob, together with Sidney Brenner, had also proposed the existence of an unstable form of RNA which acted as a "messenger" to transfer information from DNA-based genes to proteins\sjcitep[.]{brennerUnstableIntermediateCarrying1961} This messenger RNA was already clearly depicted as the intermediate carrier of information between genes and proteins in Jacob \& Monod's gene regulatory network. The exact code through which the sequence of mRNA translates to proteins was deciphered soon after using clever "forward" experiments: Marshall Nirenberg fed synthetic RNA homopolymer repeats (e.g. UUU\textsubscript{n}, AAA\textsubscript{n}, ...) to cell-free protein synthesis systems in which one of the 20 possible amino-acids were radioactively labeled. The detection of a radioactive protein product then revealed the identity of the amino-acid for which the input homopolymer coded\sjcitep[.]{nirenbergRNACodewordsProtein1964} Har Gobind Khorana combined more complex RNA trinucleotide repeat polymers (e.g. ACA\textsubscript{n}, UAG\textsubscript{n}, ...) with chemical analysis of the resulting proteins to decipher the remaining possible 3-nucleotide codons, producing a finalised code cipher in 1966\sjcitep[.]{khoranaPolynucleotideSynthesisGenetic1966} These experiments together confirmed how genes encoded for proteins.
 
-\begin{wrapfigure}[9]{r}{0.15\textwidth}
+\begin{wrapfigure}[10]{o}{0.15\textwidth}
 	\centering
 	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.15\textwidth]{walterfiers.png}}
 	% \includegraphics[width=0.15\textwidth]{walterfiers.png}
 	\caption*{W. Fiers}
 \end{wrapfigure}
 
-Biology was shifting from mutant models to molecular methods. Precise extraction and purification of specific proteins or other macromolecules began to take a center stage. For example, in 1966 Gilbert and M{\"u}ller-Hill for the first time purified \textit{lac} repressor protein fractions, confirming Jacob and Monod's theoretical model of a proteins acting as repressors[.]{gilbert1966} A year later, in a letter aptly titled \textit{The Lac Operator is DNA}\sjcitep[]{gilbert1967} the pair showed that the the \textit{lac} repressor specifically binds to DNA extracted from \textlambda80 phage carrying the \textit{lac} operon, and that this interaction could be disrupted by exposing the complex to IPTG.
+Biology was shifting from mutant models to molecular methods. Precise extraction and purification of specific proteins or other macromolecules began to take a center stage. For example, in 1966 Gilbert and M{\"u}ller-Hill for the first time purified \textit{lac} repressor protein fractions, confirming Jacob and Monod's theoretical model of a proteins acting as repressors\sjcitep[.]{gilbert1966} A year later, in a letter aptly titled \textit{The Lac Operator is DNA} the pair showed that the the \textit{lac} repressor specifically binds to DNA extracted from \textlambda80 phage carrying the \textit{lac} operon, and that this interaction could be disrupted by exposing the complex to IPTG\sjcitep[.]{gilbert1967}
 
 While codons had been de-coded, a "reverse" experiment in which the sequence of a given DNA or RNA molecule could be sequenced remained elusive. Walter Fiers (Ghent University) was the first to do so in 1972 by reporting a complete sequence of the bacteriophage MS2 coat protein gene\sjcitep[.]{jouNucleotideSequenceGene1972} Fiers first digested the phage's \textsuperscript{32}P-labeled RNA genome using ribonuclease T\textsubscript{1}, which cuts RNA at G positions, and iteratively separated the resulting fragments based on size and charge through multiple rounds of two-dimensional fractionation. Jo\"{e}l Vandekerckhove and Marc Van Montagu (both also Ghent University) had simultaneously been working on determining the amino-acid sequence of the MS2 coat protein\sjcitep[.]{vandekerckhoveUseFluorescamineSequence1973} Under the guidance of Van Montagu's preliminary amino-acid map and the Nirenberg-Khorana codon dictionary, Fiers and colleagues were able to puzzle together their fragments into a near-complete base sequence of the MS2 coat protein gene.
 
-\begin{wrapfigure}[10]{r}{0.20\textwidth}
+\begin{wrapfigure}[12]{o}{0.20\textwidth}
 	\centering
 	\raisebox{0pt}[\dimexpr\height-0.85\baselineskip\relax]{{}\includegraphics[width=0.20\textwidth]{sangersequencing.png}}
 	% \includegraphics[width=0.20\textwidth]{sangersequencing.png}
@@ -144,10 +145,17 @@ The human genome race cemented WGS as the default strategy for large genomes, an
 
 Several NGS platforms were launched almost simultaneously. Roche/454's pyrosequencing\sjcitep[,]{margulies2005genome} ABI's SOLiD, Helicos's single-molecule chemistry, and Solexa's sequencing-by-synthesis (SBS)\sjcitep[]{bennett2005toward} each promised sequencing at a fraction of the Sanger method's cost. The competitive landscape narrowed after 2007, when Illumina acquired Solexa and began to scaled SBS to industrial capacity. The method was first developed by Balasubramanian and Klenerman at Cambridge in 1998 and works by hybridizing DNA templates to an adapter oligo "lawn" on a glass flow cell\sjcitep[.]{furey1998use} Here, each individual template is amplified to generate a cluster of clones, which is then sequenced by sequentially adding fluorescently labeled nucleotides and recording where they are incorporated. High signal-to-noise, coupled with better CMOS cameras and patterned flow-cells, allowed Illumina to double output roughly every 12 months while driving per-base cost down by four orders of magnitude\sjcitep[.]{metzkerSequencingTechnologiesNext2010, mardis2011decadesperspective} By 2012, benchtop instruments such as the MiSeq delivered data for \textasciitilde\USD0.10 per megabase\sjcitep[,]{shendureexpandingscopedna2012} compared with \textasciitilde\USD1000 per megabase in 2005\sjcitep[.]{shendureaccuratemultiplexpolony2005} Competing short-read platforms faded, and long-read entrants (PacBio SMRT, Oxford Nanopore) would not appear for another decade (\autoref{fig:sequencing_plaftorms}). A second wave of SBS providers (BGI/MGI, Ultima Genomics, Complete Genomics, Singular Genomics) has recently appeared, following expiry of key Illumina patents.
 
-\begin{figure}[h]
+% \begin{figure}[h]
+% 	\centering
+% 	\resizebox{0.8\textwidth}{!}{\input{ipynb/figs/plot_geo.pgf}}
+% 	\captionsetup{width=0.85\linewidth}
+% 	\caption[Trends in sequencing platforms]{Trends in sequencing platforms: total number of gigabases submitted to GEO per platform.}
+% 	\label{fig:sequencing_plaftorms}
+% \end{figure}
+
+\begin{figure}[ht]
 	\centering
-	\resizebox{0.8\textwidth}{!}{\input{ipynb/figs/plot_geo.pgf}}
-	\captionsetup{width=0.85\linewidth}
+	\includesvg[width=1\textwidth]{ipynb/figs/plot_geo.svg}
 	\caption[Trends in sequencing platforms]{Trends in sequencing platforms: total number of gigabases submitted to GEO per platform.}
 	\label{fig:sequencing_plaftorms}
 \end{figure}
