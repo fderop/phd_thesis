@@ -93,8 +93,18 @@
 
 %--- typesetting
 % \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10, verbose=silent]{microtype}
-
 \usepackage{iftex}
+
+\ifPDFTeX
+	\usepackage[activate={true,nocompatibility},final,
+		tracking=true,kerning=true,spacing=true,
+		factor=1100,stretch=10,shrink=10,
+		protrusion=false]{microtype}
+\else
+	% XeTeX: load empty config (no features supported)
+	\usepackage{microtype}
+\fi
+
 
 % \ifPDFTeX
 %     \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10,verbose=silent]{microtype}
