@@ -12,3 +12,6 @@ if [ $? -eq 0 ]; then
 else
     echo "Compilation failed. Check the log for errors."
 fi
+
+find . -type f -name "*.bak" -exec rm {} +
+
