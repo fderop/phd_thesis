@@ -10,16 +10,19 @@
 
 %--- title page
 \input{./content/title_page.tex}
+\includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{content/First_page_of_thesis_070519.pdf}
 
 %--- toc
 % \microtypesetup{protrusion=false} % disables protrusion locally in the toc
 \tableofcontents % prints Table of Contents
+\clearpage
 \listoffigures
 % \microtypesetup{protrusion=true} % enables protrusion
 
-\includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{content/First_page_of_thesis_070519.pdf}
 \input{./content/front_1_acknowledgements.tex}
 \input{./content/front_2_ai.tex}
+\input{./content/front_3_vietnamese.tex}
+
 %--- chapters
 \mainmatter{}
 \input{./content/chapter_1_introduction.tex}
