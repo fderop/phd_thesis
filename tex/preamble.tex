@@ -39,7 +39,9 @@
 
 %--- fonts
 \usepackage[T1]{fontenc}
-\usepackage{textgreek}
+% \usepackage{textgreek}
+\newfontfamily\greekfont{Times New Roman}[Script=Greek] % or XCharter, GFS Artemisia, etc.
+\usepackage{alphabeta}
 \usepackage{charter} % for text
 \usepackage[charter]{mathdesign} % for mathematics
 \usepackage{amsmath}
@@ -185,6 +187,8 @@
 \captionsetup[figure]{name={Figure.},labelsep=period,font=default}
 \usepackage{wrapfig} % for wrapping figures inside text
 \setlength{\abovecaptionskip}{7pt} % skip height after caption
+
+\setlength{\intextsep}{0pt}  % vertical space above/below wrapfigs
 
 % dummy image
 \newcommand{\dummyfig}[1]{
