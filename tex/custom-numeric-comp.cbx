@@ -97,9 +97,21 @@
           \entrydata{\thefield{entrykey}}{%
             \printnames[lastonly][1-1]{author}%
             \addcomma\addspace%
-            \mkbibemph{\iffieldundef{shortjournal}
-              {\printfield{journaltitle}}
-              {\printfield{shortjournal}}}
+            \mkbibemph{%
+              \ifboolexpr{ test {\ifentrytype{book}} or test {\ifentrytype{mvbook}} }
+                {%
+                  \iffieldundef{shorttitle}
+                    {\iffieldundef{maintitle}
+                      {\printfield{title}}
+                      {\printfield{maintitle}\addcolon\space\printfield{title}}}
+                    {\printfield{shorttitle}}%
+                }
+                {%
+                  \iffieldundef{shortjournal}
+                    {\printfield{journaltitle}}
+                    {\printfield{shortjournal}}%
+                }%
+            }
             \addcomma\addspace%
             \printfield{year}\addperiod}}}}%
 }
