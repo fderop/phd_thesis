@@ -13,7 +13,7 @@
 		\includegraphics[width=\textwidth]{im/2021_elife_fixed.pdf}
 		\captionsetup{width=0.80\linewidth}
 		\vspace{0.5cm}
-		\captionof{figure}[Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads"]{Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads", \autoref{app:hydrop}}
+		\captionof{figure}[Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads"]{Article title page of "Hydrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads"\llap{,} \autoref{app:hydrop}}
 		\label{fig:hydrop}
 	}%
 \end{minipage}
@@ -83,7 +83,7 @@ Later on, this change also had an important effect on our scATAC-seq assay: it a
 
 \textbf{Problem:} Our first generation of beads had barcode oligos linked to their hydrogel matrix using a cleavable disulfide linker. We hypothesized that diffusion of barcodes from the center of the polyacrylamide hydrogel bead into the droplet would be a slow and reaction rate-limiting process. To test diffusion, we measured the beads' total primer content before and after DTT incubation, using probe fluorescence as a proxy. A strong residual fluorescent signal after even 50 minutes of continuous incubation with 50 mM DTT confirmed that much of the initial primer population was retained within the bead. Since DTT has a molecular weight comparable to a single nucleotide, and has good water solubility, we did not expect its diffusion to be the rate-limiting factor. Of course, 10x Genomics' beads were dissolvable, and we reasoned that this contributed to their assay's increased sensitivity.
 
-\textbf{Solution:} We included N,N'-Bis(acryloyl)cystamine (BAC) in the hydrogel polymerisation reaction, replacing classic bisacrylamide and making the gel polymer's crosslinks reversibly cleavable under reducing conditions with DTT. These beads dissolved in under 10 minutes of exposure to 10 mM DTT at room temperature.
+\textbf{Solution:} We included N,N'-Bis(acryloyl)cystamine (BAC) in the hydrogel polymerization reaction, replacing classic bisacrylamide and making the gel polymer's crosslinks reversibly cleavable under reducing conditions with DTT. These beads dissolved in under 10 minutes of exposure to 10 mM DTT at room temperature.
 
 \textbf{Problem:} Cell-plus-bead-in-oil emulsions did not survive PCR thermocycling, which was necessary for amplifying accessible genome fragments for our scATAC-seq efforts. During PCR, microdroplets coalesced into large drops, meaning that bulk rather than single-cell libraries were be generated.
 
