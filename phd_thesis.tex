@@ -68,7 +68,14 @@
 \printbibliography[heading=bibintoc,title={Bibliography}]
 
 % --- Appendices / Supplements
+\begingroup
+\makeatletter
+\addtolength{\hoffset}{-\textblockoffset}
+\addtolength{\evensidemargin}{2.0\textblockoffset}
+\makeatother
+
 \cleardoublepage
+\mainmatter
 \appendix
 \chapter{Supplementary files}
 
@@ -92,5 +99,8 @@
 	scale=0.95,
 	offset=10mm 10mm
 ]{papers/s41587-023-01881-x.pdf}
+\endgroup
+
+
 
 \end{document}
