@@ -106,7 +106,7 @@
 		protrusion=false]{microtype}
 \else
 	% XeTeX: load empty config (no features supported)
-	\usepackage{microtype}
+	\usepackage[protrusion=false]{microtype}
 \fi
 
 
@@ -333,3 +333,20 @@
 \renewcommand\arraystretch{1.4}
 \captionsetup{labelfont=sc, labelsep=quad}
 \usepackage{makecell} % Ensure this is in your preamble
+
+
+% --- some spacing between text and bottom horizontal line
+\makeatletter
+\setlength{\skip\footins}{\baselineskip} % ~1 line gap
+
+\renewcommand{\footnoterule}{%
+	\kern\baselineskip
+	\hrule \@height .4pt \@width \columnwidth
+	\kern .5\baselineskip
+}
+
+% if bidi defines a hook, use it; otherwise do nothing
+\@ifundefined{FN@footnoterule}{}{%
+	\renewcommand{\FN@footnoterule}{\footnoterule}%
+}
+\makeatother
