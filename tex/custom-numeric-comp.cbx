@@ -98,19 +98,21 @@
             \printnames[lastonly][1-1]{author}%
             \addcomma\addspace%
             \mkbibemph{%
-              \ifboolexpr{ test {\ifentrytype{book}} or test {\ifentrytype{mvbook}} }
-                {%
-                  \iffieldundef{shorttitle}
-                    {\iffieldundef{maintitle}
-                      {\printfield{title}}
-                      {\printfield{maintitle}\addcolon\space\printfield{title}}}
-                    {\printfield{shorttitle}}%
-                }
-                {%
-                  \iffieldundef{shortjournal}
-                    {\printfield{journaltitle}}
-                    {\printfield{shortjournal}}%
-                }%
+            \ifboolexpr{ test {\ifentrytype{book}} or test {\ifentrytype{mvbook}} }
+              {%
+                \iffieldundef{shorttitle}
+                  {%
+                    \iffieldundef{maintitle}
+                      {\mkbibemph{\printfield{title}}}
+                      {\mkbibemph{\printfield{maintitle}}\addcolon\space\mkbibemph{\printfield{title}}}%
+                  }
+                  {\mkbibemph{\printfield{shorttitle}}}%
+              }
+              {%
+                \iffieldundef{shortjournal}
+                  {\mkbibemph{\printfield{journaltitle}}}
+                  {\mkbibemph{\printfield{shortjournal}}}%
+              }%
             }
             \addcomma\addspace%
             \printfield{year}\addperiod}}}}%

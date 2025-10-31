@@ -9,6 +9,7 @@
 \frontmatter
 
 %--- title page
+\addtocontents{toc}{\protect\setlength{\cftbeforechapskip}{0pt}} % tighter spacing for frontmatter
 \input{./content/title_page.tex}
 \cleardoublepage
 \includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{content/First_page_of_thesis_070519.pdf}
@@ -48,12 +49,46 @@
 \makeatother
 \endgroup
 
+\addtocontents{toc}{\protect\setlength{\cftbeforechapskip}{\origcftbeforechapskip}} % restore vspace for numbered chapters
 %--- chapters
 \mainmatter{}
 \input{./content/chapter_1_introduction.tex}
+
+\cleardoublepage
+\begingroup
+\makeatletter \addtolength{\hoffset}{-\textblockoffset} \makeatother
+
+
+\cleardoublepage
+\chapter{HyDrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads}
+\label{app:hydrop}
+\includepdf[
+	pages=-,
+	pagecommand={\thispagestyle{empty}},
+	noautoscale=true,
+	scale=0.95,
+	% offset=10mm 10mm
+]{papers/elife-73971-v5.pdf}
+
+\cleardoublepage
+\chapter{Systematic benchmarking of single-cell ATAC-sequencing protocols}
+\label{app:benchmark}
+\includepdf[
+	pages=1-28,
+	pagecommand={\thispagestyle{empty}},
+	noautoscale=true,
+	scale=0.95,
+	% offset=10mm 10mm
+]{papers/s41587-023-01881-x.pdf}
+\endgroup
+
+\input{./content/chapter_4_conclusion_future.tex}
+
+% --- Appendices / Supplements
+\appendix
+
 \input{./content/chapter_2_design.tex}
 \input{./content/chapter_3_benchmark.tex}
-\input{./content/chapter_4_conclusion_future.tex}
 
 % --- Bibliography (backmatter)
 \backmatter
@@ -66,41 +101,6 @@
 \renewcommand*{\mkbibnamesuffix}[1]{\textsc{#1}}
 
 \printbibliography[heading=bibintoc,title={Bibliography}]
-
-% --- Appendices / Supplements
-\begingroup
-\makeatletter
-\addtolength{\hoffset}{-\textblockoffset}
-\addtolength{\evensidemargin}{2.0\textblockoffset}
-\makeatother
-
-\cleardoublepage
-\mainmatter
-\appendix
-\chapter{Supplementary files}
-
-\section{HyDrop enables droplet-based single-cell ATAC-seq and single-cell RNA-seq using dissolvable hydrogel beads}
-\label{app:hydrop}
-\includepdf[
-	pages=-,
-	pagecommand={\thispagestyle{empty}},
-	noautoscale=true,
-	scale=0.95,
-	offset=10mm 10mm
-]{papers/elife-73971-v5.pdf}
-
-\cleardoublepage
-\section{Systematic benchmarking of single-cell ATAC-sequencing protocols}
-\label{app:benchmark}
-\includepdf[
-	pages=1-28,
-	pagecommand={\thispagestyle{empty}},
-	noautoscale=true,
-	scale=0.95,
-	offset=10mm 10mm
-]{papers/s41587-023-01881-x.pdf}
-\endgroup
-
 
 
 \end{document}

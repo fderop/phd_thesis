@@ -93,6 +93,10 @@
 \renewcommand{\cftsubsecpagefont} % subsection page numbers
 {\cftsubsecfont}
 
+% shorter vspace between frontmatter chapters
+\newlength{\origcftbeforechapskip}
+\setlength{\origcftbeforechapskip}{\cftbeforechapskip}
+
 \usepackage{hyphenat} % to disable hyphenation in titles
 
 %--- typesetting

@@ -499,7 +499,7 @@ Here, $m$ is the number of peaks, $n$ is the number of cells, and $r = \min(m,n)
 
 % \verb|chromVAR| works in a fundamentally different way\sjcitep[.]{schepchromVAR2017} Instead of using hundreds of thousands of accessible peak regions, \verb|chromVAR| first groups these peaks into cistromes based on common TF motifs or pre-set functional annotations such as known enhancer peak sets. Accessibility within each cistrome is normalized and converted to z-scores, which are then used for \verb|t-SNE| and clustering. Instead of known TF motifs, k-mers can also be used to identify novel motifs important in a given biological process.
 
-\verb|cisTopic|, a probabilistic framework for scATAC-seq analysis, was used extensively to generate and post-process all scATAC-seq count matrices\sjcitep[.]{bravogonzalezblascistopic2019} LDA is used to calculate two sets of distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell) which should approximate the original data when multiplied\sjcitep[.]{bleiLatentDirichletAllocation2003}
+\verb|cisTopic|, a probabilistic framework for scATAC-seq analysis, was used extensively to generate and post-process all scATAC-seq count matrices\sjcitep[.]{bravogonzalezblascistopic2019} LDA\sjcitep[]{pritchard2000structure} is used to calculate two sets of distributions: the region-topic distribution (regulatory regions grouped into "topics") and the topic-cell distribution (probability of a topic being associated with a cell) which should approximate the original data when multiplied\sjcitep[.]{bleiLatentDirichletAllocation2003}
 
 \[
 	\underset{m \times n}{
@@ -535,7 +535,7 @@ LDA parameters (probabilities) are estimated using a Markov chain monte carlo ap
 \[
 	\text{Region score} = \beta_{r,t} \left( \log \beta_{r,t} - \frac{1}{T} \sum_{t=1}^{T} \log \beta_{r,t} \right)
 \]
-\vfill % otherwise this is split! check for a4 vs us letter
+
 \begin{center}
 	Consider Shannon entropy:
 
