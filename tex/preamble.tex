@@ -61,14 +61,14 @@
 % \usepackage{textcomp}
 
 \usepackage{sectsty} % use a different font for headings
-\chapterfont{\usefont{T1}{qhv}{b}{n}\selectfont\huge} % for chapters, we use "qhv" - TeX Gyre Heros, "b" - bold 
+\chapterfont{\usefont{T1}{qhv}{b}{n}\selectfont\huge} % for chapters, we use "qhv" - TeX Gyre Heros, "b" - bold
 \makeatletter
 \newcommand\thefontsize{The current font size is: \f@size pt}
 \makeatother
 
 
 % calculate difference between xheight and ascenderheight
-% \usepackage{calc}
+\usepackage{calc}
 % \newlength{\xheight}
 % \newlength{\ascenderheight}
 % \newlength{\xascenderdiff}
@@ -112,6 +112,14 @@
 	% XeTeX: load empty config (no features supported)
 	\usepackage[protrusion=false]{microtype}
 \fi
+
+% \ifPDFTeX
+%   \usepackage{transparent}
+% \fi
+
+% in preamble (after \usepackage{expl3} is fine; before first tabular)
+\providecommand\UseMathForPositioningText{}
+
 
 
 % \ifPDFTeX
@@ -203,6 +211,10 @@
 		\end{minipage}
 	}
 }
+\makeatletter
+\providecommand\IfPDFManagementActiveTF[2]{#2}%
+\providecommand\IfPDFManagementActiveF[2]{\IfPDFManagementActiveTF{#1}{#2}}%
+\makeatother
 
 \usepackage{svg}
 \usepackage{tikz}
@@ -234,7 +246,7 @@
 	maxcitenames=3,
 	maxbibnames=100,
 	block=none,
-	backend=bibtex,
+	backend=biber,
 	giveninits=true]{biblatex}
 
 \bibliography{tex/references}
@@ -321,6 +333,13 @@
 \usepackage[extrafootnotefeatures]{bidi}
 % \twocolumnfootnotes
 \threecolumnfootnotes
+
+\usepackage{array}
+\makeatletter
+\providecommand\@kernel@tabular@init{}%
+\providecommand\@tabarray{\@array}%
+\makeatother
+
 
 
 % for mpl pgf
