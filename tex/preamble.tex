@@ -318,6 +318,11 @@
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
 
 
+% Workaround: bidi's array-xetex-bidi.def references \@kernel@tabular@init
+% which does not exist in TeX Live 2025. Provide a no-op definition.
+\makeatletter
+\providecommand\@kernel@tabular@init{}
+\makeatother
 \usepackage[extrafootnotefeatures]{bidi}
 % \twocolumnfootnotes
 \threecolumnfootnotes
