@@ -1,0 +1,95 @@
+\documentclass{article}
+
+\providecommand{\ContentPageCount}{140}
+\providecommand{\SpineWidthMm}{7.1680}
+
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+
+\newlength{\PanelWidth}
+\newlength{\PanelHeight}
+\newlength{\Bleed}
+\newlength{\SpineWidth}
+\newlength{\TrimWidth}
+\newlength{\MediaWidth}
+\newlength{\MediaHeight}
+
+\setlength{\PanelWidth}{210mm}
+\setlength{\PanelHeight}{297mm}
+\setlength{\Bleed}{3mm}
+\setlength{\SpineWidth}{\SpineWidthMm mm}
+\setlength{\TrimWidth}{\dimexpr 2\PanelWidth+\SpineWidth\relax}
+\setlength{\MediaWidth}{\dimexpr \TrimWidth+2\Bleed\relax}
+\setlength{\MediaHeight}{\dimexpr \PanelHeight+2\Bleed\relax}
+
+\geometry{
+	paperwidth=\MediaWidth,
+	paperheight=\MediaHeight,
+	margin=0pt
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\newcommand{\SpineText}{%
+	Design, Development and Evaluation of Single-cell Accessible Chromatin Sequencing Technologies
+	\quad\textbar\quad
+	Dr.\ Ir.\ Florian De Rop%
+}
+
+\newcommand{\CropMarks}{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\coordinate (pageSW) at (current page.south west);
+		\coordinate (trimSW) at ([xshift=\Bleed,yshift=\Bleed]pageSW);
+		\coordinate (trimSE) at ([xshift=\dimexpr\Bleed+\TrimWidth\relax,yshift=\Bleed]pageSW);
+		\coordinate (trimNW) at ([xshift=\Bleed,yshift=\dimexpr\Bleed+\PanelHeight\relax]pageSW);
+		\coordinate (trimNE) at ([xshift=\dimexpr\Bleed+\TrimWidth\relax,yshift=\dimexpr\Bleed+\PanelHeight\relax]pageSW);
+		\coordinate (spineSW) at ([xshift=\dimexpr\Bleed+\PanelWidth\relax,yshift=\Bleed]pageSW);
+		\coordinate (spineSE) at ([xshift=\dimexpr\Bleed+\PanelWidth+\SpineWidth\relax,yshift=\Bleed]pageSW);
+		\coordinate (spineNW) at ([xshift=\dimexpr\Bleed+\PanelWidth\relax,yshift=\dimexpr\Bleed+\PanelHeight\relax]pageSW);
+		\coordinate (spineNE) at ([xshift=\dimexpr\Bleed+\PanelWidth+\SpineWidth\relax,yshift=\dimexpr\Bleed+\PanelHeight\relax]pageSW);
+
+		\draw[black,line width=0.3pt] (trimSW) -- ([xshift=-\Bleed]trimSW);
+		\draw[black,line width=0.3pt] (trimSW) -- ([yshift=-\Bleed]trimSW);
+		\draw[black,line width=0.3pt] (trimSE) -- ([xshift=\Bleed]trimSE);
+		\draw[black,line width=0.3pt] (trimSE) -- ([yshift=-\Bleed]trimSE);
+		\draw[black,line width=0.3pt] (trimNW) -- ([xshift=-\Bleed]trimNW);
+		\draw[black,line width=0.3pt] (trimNW) -- ([yshift=\Bleed]trimNW);
+		\draw[black,line width=0.3pt] (trimNE) -- ([xshift=\Bleed]trimNE);
+		\draw[black,line width=0.3pt] (trimNE) -- ([yshift=\Bleed]trimNE);
+
+		% Spine fold marks in the bleed only; these should be trimmed away.
+		\draw[black,line width=0.3pt] (spineSW) -- ([yshift=-\Bleed]spineSW);
+		\draw[black,line width=0.3pt] (spineSE) -- ([yshift=-\Bleed]spineSE);
+		\draw[black,line width=0.3pt] (spineNW) -- ([yshift=\Bleed]spineNW);
+		\draw[black,line width=0.3pt] (spineNE) -- ([yshift=\Bleed]spineNE);
+	\end{tikzpicture}%
+}
+
+\begin{document}
+\begin{tikzpicture}[remember picture,overlay]
+	\coordinate (pageSW) at (current page.south west);
+
+	% White bleed/background over the full wraparound cover.
+	\fill[white] (current page.south west) rectangle (current page.north east);
+
+	% Layout, left to right: back cover, spine, front cover.
+	\node[
+		anchor=center,
+		rotate=90,
+		inner sep=0pt,
+		font=\fontsize{8.5}{9.5}\selectfont\bfseries
+	] at
+	([xshift=\dimexpr\Bleed+\PanelWidth+0.5\SpineWidth\relax,yshift=\dimexpr\Bleed+0.5\PanelHeight\relax]pageSW)
+	{\SpineText};
+
+	\node[anchor=south west,inner sep=0pt] at
+	([xshift=\dimexpr\Bleed+\PanelWidth+\SpineWidth\relax,yshift=\Bleed]pageSW)
+	{\includegraphics[width=\PanelWidth,height=\PanelHeight]{print/cover.pdf}};
+\end{tikzpicture}
+\CropMarks
+\end{document}

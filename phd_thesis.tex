@@ -3,6 +3,21 @@
 %%% preamble
 \input{./tex/preamble.tex}
 
+% Compile print targets from source so hyperref destinations are regenerated.
+\newif\ifthesisprintcoveronly
+\newif\ifthesisprintcontentonly
+\ifdefined\printcoveronly
+	\thesisprintcoveronlytrue
+\fi
+\ifdefined\printcontentonly
+	\thesisprintcontentonlytrue
+\fi
+\ifthesisprintcoveronly
+	\ifthesisprintcontentonly
+		\PackageError{phd_thesis}{Use only one print mode}{Choose either printcoveronly or printcontentonly.}
+	\fi
+\fi
+
 \begin{document}
 
 %%% frontmatter
@@ -10,8 +25,17 @@
 
 %--- title page
 \addtocontents{toc}{\protect\setlength{\cftbeforechapskip}{0pt}} % tighter spacing for frontmatter
-\input{./content/title_page.tex}
-\cleardoublepage
+\ifthesisprintcontentonly
+\else
+	\input{./content/title_page.tex}
+\fi
+
+\ifthesisprintcoveronly
+\else
+	\ifthesisprintcontentonly
+	\else
+		\cleardoublepage
+	\fi
 \includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{content/First_page_of_thesis_070519.pdf}
 
 %--- toc
@@ -102,5 +126,6 @@
 
 \printbibliography[heading=bibintoc,title={Bibliography}]
 
+\fi
 
 \end{document}

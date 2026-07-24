@@ -1,0 +1,18 @@
+Color printing plan
+===================
+
+Page numbers are absolute PDF page numbers within each file.
+
+Method: rendered pages with annotations hidden, then marked pages as color when
+visible non-gray pixels exceeded the threshold. This avoids counting clickable
+hyperlink rectangles as printable color.
+
+cover.pdf
+---------
+Color: 1
+Black/white: none
+
+content.pdf
+-----------
+Color: 1, 3, 23, 26, 29-30, 37, 40, 48-73, 76-103, 110, 112, 114, 116
+Black/white: 2, 4-22, 24-25, 27-28, 31-36, 38-39, 41-47, 74-75, 104-109, 111, 113, 115, 117-140
