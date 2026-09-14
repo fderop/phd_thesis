@@ -223,6 +223,7 @@
 	{\color{LightSteelBlue3}$\boldsymbol \uparrow $}}
 
 %--- citations
+\usepackage{xurl}
 \usepackage{hyperref}
 \renewcommand{\figureautorefname}{fig.}
 \usepackage[hyperref=true,
@@ -236,6 +237,7 @@
 	block=none,
 	backend=bibtex,
 	giveninits=true]{biblatex}
+\ExecuteBibliographyOptions[misc]{url=true}
 
 \bibliography{tex/references}
 % \addbibresource{tex/references.bib}
