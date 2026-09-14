@@ -1,0 +1,186 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\usepackage{microtype}
+\usepackage[normalem]{ulem}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\DeclareSIUnit{\bp}{bp}
+\DeclareSIUnit{\flops}{FLOPs}
+\newcommand{\deleted}[1]{{\color{removed}\sout{#1}}}
+\newcommand{\inserted}[1]{{\color{added}#1}}
+\usepackage{xcolor}
+\usepackage[breakable,skins]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{heading}{HTML}{000000}
+\definecolor{muted}{HTML}{526575}
+\definecolor{removed}{HTML}{982832}
+\definecolor{added}{HTML}{176037}
+\newtcolorbox{reviewcomment}{enhanced,breakable,sharp corners,boxrule=0pt,
+  colback=gray!4,coltext=black,borderline west={1.5pt}{0pt}{muted!65},
+  left=9pt,right=9pt,top=6pt,bottom=6pt,before skip=6pt,after skip=9pt}
+\newtcolorbox{removedtext}{enhanced,breakable,sharp corners,boxrule=0pt,
+  colback=red!4,coltext=removed,borderline west={2pt}{0pt}{removed},
+  title={$-$},colbacktitle=red!4,coltitle=removed,fonttitle=\bfseries,
+  left=9pt,right=9pt,top=6pt,bottom=6pt,before skip=6pt,after skip=0pt}
+\newtcolorbox{addedtext}{enhanced,breakable,sharp corners,boxrule=0pt,
+  colback=green!4,coltext=added,borderline west={2pt}{0pt}{added},
+  title={$+$},colbacktitle=green!4,coltitle=added,fonttitle=\bfseries,
+  left=9pt,right=9pt,top=6pt,bottom=6pt,before skip=0pt,after skip=10pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[R]{\footnotesize\sffamily\color{muted}\thepage}
+\hypersetup{pdftitle={Response to the examination jury},pdfauthor={Florian De Rop}}
+\begin{document}
+
+{\LARGE\sffamily\bfseries\color{heading}Response to the examination jury\par}
+
+\section*{\sffamily\color{heading}Professor Céline Vallot}
+
+\subsection*{\sffamily\color{heading}1. Critical perspective and technology selection}
+
+\begin{reviewcomment}
+Given the breadth of the field, however, some sections of the Introduction remain relatively descriptive and could have benefited from a more integrated and critical perspective. In particular, I would have appreciated further discussion of how these different technologies complement one another, and what their respective strengths and limitations are. Providing more guidance on when and why one approach may be preferred over another, depending on the biological question asked, would also help the reader navigate the rapidly evolving single-cell genomics landscape. These points could provide interesting topics for further discussion during the oral defense.
+\end{reviewcomment}
+
+I have further explored the connections between these technologies and how they complement one another. Given the length of the introduction, I have chosen to prepare notes on these points for the question-and-answer session during the oral defense rather than rewrite the introduction.
+
+\section*{\sffamily\color{heading}Professor Jeroen Lammertyn}
+
+\subsection*{\sffamily\color{heading}1. Integration of the general abstract}
+
+\begin{reviewcomment}
+The general abstract is simply composed of two paragraphs discussing the two papers of the PhD. I would add a few sentences on linking both topics (e.g., a few general introductory lines in the abstract) and a kind of integrated conclusion, aspects that are well worked out for instance in the Layman's Abstract on the next page.
+\end{reviewcomment}
+
+I agree that the abstract needed more introductory context and a clearer connection between the two studies. I have modified the abstract as follows:
+
+\begin{reviewcomment}
+\setlength{\parskip}{0.5\baselineskip}
+\inserted{Gene expression and chromatin accessibility profiling provide complementary views of gene regulation across tissues, developmental stages, and disease. While bulk sequencing assays average these signals across populations of cells, single-cell RNA-seq and single-cell ATAC-seq can resolve cellular heterogeneity and enable the characterization of individual cell types and states. The rapid development of single-cell technologies has highlighted two related challenges: developing methods that make high-quality single-cell profiling more accessible, and understanding how differences between technologies influence the biological conclusions drawn from the resulting data. This thesis addresses both challenges through the development of an open-source single-cell sequencing platform and a systematic benchmark of scATAC-seq technologies.}
+
+\deleted{Single-cell RNA-seq and} \inserted{To make} single-cell \deleted{ATAC-seq have enabled the building of cell type atlases across organisms, tissues, and disease. This thesis centers around the development of} \inserted{profiling more accessible, we developed} HyDrop, a flexible, open-source droplet platform for scATAC-seq and scRNA-seq based on dissolvable polyacrylamide hydrogel beads. These beads carry split-pool barcodes which index RNA or accessible chromatin from single cells. We optimized the protocol by tuning primer load, adding a clathrin inhibitor, and titrating different enzymes to increase yield. HyDrop-ATAC generated \num{7996} high-quality single-cell profiles from flash-frozen mouse cortex. HyDrop-RNA produced \num{9508} transcriptomes from the same tissue. We also recovered a small population of rare, FACS-sorted \textit{Drosophila} neurons, demonstrating applicability to low-input samples. Across mouse cortex, HyDrop-RNA reached a median \num{3389} UMIs and \num{1658} genes per cell, and HyDrop-ATAC recovered a median \num{4148} unique fragments per cell with high TSS enrichment. Chemistry, microfluidic chips, and protocols are open-source.
+
+\deleted{We also} \inserted{To assess how technology choices affect data quality and downstream analyses, we systematically compared eight scATAC-seq technologies, including HyDrop. To enable consistent processing across technologies, we} developed \texttt{PUMATAC}, a \deleted{containerized, universal scATAC-seq} \inserted{containerized} preprocessing framework that \deleted{unifies} \inserted{standardizes} trimming, whitelist-aware barcode correction, and alignment across different scATAC-seq formats. \deleted{We used \texttt{PUMATAC} to} \inserted{The} benchmark \inserted{comprised} eight scATAC-seq methods \deleted{on} \inserted{applied to} human PBMCs: 10x v1, v1.1, v2, 10x Multiome, Bio-Rad ddSEQ, mtscATAC-seq, s3-ATAC, and HyDrop, for a total of \num{47} libraries and \num{169227} high-quality cells. We detected various systematic differences across these technologies. Sequencing efficiency, defined as fraction of reads retained in the final cell-by-peak matrix, ranged from \textasciitilde\num{4}\% for s3-ATAC and HyDrop to \textasciitilde\num{28}\% for 10x v2. Per-cell sensitivity scaled with sequencing efficiency and impacted cell-type annotation accuracy, genotype demultiplexing, peak calling, differential accessibility, and transcription factor motif enrichment. Methods also differed in specificity: fragment promoter and TSS proximity as well as aggregate fraction of fragments in peaks varied markedly, with ddSEQ recovering more TSS-proximal fragments than 10x. This effect led to technique-dependent differentially accessible regions, and imperfect cross-technology integration even after batch correction.
+
+\inserted{Together, these studies address both the development and evaluation of single-cell sequencing technologies. HyDrop provides an accessible platform for generating single-cell RNA and chromatin accessibility profiles, while the benchmark demonstrates that technical differences between scATAC-seq methods can substantially affect sensitivity, specificity, and downstream biological analyses. These results highlight that improvements in single-cell genomics should be evaluated not only in terms of throughput, but also by the quality and biological informativeness of the signal recovered from each cell. HyDrop provides a platform on which such improvements can be developed, while the benchmarking framework provides a systematic way to assess their impact.}
+\end{reviewcomment}
+
+\subsection*{\sffamily\color{heading}2. Reference formatting}
+
+\begin{reviewcomment}
+Do you have a particular motivation to implement two strategies for referencing? A general bibliography at the end and working with footnotes in the introduction and discussion chapter?
+\end{reviewcomment}
+
+The footnotes allow readers to identify the cited papers while reading, without having to scroll to the bibliography. The general bibliography provides a complete list of references at the end of the thesis.
+
+\subsection*{\sffamily\color{heading}3. Recent literature}
+
+\begin{reviewcomment}
+The most recent publications date back to 2025. Did the candidate screen for more recent information as well? I think this is a relevant remark in this very rapidly evolving field.
+\end{reviewcomment}
+
+In the new and extended discussion, I have included several works and projects from 2026.
+
+\subsection*{\sffamily\color{heading}4. Personal bibliography}
+
+\begin{reviewcomment}
+Can the candidate add a personal bibliography including the conferences, journal papers, lectures, etc.?
+\end{reviewcomment}
+
+I have expanded the Author profile with my journal publications, published laboratory protocols, and conference talks and seminar presentations.
+
+\subsection*{\sffamily\color{heading}5. Future directions, bottlenecks, and challenges}
+
+\begin{reviewcomment}
+In the discussion section it might be interesting to elaborate more on where the field should go and what the major bottlenecks and challenges are.
+\end{reviewcomment}
+
+In the new and extended discussion, I discuss what I think are major bottlenecks, and how industry and academia are dealing with these issues in their own ways.
+
+A diff of chapter 4 is included in Appendix~\ref{app:chapter4-diff}.
+
+\section*{\sffamily\color{heading}Professor Klaas Mulder}
+
+Professor Mulder approved the manuscript without revisions.
+
+\section*{\sffamily\color{heading}Professor Thierry Voet}
+
+\subsection*{\sffamily\color{heading}1. Balance between the introduction and discussion}
+
+\begin{reviewcomment}
+There is a bit of an imbalance between the first chapter (introduction) and the last chapter (discussion). While the introduction is (at times overly) detailed, the discussion is relatively brief and succinct. Consider balancing this a bit more.
+\end{reviewcomment}
+
+I have amended the discussion with a table of ongoing large omics projects. I agree that the discussion is proportionally too short, however, due to time constraints I cannot put all my ideas to rest there. I plan to remain active in the field and release written content every now and then.
+
+\subsection*{\sffamily\color{heading}2. Microarray probe count (p. 11)}
+
+\begin{reviewcomment}
+p.11 states that ‘While microarrays allow for up to 50 000 probes to be interrogated in a single experiment', however high-density arrays allow for many more probes. Please correct.
+\end{reviewcomment}
+
+The sentence was revised as follows.
+
+\begin{removedtext}
+While microarrays allow for up to 50 000 probes to be interrogated in a single experiment, their limited dynamic range, high false-positive hybridisation and heterogeneous probe hybridisation capacities skew absolute quantification.
+\end{removedtext}
+\begin{addedtext}
+While high-density microarrays allow millions of probes to be interrogated in a single experiment, their limited dynamic range, high false-positive hybridisation and heterogeneous probe hybridisation capacities skew absolute quantification.
+\end{addedtext}
+
+\subsection*{\sffamily\color{heading}3. Sequencing errors and aligner choice (p. 22)}
+
+\begin{reviewcomment}
+p. 22 states "sequencing by synthesis (Illumina) generates more deletion artifacts due to incorporation errors, and these need to be explicitly corrected for by bwa-mem, whereas minimap2 is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads". However, Illumina SBS generates primarily substitution artefacts, while nanopore has more deletion artefacts?
+\end{reviewcomment}
+
+The two sentences about read length and sequencing errors were replaced with the following three sentences.
+
+\begin{removedtext}
+Short-read aligners such as bowtie2 are optimized for reads < 200 bp, while long-read aligners like minimap2 are better at handling reads longer than 1000 bp.
+
+The type of sequencing technology used also plays a role: sequencing by synthesis (Illumina) generates more deletion artifacts due to incorporation errors, and these need to be explicitly corrected for by bwa-mem, whereas minimap2 is better suited for handling the higher single-base error rates found in Nanopore/PacBio reads.
+\end{removedtext}
+\begin{addedtext}
+For genomic alignment, bowtie2 and bwa-mem are commonly used for Illumina short reads.
+
+Minimap2 is generally better suited to long reads from Nanopore and PacBio.
+
+Sequencing errors differ in frequency and type between platforms, and alignment parameters need to account for these differences.
+\end{addedtext}
+
+\subsection*{\sffamily\color{heading}4. Missing space (p. 39)}
+
+\begin{reviewcomment}
+p. 39 typo : “10\%mouse cells”
+\end{reviewcomment}
+
+Corrected “10\%mouse cells” to “10\% mouse cells”.
+
+\subsection*{\sffamily\color{heading}5. Missing space (p. 43)}
+
+\begin{reviewcomment}
+p. 43 : typo “percluster”
+\end{reviewcomment}
+
+Corrected “percluster” to “per cluster”.
+\clearpage
+\appendix
+\section[Chapter 4 changes]{\sffamily\color{heading}Chapter 4 changes}
+\label{app:chapter4-diff}
+The comparison below shows changes from the September 10 version of chapter 4.
+
+\begingroup
+\sloppy
+\setlength{\parskip}{0.5\baselineskip}
+\input{chapter_4_diff.tex}
+\endgroup
+\end{document}
