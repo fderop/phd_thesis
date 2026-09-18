@@ -311,3 +311,4 @@ ipynb/resources/runinfo.csv
 *.bak*
 
 /tmp/
+/defense_prep/
