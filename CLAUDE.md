@@ -16,7 +16,7 @@ This runs `latexindent` on all `.tex` files, then `latexmk -xelatex -bibtex -f -
 
 ## Required External Files (gitignored)
 
-- `papers/elife-73971-v5.pdf` — eLife HyDrop paper
+- `papers/elife-73971-v5-thesis-corrected.pdf` — eLife HyDrop paper
 - `papers/s41587-023-01881-x.pdf` — Nature Biotechnology benchmark paper
 
 These are included via `\includepdf` in `phd_thesis.tex`.

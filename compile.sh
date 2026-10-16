@@ -14,8 +14,8 @@ LATEXMK=(latexmk -xelatex -bibtex -f -shell-escape)
 PDFLATEXMK=(latexmk -pdf)
 
 MISSING_PAPERS=()
-if [[ ! -f papers/elife-73971-v5-thesis-corrected.pdf && ! -f papers/elife-73971-v5.pdf ]]; then
-    MISSING_PAPERS+=("papers/elife-73971-v5.pdf (eLife HyDrop paper)")
+if [[ ! -f papers/elife-73971-v5-thesis-corrected.pdf ]]; then
+    MISSING_PAPERS+=("papers/elife-73971-v5-thesis-corrected.pdf (eLife HyDrop paper)")
 fi
 if [[ ! -f papers/s41587-023-01881-x.pdf ]]; then
     MISSING_PAPERS+=("papers/s41587-023-01881-x.pdf (Nature Biotechnology benchmark paper)")
