@@ -11,4 +11,4 @@
 
 If `papers/elife-73971-v5-thesis-corrected.pdf` is available, the build uses it instead of the original HyDrop PDF.
 
-If either paper is missing, the script shows a warning and asks whether to continue. Enter `y` to compile without the missing PDFs. The chapter headings remain. Any other response cancels the build before compilation starts.
+If either paper is missing, the script shows a warning and asks whether to continue.
