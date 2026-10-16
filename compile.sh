@@ -13,6 +13,25 @@ PRINT_DIR="print"
 LATEXMK=(latexmk -xelatex -bibtex -f -shell-escape)
 PDFLATEXMK=(latexmk -pdf)
 
+MISSING_PAPERS=()
+if [[ ! -f papers/elife-73971-v5-thesis-corrected.pdf && ! -f papers/elife-73971-v5.pdf ]]; then
+    MISSING_PAPERS+=("papers/elife-73971-v5.pdf (eLife HyDrop paper)")
+fi
+if [[ ! -f papers/s41587-023-01881-x.pdf ]]; then
+    MISSING_PAPERS+=("papers/s41587-023-01881-x.pdf (Nature Biotechnology benchmark paper)")
+fi
+
+if (( ${#MISSING_PAPERS[@]} )); then
+    echo "Warning: The following paper PDFs are missing:"
+    printf '  %s\n' "${MISSING_PAPERS[@]}"
+    echo "The complete thesis requires these papers. You can compile without them; the missing PDFs will be omitted."
+    read -r -p "Continue without the missing papers? [y/N] " REPLY
+    case "$REPLY" in
+        y|Y|yes|YES) ;;
+        *) echo "Compilation cancelled."; exit 1 ;;
+    esac
+fi
+
 find . -name "*.tex" -exec latexindent -w {} \; > /dev/null 2>&1
 
 if ! "${LATEXMK[@]}" "$THESIS_FILE.tex"; then
